@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint app.js \"{src,apps,libs,test}/**/*.js\" --fix --no-error-on-unmatched-pattern",
-    "format": "prettier --write 'app.js' 'src/**/*.js'"
+    "format": "prettier --write 'src/**/*.js'"
   },
   "keywords": [],
   "author": "",
@@ -18,7 +18,8 @@
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-prettier": "^5.4.0",
     "globals": "^16.1.0",
-    "prettier": "3.5.3"
+    "prettier": "3.5.3",
+    "prisma": "^6.8.2"
   },
   "lint-staged": {
     "*.js": [
@@ -27,7 +28,8 @@
     ]
   },
   "dependencies": {
-    "express": "^5.1.0",
-    "pg": "^8.16.0"
+    "@prisma/client": "^6.8.2",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0"
   }
 }
