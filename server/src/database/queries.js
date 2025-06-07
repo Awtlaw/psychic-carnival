@@ -16,10 +16,15 @@ export const admins = {
     return newAdmin;
   },
 
+  getAllAdmins: async () => {
+    const admins = await prisma.admin.findMany();
+    return admins;
+  },
+
   getAdminById: async (id) => {
     const admin = await prisma.admin.findUnique({
       where: {
-        id,
+        id: +id,
       },
     });
     return admin;
@@ -40,10 +45,15 @@ export const doctors = {
     return newDoctor;
   },
 
+  getAllDoctors: async () => {
+    const doctors = await prisma.doctor.findMany();
+    return doctors;
+  },
+
   getDoctorById: async (id) => {
     const doctor = await prisma.doctor.findUnique({
       where: {
-        id,
+        id: +id,
       },
     });
     return doctor;
@@ -78,10 +88,15 @@ export const patients = {
     return newPatient;
   },
 
+  getAllPatients: async () => {
+    const patients = await prisma.patient.findMany();
+    return patients;
+  },
+
   getPatientById: async (id) => {
     const patient = await prisma.patient.findUnique({
       where: {
-        id,
+        id: +id,
       },
     });
     return patient;
