@@ -1,13 +1,26 @@
 import { appointments } from '../../database/queries';
 import asyncHandler from 'express-async-handler';
+import { appointmentValidator } from '../../middlewares/validators/appointments';
+import { validationResult } from 'express-validator';
 
-export const bookNewAppointment = asyncHandler(async (req, res) => {
-  if (req.body === undefined)
-    return res.status(400).json({ status: 'error', message: 'Bad Request' });
-  const { patientId, message } = req.body;
-  const newAppointment = await appointments.bookAppointment(patientId, message);
-  res.status(201).json(newAppointment);
-});
+export const bookNewAppointment = [
+  appointmentValidator,
+  asyncHandler(async (req, res) => {
+    const validationErrors = validationResult(req);
+    if (!validationErrors.isEmpty())
+      return res
+        .status(400)
+        .json({ status: 'Validation Error', error: validationErrors.array() });
+    if (req.body === undefined)
+      return res.status(400).json({ status: 'error', message: 'Bad Request' });
+    const { patientId, message } = req.body;
+    const newAppointment = await appointments.bookAppointment(
+      patientId,
+      message,
+    );
+    res.status(201).json(newAppointment);
+  }),
+];
 
 export const getPendingAppointments = asyncHandler(async (req, res) => {
   const pendingAppointments = await appointments.findPendingAppointments();

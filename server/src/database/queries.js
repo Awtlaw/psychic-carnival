@@ -29,6 +29,15 @@ export const admins = {
     });
     return admin;
   },
+
+  getAdminByEmail: async (email) => {
+    const admin = await prisma.admin.findFirst({
+      where: {
+        email,
+      },
+    });
+    return admin;
+  },
 };
 
 export const doctors = {
@@ -54,6 +63,15 @@ export const doctors = {
     const doctor = await prisma.doctor.findUnique({
       where: {
         id: +id,
+      },
+    });
+    return doctor;
+  },
+
+  getDoctorByEmail: async (email) => {
+    const doctor = await prisma.doctor.findFirst({
+      where: {
+        email,
       },
     });
     return doctor;
@@ -97,6 +115,15 @@ export const patients = {
     const patient = await prisma.patient.findUnique({
       where: {
         id: +id,
+      },
+    });
+    return patient;
+  },
+
+  getPatientByEmail: async (email) => {
+    const patient = await prisma.patient.findFirst({
+      where: {
+        email,
       },
     });
     return patient;

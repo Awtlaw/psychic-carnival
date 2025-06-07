@@ -1,38 +1,48 @@
 import { hash, genSalt } from 'bcryptjs';
 import { patients } from '../../database/queries.js';
 import asyncHandler from 'express-async-handler';
+import { patientValidator } from '../../middlewares/validators/users.js';
+import { validationResult } from 'express-validator';
 
 // TODO: add validator
 
-export const addNewPatient = asyncHandler(async (req, res) => {
-  if (req.body === undefined)
-    return res.status(400).json({ status: 'error', message: 'Bad Request' });
-  const {
-    email,
-    phone,
-    firstName,
-    lastName,
-    password,
-    dob,
-    sex,
-    address,
-    proxy,
-  } = req.body;
-  const salt = await genSalt(10);
-  const hashPwd = await hash(password, salt);
-  const newPatient = await patients.createPatient(
-    email,
-    phone,
-    firstName,
-    lastName,
-    hashPwd,
-    dob,
-    sex,
-    address,
-    proxy,
-  );
-  res.status(201).json(newPatient);
-});
+export const addNewPatient = [
+  patientValidator,
+  asyncHandler(async (req, res) => {
+    const validationErrors = validationResult(req);
+    if (!validationErrors.isEmpty())
+      return res
+        .status(400)
+        .json({ status: 'Validation Error', error: validationErrors.array() });
+    if (req.body === undefined)
+      return res.status(400).json({ status: 'error', message: 'Bad Request' });
+    const {
+      email,
+      phone,
+      firstName,
+      lastName,
+      password,
+      dob,
+      sex,
+      address,
+      proxy,
+    } = req.body;
+    const salt = await genSalt(10);
+    const hashPwd = await hash(password, salt);
+    const newPatient = await patients.createPatient(
+      email,
+      phone,
+      firstName,
+      lastName,
+      hashPwd,
+      dob,
+      sex,
+      address,
+      proxy,
+    );
+    res.status(201).json(newPatient);
+  }),
+];
 
 export const getPatients = asyncHandler(async (req, res) => {
   const allPatients = await patients.getAllPatients();

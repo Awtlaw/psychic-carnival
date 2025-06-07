@@ -1,24 +1,34 @@
 import { hash, genSalt } from 'bcryptjs';
 import { admins } from '../../database/queries.js';
 import asyncHandler from 'express-async-handler';
+import { adminValidator } from '../../middlewares/validators/users.js';
+import { validationResult } from 'express-validator';
 
 // TODO: add validator
 
-export const addNewAdmin = asyncHandler(async (req, res) => {
-  const { email, phone, firstName, lastName, password } = req.body;
-  if (req.body === undefined)
-    return res.status(400).json({ status: 'error', message: 'Bad Request' });
-  const salt = await genSalt(10);
-  const hashPwd = await hash(password, salt);
-  const newAdmin = await admins.createAdmin(
-    email,
-    phone,
-    firstName,
-    lastName,
-    hashPwd,
-  );
-  res.status(201).json(newAdmin);
-});
+export const addNewAdmin = [
+  adminValidator,
+  asyncHandler(async (req, res) => {
+    const validationErrors = validationResult(req);
+    if (!validationErrors.isEmpty())
+      return res
+        .status(400)
+        .json({ status: 'Validation Error', error: validationErrors.array() });
+    const { email, phone, firstName, lastName, password } = req.body;
+    if (req.body === undefined)
+      return res.status(400).json({ status: 'error', message: 'Bad Request' });
+    const salt = await genSalt(10);
+    const hashPwd = await hash(password, salt);
+    const newAdmin = await admins.createAdmin(
+      email,
+      phone,
+      firstName,
+      lastName,
+      hashPwd,
+    );
+    res.status(201).json(newAdmin);
+  }),
+];
 
 export const getAdmins = asyncHandler(async (req, res) => {
   const allAdmins = await admins.getAllAdmins();
