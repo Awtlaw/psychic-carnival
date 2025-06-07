@@ -1,5 +1,5 @@
 import { body } from 'express-validator';
-import { admins, patients, doctors } from '../../database/queries';
+import { admins, patients, doctors } from '../../database/queries.js';
 
 export const adminValidator = [
   body('email', 'Must be a valid email')

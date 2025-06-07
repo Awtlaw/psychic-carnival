@@ -5,7 +5,8 @@ import {
   fulfillAppointment,
   getFulfilledAppointments,
   getPendingAppointments,
-} from '../controllers/booking/appointment';
+} from '../controllers/booking/appointment.js';
+
 export const appointments = Router();
 
 appointments.get('/pending', getPendingAppointments);

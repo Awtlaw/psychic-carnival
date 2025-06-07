@@ -3,7 +3,7 @@ import {
   createNewReport,
   getReport,
   getReports,
-} from '../controllers/checker/report';
+} from '../controllers/checker/report.js';
 export const reports = Router();
 
 reports.post('/', createNewReport);

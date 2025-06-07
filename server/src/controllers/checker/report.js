@@ -1,6 +1,6 @@
-import { reports } from '../../database/queries';
+import { reports } from '../../database/queries.js';
 import asyncHandler from 'express-async-handler';
-import { reportValidator } from '../../middlewares/validators/reports';
+import { reportValidator } from '../../middlewares/validators/reports.js';
 import { validationResult } from 'express-validator';
 
 export const createNewReport = [

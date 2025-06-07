@@ -4,8 +4,6 @@ import asyncHandler from 'express-async-handler';
 import { patientValidator } from '../../middlewares/validators/users.js';
 import { validationResult } from 'express-validator';
 
-// TODO: add validator
-
 export const addNewPatient = [
   patientValidator,
   asyncHandler(async (req, res) => {

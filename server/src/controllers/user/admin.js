@@ -4,8 +4,6 @@ import asyncHandler from 'express-async-handler';
 import { adminValidator } from '../../middlewares/validators/users.js';
 import { validationResult } from 'express-validator';
 
-// TODO: add validator
-
 export const addNewAdmin = [
   adminValidator,
   asyncHandler(async (req, res) => {
