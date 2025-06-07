@@ -1,11 +1,10 @@
 import { hash, genSalt } from 'bcryptjs';
 import { admins } from '../../database/queries.js';
+import asyncHandler from 'express-async-handler';
 
-// TODO: add err handling to controller logic
 // TODO: add validator
-// TODO: add async handler
 
-export const addNewAdmin = async (req, res) => {
+export const addNewAdmin = asyncHandler(async (req, res) => {
   const { email, phone, firstName, lastName, password } = req.body;
   if (req.body === undefined)
     return res.status(400).json({ status: 'error', message: 'Bad Request' });
@@ -19,21 +18,21 @@ export const addNewAdmin = async (req, res) => {
     hashPwd,
   );
   res.status(201).json(newAdmin);
-};
+});
 
-export const getAdmins = async (req, res) => {
+export const getAdmins = asyncHandler(async (req, res) => {
   const allAdmins = await admins.getAllAdmins();
   if (allAdmins.length === 0)
     return res
       .status(404)
       .json({ status: 'error', message: 'No admin found!' });
   res.json([...allAdmins]);
-};
+});
 
-export const getAdmin = async (req, res) => {
+export const getAdmin = asyncHandler(async (req, res) => {
   const { id } = req.params;
   if (!id)
     return res.status(400).json({ status: 'error', message: 'Bad Request' });
   const admin = await admins.getAdminById(id);
   res.json(admin);
-};
+});

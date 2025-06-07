@@ -1,11 +1,10 @@
 import { hash, genSalt } from 'bcryptjs';
 import { patients } from '../../database/queries.js';
+import asyncHandler from 'express-async-handler';
 
-// TODO: add err handling to controller logic
 // TODO: add validator
-// TODO: add async handler
 
-export const addNewPatient = async (req, res) => {
+export const addNewPatient = asyncHandler(async (req, res) => {
   if (req.body === undefined)
     return res.status(400).json({ status: 'error', message: 'Bad Request' });
   const {
@@ -33,21 +32,20 @@ export const addNewPatient = async (req, res) => {
     proxy,
   );
   res.status(201).json(newPatient);
-};
+});
 
-export const getPatients = async (req, res) => {
+export const getPatients = asyncHandler(async (req, res) => {
   const allPatients = await patients.getAllPatients();
   if (allPatients.length === 0)
     return res
       .status(404)
       .json({ status: 'error', message: 'No patient found!' });
   res.json([...allPatients]);
-};
-
-export const getPatient = async (req, res) => {
+});
+export const getPatient = asyncHandler(async (req, res) => {
   const { id } = req.params;
   if (!id)
     return res.status(400).json({ status: 'error', message: 'Bad Request' });
   const patient = await patients.getPatientById(id);
   res.json(patient);
-};
+});
