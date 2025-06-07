@@ -114,6 +114,24 @@ export const appointments = {
     return newAppointment;
   },
 
+  findPendingAppointments: async () => {
+    const appointments = await prisma.appointment.findMany({
+      where: {
+        status: 'PENDING',
+      },
+    });
+    return appointments;
+  },
+
+  findFulfilledAppointments: async () => {
+    const appointments = await prisma.appointment.findMany({
+      where: {
+        status: 'FULFILLED',
+      },
+    });
+    return appointments;
+  },
+
   cancelAppointment: async (id) => {
     const appointment = await prisma.appointment.update({
       where: { id },
@@ -135,4 +153,29 @@ export const appointments = {
   },
 };
 
-export const reports = {};
+export const reports = {
+  createReport: async (patientId, doctorId, diagnosis) => {
+    const newReport = await prisma.report.create({
+      data: {
+        patientId,
+        doctorId,
+        diagnosis,
+      },
+    });
+    return newReport;
+  },
+
+  getAllReports: async () => {
+    const reports = await prisma.report.findMany();
+    return reports;
+  },
+
+  getReportById: async (id) => {
+    const report = await prisma.report.findUnique({
+      where: {
+        id: +id,
+      },
+    });
+    return report;
+  },
+};

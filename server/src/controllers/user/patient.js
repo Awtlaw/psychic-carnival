@@ -6,6 +6,8 @@ import { patients } from '../../database/queries.js';
 // TODO: add async handler
 
 export const addNewPatient = async (req, res) => {
+  if (req.body === undefined)
+    return res.status(400).json({ status: 'error', message: 'Bad Request' });
   const {
     email,
     phone,
@@ -35,11 +37,17 @@ export const addNewPatient = async (req, res) => {
 
 export const getPatients = async (req, res) => {
   const allPatients = await patients.getAllPatients();
+  if (allPatients.length === 0)
+    return res
+      .status(404)
+      .json({ status: 'error', message: 'No patient found!' });
   res.json([...allPatients]);
 };
 
 export const getPatient = async (req, res) => {
   const { id } = req.params;
+  if (!id)
+    return res.status(400).json({ status: 'error', message: 'Bad Request' });
   const patient = await patients.getPatientById(id);
   res.json(patient);
 };
