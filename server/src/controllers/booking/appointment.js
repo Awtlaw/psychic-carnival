@@ -74,7 +74,19 @@ export const sendReminder = asyncHandler(async (req, res) => {
     const { data } = await axios.get(
       `${process.env.APP_BASE}/appointment/pending`,
     );
-    data?.map((appointment) => {
+    const filteredData = data?.filter((appointment) => {
+      const today = new Date();
+      const tomorrow = new Date();
+      tomorrow.setDate(today.getDate() + 1);
+      const nextDay = tomorrow.toLocaleString().split(',')[0];
+      const appointmentDate = new Date(appointment.message.date);
+
+      return nextDay === appointmentDate.toLocaleString().split(',')[0];
+    });
+
+    console.log(filteredData);
+
+    filteredData.map((appointment) => {
       sendReminderMail(
         appointment.message.recipient,
         appointment.message.fullName,
@@ -83,7 +95,10 @@ export const sendReminder = asyncHandler(async (req, res) => {
         appointment.message.reason,
       );
     });
-    res.json('Reminder notification sent successfully!');
+    res.json({
+      message: 'Reminder notification sent successfully!',
+      sent: [...filteredData],
+    });
   } catch (error) {
     res
       .status(500)
