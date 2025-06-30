@@ -125,7 +125,7 @@ export const appointments = {
     const newAppointment = await prisma.appointment.create({
       data: {
         patientId,
-        message: JSON.stringify(message),
+        message,
       },
     });
     return newAppointment;

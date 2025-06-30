@@ -2,7 +2,9 @@ import { appointments } from '../../database/queries.js';
 import asyncHandler from 'express-async-handler';
 import { appointmentValidator } from '../../validators/appointments.js';
 import { validationResult } from 'express-validator';
-import { sendBookingMail } from '../../utils/mail.js';
+import { sendBookingMail, sendReminderMail } from '../../utils/mail.js';
+import axios from 'axios';
+import 'dotenv/config';
 
 export const bookNewAppointment = [
   appointmentValidator,
@@ -12,7 +14,7 @@ export const bookNewAppointment = [
       return res
         .status(400)
         .json({ status: 'Validation Error', error: validationErrors.array() });
-    if (req.body === undefined)
+    if (req.body.message === undefined)
       return res.status(400).json({ status: 'error', message: 'Bad Request' });
     const { patientId, message } = req.body;
     const newAppointment = await appointments.bookAppointment(
@@ -65,4 +67,26 @@ export const fulfillAppointment = asyncHandler(async (req, res) => {
     return res.status(400).json({ status: 'error', message: 'Bad Request' });
   await appointments.fulfillAppointment(id);
   res.json('Operation Successful');
+});
+
+export const sendReminder = asyncHandler(async (req, res) => {
+  try {
+    const { data } = await axios.get(
+      `${process.env.APP_BASE}/appointment/pending`,
+    );
+    data?.map((appointment) => {
+      sendReminderMail(
+        appointment.message.recipient,
+        appointment.message.fullName,
+        appointment.message.date,
+        appointment.message.period,
+        appointment.message.reason,
+      );
+    });
+    res.json('Reminder notification sent successfully!');
+  } catch (error) {
+    res
+      .status(500)
+      .json({ status: 'error', message: `An error occured: ${error.message}` });
+  }
 });
