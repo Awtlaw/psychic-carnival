@@ -151,7 +151,7 @@ export const appointments = {
 
   cancelAppointment: async (id) => {
     const appointment = await prisma.appointment.update({
-      where: { id },
+      where: { id: +id },
       data: {
         status: 'CANCELLED',
       },
@@ -161,7 +161,7 @@ export const appointments = {
 
   fulfillAppointment: async (id) => {
     const appointment = await prisma.appointment.update({
-      where: { id },
+      where: { id: +id },
       data: {
         status: 'FULFILLED',
       },

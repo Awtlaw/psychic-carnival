@@ -42,11 +42,12 @@ export const getPendingAppointments = asyncHandler(async (req, res) => {
 
 export const getFulfilledAppointments = asyncHandler(async (req, res) => {
   const fulfilledAppointments = await appointments.findFulfilledAppointments();
-  if (fulfillAppointment.length < 1)
+  if (fulfilledAppointments.length < 1)
     return res.status(404).json({
       status: 'error',
       message: 'No fulfilled appointment found',
     });
+
   res.json([...fulfilledAppointments]);
 });
 
