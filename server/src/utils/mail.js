@@ -26,7 +26,7 @@ export function sendBookingMail(mail, name, date, period, reason) {
         📅 Date: ${date}
         🕒 Time: ${period}
         📍 Location: HealthConnect Clinic, 12 Main Street, Accra
-        Reason for Visit: ${reason}
+        🩺 Reason for Visit: ${reason}
         
         Please arrive 10 minutes early and bring any relevant medical documents.
       
@@ -47,21 +47,21 @@ export function sendReminderMail(mail, name, date, period, reason) {
     to: mail,
     subject: 'Your Appointment Has Been Scheduled - HealthConnect',
     text: `
-
-        Hello ${name},
-        
-        This is a reminder about your upcoming appointment.
-
-        📅 Date: ${date}
-        🕒 Time: ${period}
-        📍 Location: HealthConnect Clinic, 12 Main Street, Accra
-        Reason for Visit: ${reason}
-        
-        Please arrive 10 minutes early and bring any relevant medical documents.
-      
-        Best regards,  
-        HealthConnect Team
-        `,
+    
+    Hello ${name},
+    
+    This is a reminder about your upcoming appointment.
+    
+    📅 Date: ${date}
+    🕒 Time: ${period}
+    📍 Location: HealthConnect Clinic, 12 Main Street, Accra
+    🩺 Reason for Visit: ${reason}
+    
+    Please arrive 10 minutes early and bring any relevant medical documents.
+    
+    Best regards,  
+    HealthConnect Team
+    `,
   };
 
   transporter.sendMail(reminderMail, function (err, info) {
