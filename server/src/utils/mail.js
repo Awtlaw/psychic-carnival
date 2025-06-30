@@ -15,7 +15,7 @@ const transporter = createTransport(options);
 
 export function sendBookingMail(mail, name, date, period, reason) {
   const bookingMail = {
-    from: process.env.SMTP_USER,
+    from: `HealthConnect Team <${process.env.SMTP_USER}>`,
     to: mail,
     subject: 'Your Appointment Has Been Scheduled - HealthConnect',
     text: `
@@ -43,7 +43,7 @@ export function sendBookingMail(mail, name, date, period, reason) {
 
 export function sendReminderMail(mail, name, date, period, reason) {
   const reminderMail = {
-    from: process.env.SMTP_USER,
+    from: `HealthConnect Team <${process.env.SMTP_USER}>`,
     to: mail,
     subject: 'Your Appointment Has Been Scheduled - HealthConnect',
     text: `

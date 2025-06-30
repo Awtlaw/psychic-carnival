@@ -84,8 +84,6 @@ export const sendReminder = asyncHandler(async (req, res) => {
       return nextDay === appointmentDate.toLocaleString().split(',')[0];
     });
 
-    console.log(filteredData);
-
     filteredData.map((appointment) => {
       sendReminderMail(
         appointment.message.recipient,
