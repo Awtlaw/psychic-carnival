@@ -2,6 +2,7 @@ import { appointments } from '../../database/queries.js';
 import asyncHandler from 'express-async-handler';
 import { appointmentValidator } from '../../validators/appointments.js';
 import { validationResult } from 'express-validator';
+import { sendBookingMail } from '../../utils/mail.js';
 
 export const bookNewAppointment = [
   appointmentValidator,
@@ -19,16 +20,33 @@ export const bookNewAppointment = [
       message,
     );
     res.status(201).json(newAppointment);
+    sendBookingMail(
+      message.recipient,
+      message.fullName,
+      message.date,
+      message.period,
+      message.reason,
+    );
   }),
 ];
 
 export const getPendingAppointments = asyncHandler(async (req, res) => {
   const pendingAppointments = await appointments.findPendingAppointments();
+  if (pendingAppointments.length < 1)
+    return res.status(404).json({
+      status: 'error',
+      message: 'No pending appointment found',
+    });
   res.json([...pendingAppointments]);
 });
 
 export const getFulfilledAppointments = asyncHandler(async (req, res) => {
   const fulfilledAppointments = await appointments.findFulfilledAppointments();
+  if (fulfillAppointment.length < 1)
+    return res.status(404).json({
+      status: 'error',
+      message: 'No fulfilled appointment found',
+    });
   res.json([...fulfilledAppointments]);
 });
 

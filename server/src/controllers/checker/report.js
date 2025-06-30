@@ -13,8 +13,12 @@ export const createNewReport = [
         .json({ status: 'Validation Error', error: validationErrors.array() });
     if (req.body === undefined)
       return res.status(400).json({ status: 'error', message: 'Bad Request' });
-    const { patientId, doctorId, diagnois } = req.body;
-    const newReport = await reports.createReport(patientId, doctorId, diagnois);
+    const { patientId, doctorId, diagnosis } = req.body;
+    const newReport = await reports.createReport(
+      patientId,
+      doctorId,
+      diagnosis,
+    );
     res.status(201).json(newReport);
   }),
 ];
@@ -33,5 +37,9 @@ export const getReport = asyncHandler(async (req, res) => {
   if (!id)
     return res.status(400).json({ status: 'error', message: 'Bad Request' });
   const patient = await reports.getReportById(id);
+  if (!patient)
+    return res
+      .status(404)
+      .json({ status: 'error', message: 'No record found!' });
   res.json(patient);
 });

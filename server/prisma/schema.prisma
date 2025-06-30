@@ -57,8 +57,8 @@ model Doctor {
 }
 
 model Patient {
-  id          Int          @id @default(autoincrement())
-  email       String       @unique
+  id          Int           @id @default(autoincrement())
+  email       String        @unique
   phone       String
   fname       String
   lname       String
@@ -67,10 +67,10 @@ model Patient {
   proxy       Json
   address     String
   pwd         String
-  role        Role         @default(PATIENT)
-  joinedAt    DateTime     @default(now())
+  role        Role          @default(PATIENT)
+  joinedAt    DateTime      @default(now())
   Report      Report?
-  Appointment Appointment?
+  Appointment Appointment[]
 }
 
 model Report {
@@ -86,9 +86,9 @@ model Report {
 model Appointment {
   id        Int               @id @default(autoincrement())
   patient   Patient           @relation(fields: [patientId], references: [id])
-  patientId Int               @unique
+  patientId Int
   status    AppointmentStatus @default(PENDING)
-  message   String
+  message   Json?
   createdAt DateTime          @default(now())
   updatedAt DateTime          @updatedAt
   Doctor    Doctor[]
