@@ -4,14 +4,18 @@ import express from 'express';
 import { users } from './routes/users.js';
 import { appointments } from './routes/appointments.js';
 import { reports } from './routes/reports.js';
+import cors from 'cors';
 
 const app = express();
 const port = process.env.PORT;
+const whitelist = '*';
+const corsOptions = { origin: whitelist };
 
 app.use(express.json());
+app.use(cors(corsOptions));
 
 app.get('/', (req, res) => {
-  res.json({ message: 'Hello, World!' });
+  res.json({ message: 'HealthConnect' });
 });
 app.use('/user', users);
 app.use('/report', reports);
