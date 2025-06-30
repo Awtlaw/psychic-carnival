@@ -1,7 +1,7 @@
 import { hash, genSalt } from 'bcryptjs';
 import { doctors } from '../../database/queries.js';
 import asyncHandler from 'express-async-handler';
-import { doctorValidator } from '../../middlewares/validators/users.js';
+import { doctorValidator } from '../../validators/users.js';
 import { validationResult } from 'express-validator';
 
 export const addNewDoctor = [

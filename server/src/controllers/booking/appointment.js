@@ -1,6 +1,6 @@
 import { appointments } from '../../database/queries.js';
 import asyncHandler from 'express-async-handler';
-import { appointmentValidator } from '../../middlewares/validators/appointments.js';
+import { appointmentValidator } from '../../validators/appointments.js';
 import { validationResult } from 'express-validator';
 
 export const bookNewAppointment = [

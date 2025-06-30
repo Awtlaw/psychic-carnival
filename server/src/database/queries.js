@@ -80,7 +80,6 @@ export const doctors = {
 
 export const patients = {
   createPatient: async (...params) => {
-    console.log(params);
     const newPatient = await prisma.patient.create({
       data: {
         email: params[0],
@@ -90,8 +89,8 @@ export const patients = {
         pwd: params[4],
         dob: params[5],
         sex: params[6],
-        proxy: params[7],
-        address: params[8],
+        proxy: params[8],
+        address: params[7],
       },
     });
     return newPatient;

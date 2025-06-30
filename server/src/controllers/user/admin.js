@@ -1,7 +1,7 @@
 import { hash, genSalt } from 'bcryptjs';
 import { admins } from '../../database/queries.js';
 import asyncHandler from 'express-async-handler';
-import { adminValidator } from '../../middlewares/validators/users.js';
+import { adminValidator } from '../../validators/users.js';
 import { validationResult } from 'express-validator';
 
 export const addNewAdmin = [

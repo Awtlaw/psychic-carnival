@@ -10,6 +10,8 @@ import {
   getPatient,
   getPatients,
 } from '../controllers/user/patient.js';
+import expressAsyncHandler from 'express-async-handler';
+import { authenticateUser } from '../middlewares/login.js';
 
 export const users = Router();
 
@@ -17,6 +19,9 @@ export const users = Router();
 users.post('/register/admin', addNewAdmin);
 users.post('/register/doctor', addNewDoctor);
 users.post('/register/patient', addNewPatient);
+
+// login
+users.post('/login', expressAsyncHandler(authenticateUser));
 
 // users
 users.get('/admin', getAdmins);

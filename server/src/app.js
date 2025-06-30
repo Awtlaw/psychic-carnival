@@ -1,4 +1,5 @@
 import 'dotenv/config';
+import './auth/auth.js';
 import express from 'express';
 import { users } from './routes/users.js';
 import { appointments } from './routes/appointments.js';
