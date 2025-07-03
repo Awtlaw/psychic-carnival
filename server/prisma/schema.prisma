@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
   output   = "../node_modules/.prisma/client"
@@ -43,53 +37,50 @@ model Admin {
 }
 
 model Doctor {
-  id            Int          @id @default(autoincrement())
-  email         String       @unique
-  phone         String
-  fname         String
-  lname         String
-  pwd           String
-  role          Role         @default(DOCTOR)
-  joinedAt      DateTime     @default(now())
-  Report        Report?
-  Appointment   Appointment? @relation(fields: [appointmentId], references: [id])
-  appointmentId Int?
+  id       Int      @id @default(autoincrement())
+  email    String   @unique
+  phone    String
+  fname    String
+  lname    String
+  pwd      String
+  role     Role     @default(DOCTOR)
+  joinedAt DateTime @default(now())
+  reports  Report[] @relation("DoctorReports")
 }
 
 model Patient {
-  id          Int           @id @default(autoincrement())
-  email       String        @unique
-  phone       String
-  fname       String
-  lname       String
-  dob         DateTime
-  sex         Sex
-  proxy       Json
-  address     String
-  pwd         String
-  role        Role          @default(PATIENT)
-  joinedAt    DateTime      @default(now())
-  Report      Report?
-  Appointment Appointment[]
+  id           Int           @id @default(autoincrement())
+  email        String        @unique
+  phone        String
+  fname        String
+  lname        String
+  dob          DateTime
+  sex          Sex
+  proxy        Json
+  address      String
+  pwd          String
+  role         Role          @default(PATIENT)
+  joinedAt     DateTime      @default(now())
+  appointments Appointment[]
+  reports      Report[]      @relation("PatientReports")
 }
 
 model Report {
   id        Int      @id @default(autoincrement())
-  patient   Patient  @relation(fields: [patientId], references: [id])
-  patientId Int      @unique
-  doctor    Doctor   @relation(fields: [doctorId], references: [id])
-  doctorId  Int      @unique
   diagnosis String
   createdAt DateTime @default(now())
+  patient   Patient  @relation("PatientReports", fields: [patientId], references: [id])
+  patientId Int
+  doctor    Doctor   @relation("DoctorReports", fields: [doctorId], references: [id])
+  doctorId  Int
 }
 
 model Appointment {
   id        Int               @id @default(autoincrement())
-  patient   Patient           @relation(fields: [patientId], references: [id])
-  patientId Int
   status    AppointmentStatus @default(PENDING)
   message   Json?
   createdAt DateTime          @default(now())
   updatedAt DateTime          @updatedAt
-  Doctor    Doctor[]
+  patient   Patient           @relation(fields: [patientId], references: [id])
+  patientId Int
 }
