@@ -19,7 +19,7 @@ export const adminValidator = [
     .notEmpty()
     .matches(/^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9])[A-Za-z\d\W_]{8,}$/)
     .withMessage(
-      'Must contain an uppercase letter,a lowercase letter,a number and a special character',
+      'Must contain an uppercase letter, a lowercase letter,a number and a special character',
     ),
 ];
 
