@@ -1,10 +1,11 @@
 import 'dotenv/config';
-import { appointments } from '../../database/queries.js';
+import { appointments, patients } from '../../database/queries.js';
 import asyncHandler from 'express-async-handler';
 import { appointmentValidator } from '../../validators/appointments.js';
 import { validationResult } from 'express-validator';
 import { sendBookingMail, sendReminderMail } from '../../utils/mail.js';
 import axios from 'axios';
+import { calculateAge } from '../../utils/extras.js';
 
 export const bookNewAppointment = [
   appointmentValidator,
@@ -21,10 +22,24 @@ export const bookNewAppointment = [
       return res.status(400).json({ message: 'Bad Request', success: false });
 
     const { patientId, message } = req.body;
+
+    const patient = await patients.getPatientById(patientId);
+    const suspicion = `${calculateAge(patient.dob)}, ${patient.sex}, ${message.reason}`;
+
+    const { data } = await axios.post(
+      `${process.env.APP_BASE}/report/`,
+      { patientId, diagnosis: suspicion },
+      { headers: { 'Content-Type': 'application/json' } },
+    );
+
     const newAppointment = await appointments.bookAppointment(
       patientId,
       message,
     );
+
+    newAppointment.symptomCheckerResults = JSON.parse(
+      data.data.diagnosis,
+    ).data.response;
 
     res.status(201).json({
       message: 'Appointment created',

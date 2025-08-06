@@ -15,7 +15,7 @@ export const createNewReport = [
         error: validationErrors.array(),
       });
 
-    const { patientId, doctorId, diagnosis } = req.body;
+    const { patientId, diagnosis } = req.body;
     const { data } = await axios.post(
       `${process.env.APP_BASE}/report/diagnosis`,
       { query: diagnosis },
@@ -24,7 +24,6 @@ export const createNewReport = [
 
     const newReport = await reports.createReport(
       patientId,
-      doctorId,
       JSON.stringify(data),
     );
     res.status(201).json({

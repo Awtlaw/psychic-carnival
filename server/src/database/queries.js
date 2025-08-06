@@ -204,11 +204,10 @@ export const appointments = {
 };
 
 export const reports = {
-  createReport: async (patientId, doctorId, diagnosis) => {
+  createReport: async (patientId, diagnosis) => {
     const newReport = await prisma.report.create({
       data: {
         patientId,
-        doctorId,
         diagnosis,
       },
     });

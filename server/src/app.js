@@ -27,7 +27,7 @@ app.get('/', (req, res) => {
   res.json({ message: 'HealthConnect', success: true });
 });
 app.use('/user', users);
-app.use('/report', ProtectRoute, reports);
+app.use('/report', reports);
 app.use('/appointment', ProtectRoute, appointments);
 
 // error handler
