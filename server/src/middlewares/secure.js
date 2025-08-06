@@ -4,17 +4,15 @@ export function ProtectRoute(req, res, next) {
   const authorizationHeader = req.headers.authorization;
   if (authorizationHeader === undefined)
     return res.status(401).json({
-      status: 'error',
-      message: 'Unauthorized',
+      success: false,
+      message: 'Unauthorized request',
     });
   const token = authorizationHeader.split(' ')[1];
   const secret = process.env.JWT_SECRET;
   jwt.verify(token, secret, (err, payload) => {
     req.user = payload;
     if (err)
-      return res
-        .status(401)
-        .json({ status: 'error', message: 'Could not verify JWT' });
+      return res.status(401).json({ success: false, message: err.message });
   });
   next();
 }
