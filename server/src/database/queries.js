@@ -45,9 +45,7 @@ export const admins = {
       where: {
         email,
       },
-      omit: {
-        pwd: true,
-      },
+      omit: {},
     });
     return admin;
   },
@@ -96,9 +94,7 @@ export const doctors = {
       where: {
         email,
       },
-      omit: {
-        pwd: true,
-      },
+      omit: {},
     });
     return doctor;
   },
@@ -151,9 +147,7 @@ export const patients = {
       where: {
         email,
       },
-      omit: {
-        pwd: true,
-      },
+      omit: {},
     });
     return patient;
   },

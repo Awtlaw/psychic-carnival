@@ -8,6 +8,7 @@ import { reports } from './routes/reports.js';
 import cors from 'cors';
 import path from 'node:path';
 import { fileURLToPath } from 'url';
+import { ProtectRoute } from './middlewares/secure.js';
 
 const app = express();
 const port = process.env.PORT;
@@ -26,8 +27,8 @@ app.get('/', (req, res) => {
   res.json({ message: 'HealthConnect', success: true });
 });
 app.use('/user', users);
-app.use('/report', reports);
-app.use('/appointment', appointments);
+app.use('/report', ProtectRoute, reports);
+app.use('/appointment', ProtectRoute, appointments);
 
 // error handler
 // eslint-disable-next-line no-unused-vars
