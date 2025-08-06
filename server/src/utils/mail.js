@@ -66,6 +66,6 @@ export function sendReminderMail(mail, name, date, period, reason) {
 
   transporter.sendMail(reminderMail, function (err, info) {
     if (err) console.log(err);
-    console.log('Message sent:', info.messageId);
+    console.log('Message sent:', info?.messageId);
   });
 }

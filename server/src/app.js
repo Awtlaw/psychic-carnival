@@ -8,7 +8,6 @@ import { reports } from './routes/reports.js';
 import cors from 'cors';
 import path from 'node:path';
 import { fileURLToPath } from 'url';
-import { ProtectRoute } from './middlewares/secure.js';
 
 const app = express();
 const port = process.env.PORT;
@@ -28,7 +27,7 @@ app.get('/', (req, res) => {
 });
 app.use('/user', users);
 app.use('/report', reports);
-app.use('/appointment', ProtectRoute, appointments);
+app.use('/appointment', appointments);
 
 // error handler
 // eslint-disable-next-line no-unused-vars
