@@ -8,6 +8,7 @@ import { reports } from './routes/reports.js';
 import cors from 'cors';
 import path from 'node:path';
 import { fileURLToPath } from 'url';
+
 const app = express();
 const port = process.env.PORT;
 const whitelist = '*';
@@ -22,11 +23,20 @@ app.use(express.json());
 app.use(cors(corsOptions));
 
 app.get('/', (req, res) => {
-  res.json({ message: 'HealthConnect' });
+  res.json({ message: 'HealthConnect', success: true });
 });
 app.use('/user', users);
 app.use('/report', reports);
 app.use('/appointment', appointments);
+
+// error handler
+// eslint-disable-next-line no-unused-vars
+app.use((err, req, res, next) => {
+  res.status(500).json({
+    success: false,
+    message: err.message,
+  });
+});
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
