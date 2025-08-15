@@ -1,0 +1,86 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+nav {
+    background-color: #FFFFFF;
+    padding: 10px 20px;
+}
+/* Navbar flex layout */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: auto;
+    top:0;
+    z-index: 100;
+}
+.baseline {
+    border-bottom: 1px solid #F2F2F2;
+}
+    
+  /* Logo */
+  .logo {
+      color: gray;
+      font-size: 1.5rem;
+      font-weight: bold;
+      text-decoration: none;
+  }
+         /* Nav links */
+         .nav-links {
+             display: flex;
+             gap: 20px;
+         }
+    
+         .nav-links a {
+             color: gray;
+             text-decoration: none;
+             font-size: 1rem;
+             transition: color 0.3s ease;
+         }
+    
+         .nav-links a:hover {
+             color: #086972;
+         }
+                         /* Hamburger menu */
+                         .menu-btn {
+                             display: none;
+                             flex-direction: column;
+                             cursor: pointer;
+                             gap: 5px;
+                         }
+            
+                         .menu-btn span {
+                             background: red;
+                             height: 3px;
+                             width: 25px;
+                             border-radius: 2px;
+                         }
+            
+                         /* Responsive styles */
+                         @media (max-width: 768px) {
+                             .nav-links {
+                                 display: none;
+                                 flex-direction: column;
+                                 width: 100%;
+                                 background: #444;
+                                 margin-top: 10px;
+                                 padding: 10px 0;
+                             }
+            
+                             .nav-links.show {
+                                 display: flex;
+                             }
+            
+                             .menu-btn {
+                                 display: flex;
+                             }
+                                                          .username {
+                                                              margin-left: 0;
+                                                              margin-top: 10px;
+                                                          }
+                            }
