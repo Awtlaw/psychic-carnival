@@ -8,40 +8,43 @@
         height: 100vh;
         margin: 0;
         padding: 0;
-        font-family: Arial, sans-serif;
+        overflow: hidden;
+        /* font-family: Arial, sans-serif; */
     }
 
     .main-body {
-        width: 80%;
+        /* width: 80%; */
         /* same as 4/5 of content area */
-        max-width: 900px;
+        /* max-width: 900px; */
         /* keep the max width */
         min-height: 80vh;
         /* ensures main content takes almost full viewport height */
-        margin-top: 20px;
+        margin-top: 40px;
+        height: 100vh;
         background: white;
         padding: 2rem;
-        border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        overflow-y: auto;
+        /* border-radius: 8px; */
+        /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); */
     }
 
     .note {
-        background: #f2f7f8;
-        border-left: 4px solid #086972;
+        /* background: #f2f7f8; */
+        /* border-left: 4px solid #086972; */
         padding: 1rem;
         margin-bottom: 1.5rem;
-        font-size: 0.95rem;
-        color: #444;
+        /* font-size: 0.95rem; */
+        /* color: #444; */
     }
 
     .note.small {
         margin-top: 2rem;
-        font-size: 0.85rem;
+        /* font-size: 0.85rem; */
     }
 
     .input-instruction {
         margin-bottom: 1rem;
-        font-weight: bold;
+        /* font-weight: bold; */
     }
 
     .examples {
@@ -53,7 +56,7 @@
     }
 
     .example-title {
-        font-weight: lighter;
+        /* font-weight: lighter; */
         margin-bottom: 0.5rem;
         gap: 15px;
 
@@ -91,7 +94,7 @@
 
     .input-header {
         margin: 1rem 0 0.5rem;
-        font-weight: bold;
+        /* font-weight: bold; */
     }
 
     .input-box {
@@ -116,7 +119,7 @@
         border: none;
         border-radius: 5px;
         cursor: pointer;
-        font-size: 0.95rem;
+        /* font-size: 0.95rem; */
         transition: background 0.3s;
     }
 

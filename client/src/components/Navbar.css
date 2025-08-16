@@ -7,6 +7,9 @@
 nav {
     background-color: #FFFFFF;
     padding: 10px 20px;
+    width: 100%;
+    position: fixed;
+    top:0;
 }
 /* Navbar flex layout */
 .navbar {
@@ -20,7 +23,7 @@ nav {
     z-index: 100;
 }
 .baseline {
-    border-bottom: 1px solid #F2F2F2;
+    border-bottom: 1px solid black;
 }
     
   /* Logo */

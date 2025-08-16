@@ -9,7 +9,7 @@ export function Navbar() {
   }
   return (
     <div className='baseline'>
-      <nav>
+      <nav style={{ borderBottom: '2px solid #F2F2F2' }}>
         <div className='navbar'>
           <a href='#' className='logo'>
             HealthConnect

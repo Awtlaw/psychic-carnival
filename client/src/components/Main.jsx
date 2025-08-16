@@ -9,7 +9,7 @@ export function Main() {
       <div className='text-area'>
         <div className='note'>
           <p>
-            Welcome to BeyondHealth AI! Our platform utilizes diagnostic one-liners to provide accurate healthcare solutions. We analyze
+            Welcome to HealthConnect AI! Our platform utilizes diagnostic one-liners to provide accurate healthcare solutions. We analyze
             relevant demographics, history, symptoms, and test results to generate precise recommendations. Please avoid abbreviations.
             Clinical AI, our experimental feature, uses advanced AI to draft differential diagnoses or clinical plans. Remember, AI output
             should be interpreted carefully and never replace professional judgment.
@@ -58,7 +58,7 @@ export function Main() {
 
       <div className='note small'>
         <p>
-          Note: BeyondHealth AI is an advanced tool under development for healthcare professionals and medical researchers. It is not
+          Note: HealthConnect AI is an advanced tool under development for healthcare professionals and medical researchers. It is not
           intended for general use or to provide medical advice. Its purpose is to assist trained professionals in generating accurate
           diagnoses, treatment plans, and conducting medical research.
         </p>
