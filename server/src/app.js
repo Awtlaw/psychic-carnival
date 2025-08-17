@@ -25,9 +25,9 @@ app.use(cors(corsOptions));
 app.get('/', (req, res) => {
   res.json({ message: 'HealthConnect', success: true });
 });
-app.use('/user', users);
-app.use('/report', reports);
-app.use('/appointment', appointments);
+app.use('/api/user', users);
+app.use('/api/report', reports);
+app.use('/api/appointment', appointments);
 
 // error handler
 // eslint-disable-next-line no-unused-vars
