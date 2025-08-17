@@ -12,6 +12,7 @@ import {
 } from '../controllers/user/patient.js';
 import expressAsyncHandler from 'express-async-handler';
 import { authenticateUser } from '../middlewares/login.js';
+import { ProtectRoute } from '../middlewares/secure.js';
 
 export const users = Router();
 
@@ -24,11 +25,11 @@ users.post('/register/patient', addNewPatient);
 users.post('/login', expressAsyncHandler(authenticateUser));
 
 // users
-users.get('/admin', getAdmins);
-users.get('/admin/:id', getAdmin);
+users.get('/admin', ProtectRoute, getAdmins);
+users.get('/admin/:id', ProtectRoute, getAdmin);
 
-users.get('/doctor', getDoctors);
-users.get('/doctor/:id', getDoctor);
+users.get('/doctor', ProtectRoute, getDoctors);
+users.get('/doctor/:id', ProtectRoute, getDoctor);
 
-users.get('/patient', getPatients);
-users.get('/patient/:id', getPatient);
+users.get('/patient', ProtectRoute, getPatients);
+users.get('/patient/:id', ProtectRoute, getPatient);

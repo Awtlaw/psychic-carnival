@@ -7,9 +7,7 @@ export const authenticateUser = function (req, res, next) {
     try {
       if (err) {
         console.error('Passport error:', err);
-        return res
-          .status(500)
-          .json({ success: false, message: 'Internal server error' });
+        return res.status(500).json({ success: false, message: err.message });
       }
       if (!user) {
         console.warn('Login failed:', info?.message);

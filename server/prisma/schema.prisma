@@ -45,7 +45,6 @@ model Doctor {
   pwd      String
   role     Role     @default(DOCTOR)
   joinedAt DateTime @default(now())
-  reports  Report[] @relation("DoctorReports")
 }
 
 model Patient {
@@ -71,8 +70,6 @@ model Report {
   createdAt DateTime @default(now())
   patient   Patient  @relation("PatientReports", fields: [patientId], references: [id])
   patientId Int
-  doctor    Doctor   @relation("DoctorReports", fields: [doctorId], references: [id])
-  doctorId  Int
 }
 
 model Appointment {

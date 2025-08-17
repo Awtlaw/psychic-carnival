@@ -9,11 +9,12 @@ export const addNewDoctor = [
   asyncHandler(async (req, res) => {
     const validationErrors = validationResult(req);
     if (!validationErrors.isEmpty())
-      return res
-        .status(400)
-        .json({ status: 'Validation Error', error: validationErrors.array() });
-    if (req.body === undefined)
-      return res.status(400).json({ status: 'error', message: 'Bad Request' });
+      return res.status(400).json({
+        message: 'Validation error',
+        success: false,
+        error: validationErrors.array(),
+      });
+
     const { email, phone, firstName, lastName, password } = req.body;
     const salt = await genSalt(10);
     const hashPwd = await hash(password, salt);
@@ -24,7 +25,9 @@ export const addNewDoctor = [
       lastName,
       hashPwd,
     );
-    res.status(201).json(newDoctor);
+    res
+      .status(201)
+      .json({ message: 'Created user', success: true, data: newDoctor });
   }),
 ];
 
@@ -33,13 +36,20 @@ export const getDoctors = asyncHandler(async (req, res) => {
   if (allDoctors.length === 0)
     return res
       .status(404)
-      .json({ status: 'error', message: 'No patient found!' });
-  res.json([...allDoctors]);
+      .json({ message: 'No patient found!', success: false });
+
+  res.json({
+    message: 'Retrieved users',
+    success: true,
+    data: [...allDoctors],
+  });
 });
+
 export const getDoctor = asyncHandler(async (req, res) => {
   const { id } = req.params;
   if (!id)
-    return res.status(400).json({ status: 'error', message: 'Bad Request' });
+    return res.status(400).json({ message: 'Bad Request', succes: false });
+
   const doctor = await doctors.getDoctorById(id);
-  res.json(doctor);
+  res.json({ message: 'Retrieved user', sucess: true, data: doctor });
 });

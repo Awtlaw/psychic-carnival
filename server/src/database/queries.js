@@ -12,12 +12,19 @@ export const admins = {
         lname,
         pwd,
       },
+      omit: {
+        pwd: true,
+      },
     });
     return newAdmin;
   },
 
   getAllAdmins: async () => {
-    const admins = await prisma.admin.findMany();
+    const admins = await prisma.admin.findMany({
+      omit: {
+        pwd: true,
+      },
+    });
     return admins;
   },
 
@@ -25,6 +32,9 @@ export const admins = {
     const admin = await prisma.admin.findUnique({
       where: {
         id: +id,
+      },
+      omit: {
+        pwd: true,
       },
     });
     return admin;
@@ -35,6 +45,7 @@ export const admins = {
       where: {
         email,
       },
+      omit: {},
     });
     return admin;
   },
@@ -50,12 +61,19 @@ export const doctors = {
         lname,
         pwd,
       },
+      omit: {
+        pwd: true,
+      },
     });
     return newDoctor;
   },
 
   getAllDoctors: async () => {
-    const doctors = await prisma.doctor.findMany();
+    const doctors = await prisma.doctor.findMany({
+      omit: {
+        pwd: true,
+      },
+    });
     return doctors;
   },
 
@@ -63,6 +81,9 @@ export const doctors = {
     const doctor = await prisma.doctor.findUnique({
       where: {
         id: +id,
+      },
+      omit: {
+        pwd: true,
       },
     });
     return doctor;
@@ -73,6 +94,7 @@ export const doctors = {
       where: {
         email,
       },
+      omit: {},
     });
     return doctor;
   },
@@ -92,12 +114,19 @@ export const patients = {
         proxy: params[8],
         address: params[7],
       },
+      omit: {
+        pwd: true,
+      },
     });
     return newPatient;
   },
 
   getAllPatients: async () => {
-    const patients = await prisma.patient.findMany();
+    const patients = await prisma.patient.findMany({
+      omit: {
+        pwd: true,
+      },
+    });
     return patients;
   },
 
@@ -105,6 +134,9 @@ export const patients = {
     const patient = await prisma.patient.findUnique({
       where: {
         id: +id,
+      },
+      omit: {
+        pwd: true,
       },
     });
     return patient;
@@ -115,6 +147,7 @@ export const patients = {
       where: {
         email,
       },
+      omit: {},
     });
     return patient;
   },
@@ -171,11 +204,10 @@ export const appointments = {
 };
 
 export const reports = {
-  createReport: async (patientId, doctorId, diagnosis) => {
+  createReport: async (patientId, diagnosis) => {
     const newReport = await prisma.report.create({
       data: {
         patientId,
-        doctorId,
         diagnosis,
       },
     });

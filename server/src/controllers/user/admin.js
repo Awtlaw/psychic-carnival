@@ -9,12 +9,14 @@ export const addNewAdmin = [
   asyncHandler(async (req, res) => {
     const validationErrors = validationResult(req);
     if (!validationErrors.isEmpty())
-      return res
-        .status(400)
-        .json({ status: 'Validation Error', error: validationErrors.array() });
+      return res.status(400).json({
+        message: 'Validation error',
+        success: false,
+        error: validationErrors.array(),
+      });
+
     const { email, phone, firstName, lastName, password } = req.body;
-    if (req.body === undefined)
-      return res.status(400).json({ status: 'error', message: 'Bad Request' });
+
     const salt = await genSalt(10);
     const hashPwd = await hash(password, salt);
     const newAdmin = await admins.createAdmin(
@@ -24,23 +26,25 @@ export const addNewAdmin = [
       lastName,
       hashPwd,
     );
-    res.status(201).json(newAdmin);
+    res
+      .status(201)
+      .json({ message: 'Created user', success: true, data: newAdmin });
   }),
 ];
 
 export const getAdmins = asyncHandler(async (req, res) => {
   const allAdmins = await admins.getAllAdmins();
   if (allAdmins.length === 0)
-    return res
-      .status(404)
-      .json({ status: 'error', message: 'No admin found!' });
-  res.json([...allAdmins]);
+    return res.status(404).json({ message: 'No admin found!', success: false });
+
+  res.json({ message: 'Retrieved users', success: true, data: [...allAdmins] });
 });
 
 export const getAdmin = asyncHandler(async (req, res) => {
   const { id } = req.params;
   if (!id)
-    return res.status(400).json({ status: 'error', message: 'Bad Request' });
+    return res.status(400).json({ message: 'Bad Request', success: false });
+
   const admin = await admins.getAdminById(id);
-  res.json(admin);
+  res.json({ message: 'Retrieved user', success: true, data: admin });
 });
