@@ -29,12 +29,9 @@
     }
 
     .note {
-        /* background: #f2f7f8; */
-        /* border-left: 4px solid #086972; */
         padding: 1rem;
         margin-bottom: 1.5rem;
-        /* font-size: 0.95rem; */
-        /* color: #444; */
+     
     }
 
     .note.small {
@@ -59,6 +56,7 @@
         /* font-weight: lighter; */
         margin-bottom: 0.5rem;
         gap: 15px;
+        padding-top: 25px;
 
 
     }
@@ -68,13 +66,15 @@
         flex-wrap: wrap;
         gap: 15px;
         align-items: stretch;
+        padding-top: 15px;
 
     }
 
     .example-item {
         flex: 1;
         /* Equal width per row */
-        min-width: 150px;
+        width: 200px;
+        height: 45px;
         display: flex;
         /* For vertical centering */
         justify-content: center;
