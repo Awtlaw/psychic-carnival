@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "public"."Patient" ALTER COLUMN "dob" SET DATA TYPE TEXT,
+ALTER COLUMN "proxy" SET DATA TYPE TEXT;
