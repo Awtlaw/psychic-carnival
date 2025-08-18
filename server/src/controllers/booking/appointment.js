@@ -27,7 +27,7 @@ export const bookNewAppointment = [
     const suspicion = `${calculateAge(patient.dob)}, ${patient.sex}, ${message.reason}`;
 
     const { data } = await axios.post(
-      `${process.env.APP_BASE}/report/`,
+      `${process.env.APP_BASE}/api/report/`,
       { patientId, diagnosis: suspicion },
       { headers: { 'Content-Type': 'application/json' } },
     );

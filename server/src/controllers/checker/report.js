@@ -17,7 +17,7 @@ export const createNewReport = [
 
     const { patientId, diagnosis } = req.body;
     const { data } = await axios.post(
-      `${process.env.APP_BASE}/report/diagnosis`,
+      `${process.env.APP_BASE}/api/report/diagnosis`,
       { query: diagnosis },
       { headers: { 'Content-Type': 'application/json' } },
     );
