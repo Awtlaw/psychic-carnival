@@ -55,7 +55,7 @@ model Patient {
   lname        String
   dob          String
   sex          Sex
-  proxy        String
+  proxy        String?
   address      String
   pwd          String
   role         Role          @default(PATIENT)
