@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { format } from 'date-fns'
 import { signupPatient } from '../../apis'
 import './patientSignUp.css'
 export function PatientSignUp() {
@@ -25,7 +26,7 @@ export function PatientSignUp() {
     e.preventDefault()
     let res
     try {
-      res = await signupPatient(patientForm)
+      res = await signupPatient({ ...patientForm, dob: format(patientForm.dob, 'MM/dd/yyyy') })
       if (res.success) {
         alert(res.message)
       } else {
