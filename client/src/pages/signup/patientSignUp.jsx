@@ -13,7 +13,7 @@ export function PatientSignUp() {
     dob: '',
     sex: 'M',
     address: '',
-    proxy: {}
+    proxy: null
   }
   const [patientForm, setPatientForm] = useState(init)
 
