@@ -1,9 +1,34 @@
+import { checkSymptoms } from '../apis'
+import { useEffect, useState } from 'react'
 import './main.css'
+
 export function Main() {
-  const generateResults = () => {
-    // Placeholder for the function that generates results
-    console.log('Generating results...')
+  const [prediction, setPrediction] = useState({})
+  const [symptoms, setSymptoms] = useState('')
+
+  const handleSymptomChange = (e) => {
+    setSymptoms(e.target.value)
   }
+
+  const generateResults = async (e) => {
+    e.preventDefault()
+    try {
+      let { data: res } = await checkSymptoms({ query: symptoms })
+      if (res.success) {
+        alert('Symptoms analysis completed successfully!')
+        setPrediction(res) // res is already the data you need
+      } else {
+        alert('Analysis failed. Please try again.')
+      }
+    } catch (error) {
+      alert(error.message || 'An error occurred')
+    }
+  }
+
+  useEffect(() => {
+    console.log(symptoms)
+  }, [symptoms])
+
   return (
     <div className='main-body'>
       <div className='text-area'>
@@ -15,11 +40,9 @@ export function Main() {
             should be interpreted carefully and never replace professional judgment.
           </p>
         </div>
-
         <div className='input-instruction'>
           <p>Enter a clinical problem representation below to generate either a DDx or clinical plan.</p>
         </div>
-
         <div className='examples'>
           <p className='example-title'>Try an example:</p>
           <div className='example-list'>
@@ -29,33 +52,94 @@ export function Main() {
             <div className='example-item'>ACS Clinical plan</div>
           </div>
         </div>
-
         <div className='input-header'>
           <p>Main complaint</p>
         </div>
-        <textarea className='input-box' id='myInput' placeholder='Type here'></textarea>
-
-        <div className='buttons'>
-          <button className='btn btn-primary'>Differential diagnosis</button>
-          <button className='btn btn-outline'>Clinical plan</button>
-          <button className='btn btn-accent' onClick={generateResults()}>
-            Generate 🤖
-          </button>
-        </div>
-
-        <div className='output-container'>
-          <p id='myOutput'></p>
-          <div className='buttons-sec'>
-            <button className='btn btn-primary' id='downloadPdf' style={{ display: 'none' }}>
-              Download PDF
+        <form onSubmit={generateResults}>
+          <textarea
+            className='input-box'
+            id='myInput'
+            placeholder='Type here'
+            name='symptoms'
+            value={symptoms}
+            onChange={handleSymptomChange}
+          ></textarea>
+          <div className='buttons'>
+            <button className='btn btn-primary' type='submit'>
+              Differential diagnosis
             </button>
-            <button className='btn btn-accent' id='copy' style={{ display: 'none' }}>
-              Copy
-            </button>
+            <button className='btn btn-outline'>Clinical plan</button>
+            <button className='btn btn-accent'>Generate 🤖</button>
           </div>
-        </div>
-      </div>
+        </form>
 
+        {/* Fixed: Actually display the prediction data */}
+        {prediction?.response?.possible_conditions && (
+          <div className='output-container'>
+            <div id='myOutput'>
+              <h3>Possible Conditions:</h3>
+              {prediction.response.possible_conditions.map((condition, index) => (
+                <div key={index} style={{ marginBottom: '15px', padding: '10px', border: '1px solid #ccc' }}>
+                  <h4>{condition.name}</h4>
+                  <p>
+                    <strong>Reason:</strong> {condition.reason}
+                  </p>
+                </div>
+              ))}
+
+              {prediction.response.reasoning && (
+                <div style={{ marginTop: '20px' }}>
+                  <h4>Clinical Reasoning:</h4>
+                  <p>{prediction.response.reasoning}</p>
+                </div>
+              )}
+
+              {prediction.response.recommendations && (
+                <div style={{ marginTop: '20px' }}>
+                  <h4>Recommendations:</h4>
+                  <p>
+                    <strong>Immediate Actions:</strong> {prediction.response.recommendations.immediate_actions}
+                  </p>
+                  <p>
+                    <strong>When to Seek Care:</strong> {prediction.response.recommendations.when_to_seek_care}
+                  </p>
+
+                  {prediction.response.recommendations.tests && (
+                    <div>
+                      <strong>Suggested Tests:</strong>
+                      <ul>
+                        {prediction.response.recommendations.tests.map((test, index) => (
+                          <li key={index}>{test}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {prediction.response.red_flags && (
+                <div style={{ marginTop: '20px', color: 'red' }}>
+                  <h4>Red Flags - Seek Immediate Care:</h4>
+                  <ul>
+                    {prediction.response.red_flags.map((flag, index) => (
+                      <li key={index}>{flag}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+
+            <div className='buttons-sec'>
+              <button className='btn btn-primary' id='downloadPdf' style={{ display: 'none' }}>
+                Download PDF
+              </button>
+              <button className='btn btn-accent' id='copy' style={{ display: 'none' }}>
+                Copy
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
       <div className='note small'>
         <p>
           Note: HealthConnect AI is an advanced tool under development for healthcare professionals and medical researchers. It is not
