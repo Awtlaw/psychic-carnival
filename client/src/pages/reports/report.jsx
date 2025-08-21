@@ -8,7 +8,7 @@ export default function Report() {
       <Navbar />
 
       <div className='content'>
-        <Sidebar />
+        {/* <Sidebar /> */}
         <div className='doc-main-content'>
           <Summary />
         </div>

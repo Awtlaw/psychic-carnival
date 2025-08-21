@@ -1,0 +1,109 @@
+
+
+.service-page {
+    line-height: 1.6;
+    background: #f9f9f9;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    heiight: 100%;
+    overflow: auto;
+}
+
+
+.hc-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    background: #0077b6;
+    color: #fff;
+}
+
+.hc-navbar .logo1 {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.hc-navbar .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.hc-navbar .nav-links li a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.hc-navbar .nav-links li a:hover,
+.hc-navbar .nav-links li a.active {
+    color: #ffd166;
+}
+
+
+.hc-services-hero {
+    text-align: center;
+    padding: 60px 20px;
+    background: linear-gradient(to right, #0077b6, #00b4d8);
+    color: white;
+}
+
+.hc-services-hero h1 {
+    font-size: 40px;
+    margin-bottom: 15px;
+}
+
+.hc-services-hero p {
+    font-size: 18px;
+    max-width: 600px;
+    margin: auto;
+}
+
+.hc-services-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
+    padding: 50px;
+}
+
+.service-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+    text-align: center;
+}
+
+.service-card:hover {
+    transform: translateY(-8px);
+}
+
+.service-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.service-card h2 {
+    font-size: 22px;
+    margin: 15px 0;
+    color: #0077b6;
+}
+
+.service-card p {
+    font-size: 15px;
+    padding: 0 15px 20px;
+    color: #555;
+}
+
+.hcs-footer {
+    background: #0077b6;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    margin-top: 135px;
+}

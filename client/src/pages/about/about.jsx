@@ -26,7 +26,7 @@ export function About() {
       </nav>
 
       <header className='about-header'>
-        <h1>
+        <h1 className='hd'>
           About <span>HealthConnect</span>
         </h1>
         <p>Your trusted AI-powered healthcare companion</p>
