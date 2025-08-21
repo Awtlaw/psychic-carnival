@@ -1,0 +1,117 @@
+/* ============================
+   Main Container
+============================ */
+.history-main-container {
+    background: #fff;
+    color: black;
+    font-family: monospace;
+    padding: 4rem 8rem;
+    height: 100vh;
+    flex: 1;
+    overflow-y: auto;
+}
+
+/* ============================
+   Search Section
+============================ */
+.search-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2rem;
+}
+
+.search-container h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+}
+
+.search-box {
+    position: relative;
+    width: 24rem;
+}
+
+.search-box input {
+    width: 100%;
+    border-radius: 1rem;
+    padding: 0.75rem;
+    text-align: center;
+    font-family: monospace;
+    font-weight: 500;
+    color: black;
+    outline: black;
+}
+
+.search-box button {
+    position: absolute;
+    right: 2.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* ============================
+   Section Title
+============================ */
+.section-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 20px 0 10px 0;
+    color: #4D9245;
+}
+
+/* ============================
+   History Form (Replaces Table)
+============================ */
+.history-form {
+    width: 100%;
+    border: 1px solid black;
+    border-collapse: collapse;
+    margin-bottom: 1.5rem;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #fff;
+}
+
+/* Each Row (like tr) */
+.history-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    border-bottom: 1px solid black;
+    min-height: 45px;
+    /* keeps same height as td */
+}
+
+/* Remove border on last row */
+.history-row:last-child {
+    border-bottom: none;
+}
+
+/* Labels (like th) */
+.history-row label {
+    font-weight: bold;
+    color: #4D9245;
+    width: 200px;
+    /* keeps column alignment like table */
+}
+
+/* Values (like td) */
+.history-row span {
+    flex: 1;
+    text-align: left;
+    padding-left: 20px;
+}
+
+.history-row span a {
+    color: black;
+    text-decoration: none;
+}
+
+.history-row span a:hover {
+    color: #4D9245;
+}

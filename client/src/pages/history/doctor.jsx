@@ -1,16 +1,16 @@
-import { Summary } from '../../components/summary'
+import { History } from '../../components/history'
 import { Navbar } from '../../components/Navbar'
 import { Sidebar } from '../../components/sidebar'
 
-export default function Report() {
+export default function Doctor() {
   return (
     <div>
       <Navbar />
 
       <div className='content'>
         <Sidebar />
-        <div className='doc-main-content'>
-          <Summary />
+        <div className='history-main-container'>
+          <History />
         </div>
       </div>
     </div>
