@@ -154,10 +154,11 @@ export const patients = {
 };
 
 export const appointments = {
-  bookAppointment: async (patientId, message) => {
+  bookAppointment: async (patientId, doctorId, message) => {
     const newAppointment = await prisma.appointment.create({
       data: {
         patientId,
+        doctorId,
         message,
       },
     });
@@ -201,13 +202,24 @@ export const appointments = {
     });
     return appointment;
   },
+
+  countAppointmentsPerDoc: async (docId) => {
+    const results = await prisma.appointment.count({
+      where: {
+        status: 'PENDING',
+        doctor: { id: docId },
+      },
+    });
+    return results;
+  },
 };
 
 export const reports = {
-  createReport: async (patientId, diagnosis) => {
+  createReport: async (patientId, doctorId, diagnosis) => {
     const newReport = await prisma.report.create({
       data: {
         patientId,
+        doctorId,
         diagnosis,
       },
     });

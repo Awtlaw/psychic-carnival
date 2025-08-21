@@ -3,6 +3,7 @@ import {
   bookNewAppointment,
   cancelAppointment,
   fulfillAppointment,
+  getAvailableDoc,
   getFulfilledAppointments,
   getPendingAppointments,
   sendReminder,
@@ -13,6 +14,7 @@ export const appointments = Router();
 
 appointments.get('/pending', getPendingAppointments);
 appointments.get('/fulfilled', ProtectRoute, getFulfilledAppointments);
+appointments.get('/assignment', ProtectRoute, getAvailableDoc);
 
 appointments.post('/', ProtectRoute, bookNewAppointment);
 appointments.post('/reminder', sendReminder);

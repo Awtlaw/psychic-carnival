@@ -1,11 +1,12 @@
 import 'dotenv/config';
-import { appointments, patients } from '../../database/queries.js';
 import asyncHandler from 'express-async-handler';
+import { appointments } from '../../database/queries.js';
 import { appointmentValidator } from '../../validators/appointments.js';
 import { validationResult } from 'express-validator';
 import { sendBookingMail, sendReminderMail } from '../../utils/mail.js';
 import axios from 'axios';
-import { calculateAge } from '../../utils/extras.js';
+
+const APP_BASE = process.env.APP_BASE;
 
 export const bookNewAppointment = [
   appointmentValidator,
@@ -21,25 +22,13 @@ export const bookNewAppointment = [
     if (req.body.message === undefined)
       return res.status(400).json({ message: 'Bad Request', success: false });
 
-    const { patientId, message } = req.body;
-
-    const patient = await patients.getPatientById(patientId);
-    const suspicion = `${calculateAge(patient.dob)}, ${patient.sex}, ${message.reason}`;
-
-    const { data } = await axios.post(
-      `${process.env.APP_BASE}/api/report/`,
-      { patientId, diagnosis: suspicion },
-      { headers: { 'Content-Type': 'application/json' } },
-    );
+    const { patientId, doctor, message } = req.body;
 
     const newAppointment = await appointments.bookAppointment(
       patientId,
+      doctor.id,
       message,
     );
-
-    newAppointment.symptomCheckerResults = JSON.parse(
-      data.data.diagnosis,
-    ).data.response;
 
     res.status(201).json({
       message: 'Appointment created',
@@ -53,6 +42,7 @@ export const bookNewAppointment = [
       message.date,
       message.period,
       message.reason,
+      `${doctor.fname} ${doctor.lname}`,
     );
   }),
 ];
@@ -135,5 +125,55 @@ export const sendReminder = asyncHandler(async (req, res) => {
     message: 'Reminder notification sent successfully!',
     success: true,
     data: [...filteredData],
+  });
+});
+
+export const getAvailableDoc = asyncHandler(async (req, res) => {
+  // 1. Fetch the list of doctors
+  const { data } = await axios.get(`${APP_BASE}/api/user/doctor`, {
+    headers: {
+      Authorization: `Bearer ${req.user.tk}`,
+    },
+  });
+  const doctorsList = data.data;
+
+  // 2. Efficiently get the count for each doctor in parallel
+  //    Map to an array of promises that resolve to { doctorId, count }
+  const loadPromises = doctorsList.map(async (doc) => {
+    const load = await appointments.countAppointmentsPerDoc(doc.id);
+    return { doctor: doc, load }; // Attach the full doctor object and its load
+  });
+
+  // 3. Wait for all counts to be resolved (use allSettled for robustness)
+  const loadResults = await Promise.allSettled(loadPromises);
+
+  // 4. Handle results: only use successfully fulfilled promises
+  const doctorsWithLoad = loadResults
+    .filter((result) => result.status === 'fulfilled') // Keep only successful results
+    .map((result) => result.value); // Extract the value { doctor, load }
+
+  // 5. Check if we have any doctors left after filtering out errors
+  if (doctorsWithLoad.length === 0) {
+    return res.status(500).json({
+      message: 'Could not calculate load for any doctors.',
+      success: false,
+    });
+  }
+
+  // 6. Find the minimum load value from the successful results
+  const minLoad = Math.min(...doctorsWithLoad.map((item) => item.load));
+
+  // 7. Find all doctors who have this minimum load (the candidates)
+  const candidates = doctorsWithLoad.filter((item) => item.load === minLoad);
+
+  // 8. Tie-breaking: For your PoC, simply pick the first candidate.
+  const assignedDoctor =
+    candidates[Math.floor(Math.random() * candidates.length)];
+
+  // 9. Respond with the assigned doctor's information
+  res.json({
+    message: 'Doctor assigned successfully',
+    success: true,
+    data: assignedDoctor, // Send back the chosen doctor's details
   });
 });

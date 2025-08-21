@@ -13,7 +13,7 @@ const options = {
 
 const transporter = createTransport(options);
 
-export function sendBookingMail(mail, name, date, period, reason) {
+export function sendBookingMail(mail, name, date, period, reason, doc) {
   const bookingMail = {
     from: `HealthConnect Team <${process.env.SMTP_USER}>`,
     to: mail,
@@ -27,6 +27,7 @@ export function sendBookingMail(mail, name, date, period, reason) {
         🕒 Time: ${period}
         📍 Location: HealthConnect Clinic, 12 Main Street, Accra
         🩺 Reason for Visit: ${reason}
+        👨🏾‍⚕ Assigned Doctor: ${doc}
         
         Please arrive 10 minutes early and bring any relevant medical documents.
       
@@ -41,7 +42,7 @@ export function sendBookingMail(mail, name, date, period, reason) {
   });
 }
 
-export function sendReminderMail(mail, name, date, period, reason) {
+export function sendReminderMail(mail, name, date, period, reason, doc) {
   const reminderMail = {
     from: `HealthConnect Team <${process.env.SMTP_USER}>`,
     to: mail,
@@ -56,6 +57,7 @@ export function sendReminderMail(mail, name, date, period, reason) {
     🕒 Time: ${period}
     📍 Location: HealthConnect Clinic, 12 Main Street, Accra
     🩺 Reason for Visit: ${reason}
+    👨🏾‍⚕ Assigned Doctor: ${doc}
     
     Please arrive 10 minutes early and bring any relevant medical documents.
     
