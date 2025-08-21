@@ -9,11 +9,13 @@ import { Land } from './pages/landingpage/land'
 import { About } from './pages/about/about'
 import { Service } from './pages/service/service'
 import { Contact } from './pages/contact/contact'
+import PageNotFound from './pages/error/page'
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path='*' element={<PageNotFound />} />
         <Route path='/' element={<Land />} />
         <Route path='home' element={<Home />} />
         <Route path='/about' element={<About />} />
