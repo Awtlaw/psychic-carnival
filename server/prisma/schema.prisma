@@ -37,14 +37,16 @@ model Admin {
 }
 
 model Doctor {
-  id       Int      @id @default(autoincrement())
-  email    String   @unique
-  phone    String
-  fname    String
-  lname    String
-  pwd      String
-  role     Role     @default(DOCTOR)
-  joinedAt DateTime @default(now())
+  id          Int           @id @default(autoincrement())
+  email       String        @unique
+  phone       String
+  fname       String
+  lname       String
+  pwd         String
+  role        Role          @default(DOCTOR)
+  joinedAt    DateTime      @default(now())
+  Appointment Appointment[]
+  Report      Report[]
 }
 
 model Patient {
@@ -70,6 +72,8 @@ model Report {
   createdAt DateTime @default(now())
   patient   Patient  @relation("PatientReports", fields: [patientId], references: [id])
   patientId Int
+  doctor    Doctor?  @relation(fields: [doctorId], references: [id])
+  doctorId  Int?
 }
 
 model Appointment {
@@ -80,4 +84,6 @@ model Appointment {
   updatedAt DateTime          @updatedAt
   patient   Patient           @relation(fields: [patientId], references: [id])
   patientId Int
+  doctor    Doctor?           @relation(fields: [doctorId], references: [id])
+  doctorId  Int?
 }

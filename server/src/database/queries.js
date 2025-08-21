@@ -201,6 +201,16 @@ export const appointments = {
     });
     return appointment;
   },
+
+  countAppointmentsPerDoc: async (docId) => {
+    const results = await prisma.appointment.count({
+      where: {
+        status: 'PENDING',
+        doctor: { id: docId },
+      },
+    });
+    return results;
+  },
 };
 
 export const reports = {
