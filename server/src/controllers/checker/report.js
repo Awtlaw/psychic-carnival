@@ -2,7 +2,6 @@ import { reports } from '../../database/queries.js';
 import asyncHandler from 'express-async-handler';
 import { reportValidator } from '../../validators/reports.js';
 import { validationResult } from 'express-validator';
-import axios from 'axios';
 
 export const createNewReport = [
   reportValidator,
@@ -15,15 +14,11 @@ export const createNewReport = [
         error: validationErrors.array(),
       });
 
-    const { patientId, diagnosis } = req.body;
-    const { data } = await axios.post(
-      `${process.env.APP_BASE}/api/report/diagnosis`,
-      { query: diagnosis },
-      { headers: { 'Content-Type': 'application/json' } },
-    );
+    const { patientId, doctor, diagnosis: data } = req.body;
 
     const newReport = await reports.createReport(
       patientId,
+      doctor.id,
       JSON.stringify(data),
     );
     res.status(201).json({

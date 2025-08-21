@@ -22,17 +22,11 @@ export const bookNewAppointment = [
     if (req.body.message === undefined)
       return res.status(400).json({ message: 'Bad Request', success: false });
 
-    const { data } = await axios.get(`${APP_BASE}/api/appointment/assignment`, {
-      headers: {
-        Authorization: `Bearer ${req.user.tk}`,
-      },
-    });
-
-    const { patientId, message } = req.body;
+    const { patientId, doctor, message } = req.body;
 
     const newAppointment = await appointments.bookAppointment(
       patientId,
-      data.data.doctor.id,
+      doctor.id,
       message,
     );
 
@@ -48,7 +42,7 @@ export const bookNewAppointment = [
       message.date,
       message.period,
       message.reason,
-      `${data.data.doctor.fname} ${data.data.doctor.lname}`,
+      `${doctor.fname} ${doctor.lname}`,
     );
   }),
 ];
