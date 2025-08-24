@@ -22,8 +22,8 @@ export function ProtectRoute({ children }) {
 
     return children
   } catch (error) {
-    console.error('Invalid token:', error)
-    localStorage.removeItem('access')
+    console.log('Invalid token:', error)
+    localStorage.clear()
     navigate('/login')
   }
 }

@@ -17,3 +17,12 @@ export const getOneReport = async (id) => {
     return error.response.data
   }
 }
+
+export const writeReport = async (data) => {
+  try {
+    const response = await httpClient.post('/api/report', data)
+    return response.data
+  } catch (error) {
+    return error.response.data
+  }
+}

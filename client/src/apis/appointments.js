@@ -18,6 +18,15 @@ export const listFulfilledApts = async () => {
   }
 }
 
+export const assignDoctor = async () => {
+  try {
+    const response = await httpClient.get('/api/appointment/assignment')
+    return response.data
+  } catch (error) {
+    return error.response.data
+  }
+}
+
 export const bookApt = async (data) => {
   try {
     const response = await httpClient.post('/api/appointment', data)

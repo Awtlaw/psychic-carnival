@@ -1,6 +1,7 @@
-import { checkSymptoms } from '../apis'
-import { useEffect, useState } from 'react'
+import { assignDoctor, bookApt, checkSymptoms, getPatientById, writeReport } from '../apis'
+import { useState } from 'react'
 import './main.css'
+import { jwtDecode } from 'jwt-decode'
 
 export function Main() {
   const [prediction, setPrediction] = useState({})
@@ -21,7 +22,7 @@ export function Main() {
       let { data: res } = await checkSymptoms({ query: symptoms })
       console.log('API Response:', res)
       if (res.success) {
-        alert('Symptoms analysis completed successfully!')
+        // alert('Symptoms analysis completed successfully!')
         setPrediction(res)
         console.log('API is working', res)
       } else {
@@ -34,16 +35,35 @@ export function Main() {
     }
   }
 
-  const handleAppointmentSubmit = (e) => {
+  const handleAppointmentSubmit = async (e) => {
     e.preventDefault()
-    console.log('Appointment booked:', { date, time })
-    alert('Appointment booked successfully!')
-    setShowModal(false)
-  }
+    const { sub: patientId } = jwtDecode(localStorage.getItem('access'))
+    console.log('patientId: ', patientId)
+    const doc = await assignDoctor()
+    console.log('doc: ', doc)
 
-  useEffect(() => {
-    console.log('Symptoms entered:', symptoms)
-  }, [symptoms])
+    const patientObject = await getPatientById(patientId)
+    const aptData = {
+      patientId,
+      doctorId: doc.data.doctor.id,
+      message: {
+        fullName: `${patientObject.data.fname} ${patientObject.data.lname}`,
+        recipient: patientObject.data.email,
+        date,
+        period: time,
+        reason: symptoms,
+        docFullName: `${doc.data.doctor.fname} ${doc.data.doctor.lname}`
+      }
+    }
+    const reportData = { patientId, doctorId: doc.data.doctor.id, diagnosis: prediction }
+    await writeReport(reportData)
+    await bookApt(aptData)
+    setShowModal(false)
+    setSymptoms('')
+    setTime('')
+    setDate('')
+    setPrediction({})
+  }
 
   return (
     <div className='main-body'>
@@ -170,7 +190,13 @@ export function Main() {
               </label>
               <label>
                 Select Time:
-                <input type='time' value={time} onChange={(e) => setTime(e.target.value)} required />
+                {/* <input type='time' value={time} onChange={(e) => setTime(e.target.value)} required /> */}
+                <select name='period' id='time' onChange={(e) => setTime(e.target.value)} value={time} required>
+                  <option value=''>--Select a period--</option>
+                  <option value='Morning'>Morning</option>
+                  <option value='Afternoon'>Afternoon</option>
+                  <option value='Evening'>Evening</option>
+                </select>
               </label>
 
               <div className='modal-buttons'>
