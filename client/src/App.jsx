@@ -33,22 +33,10 @@ function App() {
           }
         />
 
-        <Route
-          path='/history'
-          element={
-            // <ProtectRoute>
-            <Doctor />
-            // </ProtectRoute>
-          }
-        />
-        <Route
-          path='/reports'
-          element={
-            // <ProtectRoute>
-            <Report />
-            // </ProtectRoute>
-          }
-        />
+        <Route path='reports'>
+          <Route element={<Doctor />} index={true} />
+          <Route element={<Report />} path=':id' />
+        </Route>
       </Routes>
     </BrowserRouter>
   )

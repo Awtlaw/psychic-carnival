@@ -1,6 +1,32 @@
+import { useParams } from 'react-router-dom'
 import './summary.css'
+import { useEffect, useState } from 'react'
+import { getOneReport, getPatientById } from '../apis'
+import { parseISO, format, differenceInYears } from 'date-fns'
 
 export function Summary() {
+  const { id } = useParams()
+  const [report, setReport] = useState(null)
+  const [patient, setPatient] = useState(null)
+
+  useEffect(() => {
+    async function fetchData() {
+      const { data } = await getOneReport(id)
+      data.diagnosis = JSON.parse(data.diagnosis)
+      setReport(data)
+
+      // fetch patient details
+      const patientRes = await getPatientById(data.patientId)
+      setPatient(patientRes.data)
+    }
+    fetchData()
+  }, [id])
+
+  if (!report || !patient) return <p>Loading...</p>
+
+  const diag = report.diagnosis
+  const age = differenceInYears(new Date(), new Date(patient.dob))
+
   return (
     <div className='doctor-container'>
       <h2 className='doctor-title'>Doctor’s View</h2>
@@ -11,14 +37,28 @@ export function Summary() {
       <div className='doctor-section'>
         <h3>Patient Info</h3>
         <div className='doctor-grid'>
-          <div className='doctor-label'>Patient ID:</div>
-          <div className='doctor-value'>2</div>
+          <div className='doctor-label'>Name:</div>
+          <div className='doctor-value'>
+            {patient.fname} {patient.lname}
+          </div>
 
-          <div className='doctor-label'>Report ID:</div>
-          <div className='doctor-value'>1</div>
+          <div className='doctor-label'>Age:</div>
+          <div className='doctor-value'>{age} years</div>
 
-          <div className='doctor-label'>Created At:</div>
-          <div className='doctor-value'>2025-08-18 15:55</div>
+          <div className='doctor-label'>Sex:</div>
+          <div className='doctor-value'>{patient.sex === 'M' ? 'Male' : 'Female'}</div>
+
+          <div className='doctor-label'>Email:</div>
+          <div className='doctor-value'>{patient.email}</div>
+
+          <div className='doctor-label'>Phone:</div>
+          <div className='doctor-value'>{patient.phone}</div>
+
+          <div className='doctor-label'>Address:</div>
+          <div className='doctor-value'>{patient.address}</div>
+
+          <div className='doctor-label'>Report Created:</div>
+          <div className='doctor-value'>{format(parseISO(report.createdAt), 'yyyy-MM-dd HH:mm')}</div>
         </div>
       </div>
       <hr />
@@ -29,13 +69,13 @@ export function Summary() {
         <h3>Symptom Check Report</h3>
         <div className='doctor-grid'>
           <div className='doctor-label'>Patient’s Complaint:</div>
-          <div className='doctor-value'>2 months, 61 days, M, Bodyache</div>
+          <div className='doctor-value'>{diag.query}</div>
 
           <div className='doctor-label'>Confidence:</div>
-          <div className='doctor-value'>High</div>
+          <div className='doctor-value'>{diag.confidence}</div>
 
           <div className='doctor-label'>Emergency Case:</div>
-          <div className='doctor-value'>No</div>
+          <div className='doctor-value'>{diag.isEmergency ? 'Yes' : 'No'}</div>
         </div>
       </div>
       <hr />
@@ -45,15 +85,11 @@ export function Summary() {
       <div className='doctor-section'>
         <h3>Possible Conditions</h3>
         <ul className='point'>
-          <li>
-            <b>Viral Illness:</b> – Body aches are a common sign of viral infections (e.g., cold, flu).
-          </li>
-          <li>
-            <b>Post-Vaccination Reaction:</b> – Could be a side effect of recent immunization (fever, irritability).
-          </li>
-          <li>
-            <b>Myalgia (Muscle Pain):</b> – General distress — could be viral, immune response, or discomfort.
-          </li>
+          {diag.response.possible_conditions.map((c, idx) => (
+            <li key={idx}>
+              <b>{c.name}:</b> – {c.reason}
+            </li>
+          ))}
         </ul>
       </div>
       <hr />
@@ -62,7 +98,7 @@ export function Summary() {
       {/* Clinical Reasoning */}
       <div className='doctor-section'>
         <h3>Clinical Reasoning</h3>
-        <p>Body ache in infants is non-specific but often points to viral illness or post-vaccination reaction.</p>
+        <p>{diag.response.reasoning}</p>
       </div>
       <hr />
       <hr />
@@ -72,13 +108,13 @@ export function Summary() {
         <h3>Recommendations</h3>
         <ul className='point'>
           <li>
-            <b>Immediate Actions:</b> Comfort, check fever, keep hydrated, avoid meds without pediatrician.
+            <b>Immediate Actions:</b> {diag.response.recommendations.immediate_actions}
           </li>
           <li>
-            <b>When to Seek Care:</b> Fever &gt; 100.4°F, poor feeding, lethargy, inconsolable crying, dehydration.
+            <b>When to Seek Care:</b> {diag.response.recommendations.when_to_seek_care}
           </li>
           <li>
-            <b>Suggested Tests:</b> CBC, Viral Panel, Urinalysis, Pediatric Exam.
+            <b>Suggested Tests:</b> {diag.response.recommendations.tests.join(', ')}
           </li>
         </ul>
       </div>
@@ -89,10 +125,9 @@ export function Summary() {
       <div className='doctor-section'>
         <h3>Red Flags</h3>
         <ul className='point'>
-          <li>Fever in infant &lt; 3 months</li>
-          <li>Breathing difficulties</li>
-          <li>Unusual lethargy</li>
-          <li>Dehydration signs</li>
+          {diag.response.red_flags.map((flag, idx) => (
+            <li key={idx}>{flag}</li>
+          ))}
         </ul>
       </div>
       <hr />
@@ -102,11 +137,12 @@ export function Summary() {
       <div className='doctor-section'>
         <h3>Reference Cases</h3>
         <ul className='point'>
-          <li>Patient 22F → Pregnancy-related myalgia</li>
-          <li>Patient 27F → Tension headache</li>
-          <li>Patient 31F → Cyesis + headache</li>
-          <li>Patient 26F → Amenorrhea + myalgia</li>
-          <li>Patient 23F → Cyesis only</li>
+          {diag.cases.map((c) => (
+            <li key={c.metadata.id}>
+              Patient {c.metadata.age}
+              {c.metadata.gender[0].toUpperCase()} → {c.metadata.diagnosis}
+            </li>
+          ))}
         </ul>
       </div>
     </div>

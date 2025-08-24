@@ -25,18 +25,17 @@ export function History() {
 
   useEffect(() => {
     const fetchPatients = async () => {
+      const uniqueIds = [...new Set(reportsList.map((r) => r.patientId))]
       const entries = await Promise.all(
-        reportsList.map(async (r) => {
-          const patient = await getPatientById(r.patientId)
-          return [r.patientId, patient.data]
+        uniqueIds.map(async (id) => {
+          const patient = await getPatientById(id)
+          return [id, patient.data]
         })
       )
       setPatients(Object.fromEntries(entries))
     }
 
-    if (reportsList.length > 0) {
-      fetchPatients()
-    }
+    fetchPatients()
   }, [reportsList])
 
   console.log(reportsList)
@@ -53,11 +52,11 @@ export function History() {
             <div key={r.id} style={{ display: 'flex', justifyContent: 'space-between', padding: '4px' }}>
               <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
                 <FontAwesomeIcon icon={faFile} />
-                <Link to=''>{patient ? `Report for ${patient.fname} ${patient.lname}` : 'Loading...'}</Link>
+                <Link to={`${r.id}`}>{patient ? `Report for ${patient.fname} ${patient.lname}` : 'Loading...'}</Link>
               </div>
               <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
                 <FontAwesomeIcon icon={faClock} />
-                <div>{format(parseISO(`${r.createdAt}`), 'MM-dd-yyyy k:mm')}</div>
+                <div>{format(parseISO(r.createdAt), 'MM-dd-yyyy k:mm')}</div>
               </div>
             </div>
           )
@@ -68,40 +67,6 @@ export function History() {
           <p className='record'>No record found</p>
         </div>
       )}
-
-      {/* {reportsList.length > 0 ? ( */}
-      {/*   reportsList.map((report) => { */}
-      {/*     const patient = patients[report.patientId] */}
-      {/**/}
-      {/*     return ( */}
-      {/*       <div className='doctor-section1' key={report.id}> */}
-      {/*         <div className='doctor-grid1'> */}
-      {/*           {/* Title */}
-      {/*           <div className='doctor-label1'> */}
-      {/*             <FontAwesomeIcon icon={faFile} /> Title: */}
-      {/*           </div> */}
-      {/*           <div className='doctor-value1'> */}
-      {/*             <a href='#'> */}
-      {/*               Report #{report.id} – Patient {patient ? `${patient.firstName} ${patient.lastName}` : 'Loading...'} */}
-      {/*             </a> */}
-      {/*           </div> */}
-      {/**/}
-      {/*           {/* Timestamp */}
-      {/*           <div className='doctor-label1'> */}
-      {/*             <FontAwesomeIcon icon={faClock} /> Timestamp: */}
-      {/*           </div> */}
-      {/*           <div className='doctor-value1'>{new Date(report.createdAt).toLocaleString()}</div> */}
-      {/*         </div> */}
-      {/*         <hr /> */}
-      {/*       </div> */}
-      {/*     ) */}
-      {/*   }) */}
-      {/* ) : ( */}
-      {/*   <div className='doctor-section1'> */}
-      {/*     <h3>Status</h3> */}
-      {/*     <p className='record'>No record found</p> */}
-      {/*   </div> */}
-      {/* )} */}
     </div>
   )
 }

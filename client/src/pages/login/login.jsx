@@ -31,7 +31,7 @@ export function Login() {
 
         switch (userObject.role) {
           case 'DOCTOR':
-            navigate('/history')
+            navigate('/reports')
             break
           case 'PATIENT':
             navigate('/home')
