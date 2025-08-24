@@ -1,8 +1,5 @@
-/* ============================
-   Main Container
-============================ */
 .history-main-container {
-    background: #fff;
+    background: #F0F8F8;
     color: black;
     font-family: monospace;
     padding: 4rem 8rem;
@@ -10,108 +7,73 @@
     flex: 1;
     overflow-y: auto;
 }
+   .doctor-container1 {
+       max-width: 900px;
+       margin: 20px auto;
+       padding: 20px;
+       background: #fff;
+       border-radius: 12px;
+       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+       font-family: Arial, sans-serif;
+       color: #333;
+   }
 
-/* ============================
-   Search Section
-============================ */
-.search-container {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 2rem;
-}
+   .doctor-title1 {
+       text-align: center;
+       font-size: 1.8rem;
+       margin-bottom: 10px;
+       color: #086972;
+   }
 
-.search-container h2 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    margin-bottom: 1.5rem;
-}
+   .doctor-section1 {
+       margin: 20px 0;
+       color: #086972;
+   }
 
-.search-box {
-    position: relative;
-    width: 24rem;
-}
+   .doctor-grid1 {
+       display: grid;
+       grid-template-columns: 200px 1fr;
+       gap: 10px 20px;
+       align-items: center;
+   }
 
-.search-box input {
-    width: 100%;
-    border-radius: 1rem;
-    padding: 0.75rem;
-    text-align: center;
-    font-family: monospace;
-    font-weight: 500;
+   .doctor-label1 {
+       font-weight: bold;
+       color: #555;
+   }
+
+   .doctor-value1 {
+       padding: 8px 12px;
+       background: #f9f9f9;
+       border-radius: 8px;
+       border: 1px solid #eee;
+       color: black;
+   }
+   .doctor-value1 a {
+       display: inline-block;
+       padding: 6px 12px;
+       background: #e6f7f8;
+      
+       /* color: #086972; */
+       
+       font-weight: 600;
+       text-decoration: none;
+       border-radius: 6px;
+       border: 1px solid #b3e6e8;
+       
+       transition: all 0.2s ease;
+   }
+
+   .doctor-value1 a:hover {
+       background: #F0F8F8;
+       color: #086972;
+       border-color: #F0F8F8;
+   }
+   .record{
     color: black;
-    outline: black;
-}
+   }
 
-.search-box button {
-    position: absolute;
-    right: 2.5rem;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    cursor: pointer;
-}
 
-/* ============================
-   Section Title
-============================ */
-.section-title {
-    font-size: 20px;
-    font-weight: bold;
-    margin: 20px 0 10px 0;
-    color: #4D9245;
-}
 
-/* ============================
-   History Form (Replaces Table)
-============================ */
-.history-form {
-    width: 100%;
-    border: 1px solid black;
-    border-collapse: collapse;
-    margin-bottom: 1.5rem;
-    border-radius: 8px;
-    overflow: hidden;
-    background: #fff;
-}
 
-/* Each Row (like tr) */
-.history-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px;
-    border-bottom: 1px solid black;
-    min-height: 45px;
-    /* keeps same height as td */
-}
-
-/* Remove border on last row */
-.history-row:last-child {
-    border-bottom: none;
-}
-
-/* Labels (like th) */
-.history-row label {
-    font-weight: bold;
-    color: #4D9245;
-    width: 200px;
-    /* keeps column alignment like table */
-}
-
-/* Values (like td) */
-.history-row span {
-    flex: 1;
-    text-align: left;
-    padding-left: 20px;
-}
-
-.history-row span a {
-    color: black;
-    text-decoration: none;
-}
-
-.history-row span a:hover {
-    color: #4D9245;
-}
+   

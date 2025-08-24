@@ -11,6 +11,7 @@ nav {
     height: 56px;
     position: fixed;
     top:0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     
 }
 /* Navbar flex layout */
@@ -30,19 +31,35 @@ nav {
     
   /* Logo */
   .logo {
-      color: gray;
+      color: #086972;
+      display: flex;
       font-size: 1.5rem;
       font-weight: bold;
       text-decoration: none;
+      /* align-items: center; */
   }
-         /* Nav links */
+   .nlogo  {
+       display: flex;
+       /* align-items: center; */
+       gap:10px;
+
+   }
+   .nlogo img{
+width: 50px;
+    height: auto;
+    transform: translateY(-16px);
+   }
+   
+  .logoN{
+    margin-bottom: 0;
+  }
          .nav-links {
              display: flex;
              gap: 20px;
          }
     
          .nav-links a {
-             color: gray;
+             color:#086972;
              text-decoration: none;
              font-size: 1rem;
              transition: color 0.3s ease;

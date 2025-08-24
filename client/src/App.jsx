@@ -10,6 +10,7 @@ import { About } from './pages/about/about'
 import { Service } from './pages/service/service'
 import { Contact } from './pages/contact/contact'
 import PageNotFound from './pages/error/page'
+import { ProtectRoute } from './components/protectRoute'
 
 function App() {
   return (
@@ -17,15 +18,37 @@ function App() {
       <Routes>
         <Route path='*' element={<PageNotFound />} />
         <Route path='/' element={<Land />} />
-        <Route path='home' element={<Home />} />
         <Route path='/about' element={<About />} />
         <Route path='/service' element={<Service />} />
         <Route path='contact' element={<Contact />} />
         <Route path='/login' element={<Login />} />
-        <Route path='/history' element={<Doctor />} />
-        <Route path='/reports' element={<Report />} />
         <Route path='/register-patient' element={<PatientSignUp />} />
         <Route path='/register-doctor' element={<DocSignUp />} />
+        <Route
+          path='home'
+          element={
+            <ProtectRoute>
+              <Home />
+            </ProtectRoute>
+          }
+        />
+
+        <Route
+          path='/history'
+          element={
+            // <ProtectRoute>
+            <Doctor />
+            // </ProtectRoute>
+          }
+        />
+        <Route
+          path='/reports'
+          element={
+            // <ProtectRoute>
+            <Report />
+            // </ProtectRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   )

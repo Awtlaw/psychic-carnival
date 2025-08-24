@@ -39,6 +39,7 @@ export function DocSignUp() {
       </a>
 
       <div class='doctor-signup-container'>
+        <img src='logo.png' alt='logo' />
         <h2>Doctor Sign Up</h2>
         <form class='doctor-signup-form' onSubmit={handleSubmit}>
           <div class='input-box'>

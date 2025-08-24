@@ -9,11 +9,18 @@ export function Navbar() {
   }
   return (
     <div className='baseline'>
-      <nav style={{ borderBottom: '2px solid #F2F2F2' }}>
+      <nav style={{ borderBottom: '1px solid #F2F2F2' }}>
         <div className='navbar'>
-          <a href='#' className='logo'>
-            HealthConnect
-          </a>
+          <div className='nlogo'>
+            <div className='logoN'>
+              <img src='logo.png' alt='logo' />
+            </div>
+            <div>
+              <a href='#' className='logo'>
+                HealthConnect
+              </a>
+            </div>
+          </div>
 
           <div className='menu-btn' id='menu-btn' onClick={handleToggle}>
             <span></span>

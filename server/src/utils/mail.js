@@ -25,7 +25,7 @@ export function sendBookingMail(mail, name, date, period, reason, doc) {
 
         📅 Date: ${date}
         🕒 Time: ${period}
-        📍 Location: HealthConnect Clinic, 12 Main Street, Accra
+        📍 Location:Accra Technical University, 12 Main Street, Accra
         🩺 Reason for Visit: ${reason}
         👨🏾‍⚕ Assigned Doctor: ${doc}
         
@@ -55,7 +55,7 @@ export function sendReminderMail(mail, name, date, period, reason, doc) {
     
     📅 Date: ${date}
     🕒 Time: ${period}
-    📍 Location: HealthConnect Clinic, 12 Main Street, Accra
+    📍 Location: Accra Technical University, 12 Main Street, Accra
     🩺 Reason for Visit: ${reason}
     👨🏾‍⚕ Assigned Doctor: ${doc}
     

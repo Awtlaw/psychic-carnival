@@ -8,7 +8,7 @@ export default function Doctor() {
       <Navbar />
 
       <div className='content'>
-        <Sidebar />
+        {/* <Sidebar /> */}
         <div className='history-main-container'>
           <History />
         </div>

@@ -1,54 +1,85 @@
-import { faClock } from '@fortawesome/free-regular-svg-icons'
-import { faFile, faUserDoctor, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+import { faClock, faFile, faUserDoctor } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './history.css'
+import { useEffect, useState } from 'react'
+import { listReports, getPatientById } from '../apis'
 
 export function History() {
+  const [reportsList, setReportsList] = useState([])
+  const [patients, setPatients] = useState({}) // store patient info keyed by id
+
+  useEffect(() => {
+    const fetchReports = async () => {
+      try {
+        const res = await listReports()
+        if (res?.data) {
+          setReportsList(res.data)
+
+          // fetch all patient info in parallel
+          const patientPromises = res.data.map((report) => getPatientById(report.patientId))
+          const patientsData = await Promise.all(patientPromises)
+
+          // store patients keyed by id for easy lookup
+          const patientsMap = {}
+          patientsData.forEach((p) => {
+            patientsMap[p.id] = p
+          })
+          setPatients(patientsMap)
+        }
+      } catch (err) {
+        console.error('Failed to load reports or patients:', err)
+      }
+    }
+
+    fetchReports()
+  }, [])
+
   return (
-    <div className='history-main-container'>
-      <div className='search-container'>
-        <h2>Patient's Search</h2>
-        <div className='search-box'>
-          <input type='text' placeholder='Patient Name' />
-          <button>
-            <FontAwesomeIcon icon={faMagnifyingGlass} />
-          </button>
-        </div>
-      </div>
+    <div className='doctor-container1'>
+      <h2 className='doctor-title1'>Symptom Checker Reports</h2>
+      <hr />
+      <hr />
 
-      <div>
-        <div className='section-title'>History</div>
+      {reportsList.length > 0 ? (
+        reportsList.map((report) => {
+          const patient = patients[report.patientId]
 
-        <div className='history-form'>
-          <div className='history-row'>
-            <label>
-              <FontAwesomeIcon icon={faFile} /> Title:
-            </label>
-            <span>
-              <a href='#'>Report for John Doe</a>
-            </span>
-          </div>
-          <div className='history-row'>
-            <label>
-              <FontAwesomeIcon icon={faUserDoctor} /> Created By:
-            </label>
-            <span>Dr. Smith</span>
-          </div>
-          <div className='history-row'>
-            <label>
-              <FontAwesomeIcon icon={faClock} /> Timestamp:
-            </label>
-            <span>2025-08-18 10:30 AM</span>
-          </div>
-        </div>
+          return (
+            <div className='doctor-section1' key={report.id}>
+              <h3>Report Summary</h3>
+              <div className='doctor-grid1'>
+                {/* Title */}
+                <div className='doctor-label1'>
+                  <FontAwesomeIcon icon={faFile} /> Title:
+                </div>
+                <div className='doctor-value1'>
+                  <a href='#'>
+                    Report #{report.id} – Patient {patient ? `${patient.firstName} ${patient.lastName}` : 'Loading...'}
+                  </a>
+                </div>
 
-        <div className='history-form'>
-          <div className='history-row'>
-            <label>Status:</label>
-            <span>No record found</span>
-          </div>
+                {/* Created By */}
+                <div className='doctor-label1'>
+                  <FontAwesomeIcon icon={faUserDoctor} /> Created By:
+                </div>
+                <div className='doctor-value1'>{report.doctorId ? `Dr. ${report.doctorId}` : 'System Generated'}</div>
+
+                {/* Timestamp */}
+                <div className='doctor-label1'>
+                  <FontAwesomeIcon icon={faClock} /> Timestamp:
+                </div>
+                <div className='doctor-value1'>{new Date(report.createdAt).toLocaleString()}</div>
+              </div>
+              <hr />
+            </div>
+          )
+        })
+      ) : (
+        <div className='doctor-section1'>
+          <h3>Status</h3>
+          <p className='record'>No record found</p>
         </div>
-      </div>
+      )}
     </div>
   )
 }

@@ -2,59 +2,112 @@ import './summary.css'
 
 export function Summary() {
   return (
-    <div class='ps-container'>
-      <div class='ps-title'>Patient Summary</div>
+    <div className='doctor-container'>
+      <h2 className='doctor-title'>Doctor’s View</h2>
+      <hr />
       <hr />
 
-      <div class='ps-section'>
-        <h3>Patient Information</h3>
-        <div class='ps-grid'>
-          <div class='ps-label'>First Name</div>
-          <div class='ps-value'>John</div>
+      {/* Patient Info */}
+      <div className='doctor-section'>
+        <h3>Patient Info</h3>
+        <div className='doctor-grid'>
+          <div className='doctor-label'>Patient ID:</div>
+          <div className='doctor-value'>2</div>
 
-          <div class='ps-label'>Last Name</div>
-          <div class='ps-value'>Doe</div>
+          <div className='doctor-label'>Report ID:</div>
+          <div className='doctor-value'>1</div>
 
-          <div class='ps-label'>Sex</div>
-          <div class='ps-value'>Male</div>
-
-          <div class='ps-label'>Age</div>
-          <div class='ps-value'>29</div>
-
-          <div class='ps-label'>Phone</div>
-          <div class='ps-value'>+233 20 123 4567</div>
-
-          <div class='ps-label'>Email</div>
-          <div class='ps-value'>johndoe@email.com</div>
-
-          <div class='ps-label'>Address</div>
-          <div class='ps-value'>Accra, Ghana</div>
+          <div className='doctor-label'>Created At:</div>
+          <div className='doctor-value'>2025-08-18 15:55</div>
         </div>
       </div>
       <hr />
+      <hr />
 
-      <div class='ps-section'>
-        <h3>Diagnosis & Recommendations</h3>
-        <div class='ps-grid'>
-          <div class='ps-label'>Diagnosis</div>
-          <div class='ps-value'>Malaria</div>
+      {/* Symptom Report */}
+      <div className='doctor-section'>
+        <h3>Symptom Check Report</h3>
+        <div className='doctor-grid'>
+          <div className='doctor-label'>Patient’s Complaint:</div>
+          <div className='doctor-value'>2 months, 61 days, M, Bodyache</div>
 
-          <div class='ps-label'>System Orthodox Drugs</div>
-          <div class='ps-value'>Artemether, Lumefantrine</div>
+          <div className='doctor-label'>Confidence:</div>
+          <div className='doctor-value'>High</div>
 
-          <div class='ps-label'>Doctor Recommended Drugs</div>
-          <div class='ps-value'>Paracetamol, Vitamin C</div>
-
-          <div class='ps-label'>Traditional Drugs</div>
-          <div class='ps-value'>Neem extract, Herbal tea</div>
+          <div className='doctor-label'>Emergency Case:</div>
+          <div className='doctor-value'>No</div>
         </div>
       </div>
       <hr />
+      <hr />
 
-      <div class='ps-print'>
-        <button class='ps-btn' onclick='window.print()'>
-          Print Report
-        </button>
+      {/* Possible Conditions */}
+      <div className='doctor-section'>
+        <h3>Possible Conditions</h3>
+        <ul className='point'>
+          <li>
+            <b>Viral Illness:</b> – Body aches are a common sign of viral infections (e.g., cold, flu).
+          </li>
+          <li>
+            <b>Post-Vaccination Reaction:</b> – Could be a side effect of recent immunization (fever, irritability).
+          </li>
+          <li>
+            <b>Myalgia (Muscle Pain):</b> – General distress — could be viral, immune response, or discomfort.
+          </li>
+        </ul>
+      </div>
+      <hr />
+      <hr />
+
+      {/* Clinical Reasoning */}
+      <div className='doctor-section'>
+        <h3>Clinical Reasoning</h3>
+        <p>Body ache in infants is non-specific but often points to viral illness or post-vaccination reaction.</p>
+      </div>
+      <hr />
+      <hr />
+
+      {/* Recommendations */}
+      <div className='doctor-section'>
+        <h3>Recommendations</h3>
+        <ul className='point'>
+          <li>
+            <b>Immediate Actions:</b> Comfort, check fever, keep hydrated, avoid meds without pediatrician.
+          </li>
+          <li>
+            <b>When to Seek Care:</b> Fever &gt; 100.4°F, poor feeding, lethargy, inconsolable crying, dehydration.
+          </li>
+          <li>
+            <b>Suggested Tests:</b> CBC, Viral Panel, Urinalysis, Pediatric Exam.
+          </li>
+        </ul>
+      </div>
+      <hr />
+      <hr />
+
+      {/* Red Flags */}
+      <div className='doctor-section'>
+        <h3>Red Flags</h3>
+        <ul className='point'>
+          <li>Fever in infant &lt; 3 months</li>
+          <li>Breathing difficulties</li>
+          <li>Unusual lethargy</li>
+          <li>Dehydration signs</li>
+        </ul>
+      </div>
+      <hr />
+      <hr />
+
+      {/* Reference Cases */}
+      <div className='doctor-section'>
+        <h3>Reference Cases</h3>
+        <ul className='point'>
+          <li>Patient 22F → Pregnancy-related myalgia</li>
+          <li>Patient 27F → Tension headache</li>
+          <li>Patient 31F → Cyesis + headache</li>
+          <li>Patient 26F → Amenorrhea + myalgia</li>
+          <li>Patient 23F → Cyesis only</li>
+        </ul>
       </div>
     </div>
   )

@@ -35,7 +35,7 @@ export function Login() {
         ← Home
       </a>
       <div className='login-box'>
-        <img src='/html/images/image-removebg-preview (2).png' alt='HealthConnect Logo' />
+        <img src='logo.png' alt='HealthConnect Logo' />
         <h2>Welcome Back to HealthConnect</h2>
         <form className='login-form' onSubmit={handleLogin}>
           <div className='login-input-box'>

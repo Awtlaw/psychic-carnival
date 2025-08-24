@@ -7,6 +7,11 @@
    height: 100vh;
    margin: 0;
  }
+    .signup-box img {
+      display: block;
+      margin: 0 auto 1px auto;
+      width: 60px;
+    }
 
  .home-btn {
    position: absolute;

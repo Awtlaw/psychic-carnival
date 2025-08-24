@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint app.js \"{src,apps,libs,test}/**/*.js\" --fix --no-error-on-unmatched-pattern",
-    "format": "prettier --write 'src/**/*.js'",
+    "format": "prettier --write .",
     "dev": "node --watch src/app"
   },
   "keywords": [],

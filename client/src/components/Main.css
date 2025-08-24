@@ -21,7 +21,7 @@
         /* ensures main content takes almost full viewport height */
         margin-top: 40px;
         height: 100vh;
-        background: white;
+        background: #F0F8F8;
         padding: 2rem;
         overflow-y: auto;
         /* border-radius: 8px; */
@@ -164,3 +164,126 @@
         display: flex;
         gap: 0.75rem;
     }
+
+        /* ============================
+       Appointment Modal Styling
+       ============================ */
+    
+        /* Modal overlay (dark background) */
+        .appointment-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            /* stays above everything */
+        }
+    
+        /* Modal box */
+        .appointment-modal .modal-content {
+            background: #ffffff;
+            padding: 25px 30px;
+            border-radius: 12px;
+            width: 400px;
+            max-width: 90%;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            animation: fadeIn 0.3s ease-in-out;
+        }
+    
+        /* Title */
+        .appointment-modal .modal-content h2 {
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.5rem;
+            color: #053B40;
+        }
+    
+        /* Form */
+        .appointment-modal form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+    
+        /* Labels */
+        .appointment-modal label {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+    
+        /* Inputs */
+        .appointment-modal input[type="date"],
+        .appointment-modal input[type="time"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+    
+        .appointment-modal input[type="date"]:focus,
+        .appointment-modal input[type="time"]:focus {
+            border-color: #053B40;
+        }
+    
+        /* Buttons container */
+        .appointment-modal .modal-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+    
+        /* Confirm button */
+        .appointment-modal .btn.btn-primary {
+            background-color: #053B40;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            color: #fff;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+    
+        .appointment-modal .btn.btn-primary:hover {
+            background-color: #066357;
+        }
+    
+        /* Cancel button */
+        .appointment-modal .btn.btn-secondary {
+            background-color: #ccc;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            color: #333;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+    
+        .appointment-modal .btn.btn-secondary:hover {
+            background-color: #aaa;
+        }
+    
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+    
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }

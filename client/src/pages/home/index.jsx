@@ -9,7 +9,7 @@ export default function Home() {
       <Navbar />
 
       <div className='content'>
-        <Sidebar />
+        {/* <Sidebar /> */}
         <div className='main-content'>
           <Main />
         </div>

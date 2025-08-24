@@ -43,6 +43,7 @@ export function PatientSignUp() {
         ← Home
       </a>
       <div className='signup-box'>
+        <img src='logo.png' alt='' />
         <h2>Create Your HealthConnect Account</h2>
         <form className='signup-form' onSubmit={handleSubmit}>
           <div className='input-box'>

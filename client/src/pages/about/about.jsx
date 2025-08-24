@@ -34,7 +34,7 @@ export function About() {
 
       <section className='about-section'>
         <div className='about-image'>
-          <img src='https://via.placeholder.com/500x350' alt='Healthcare team' />
+          <img src='doc.png' alt='Healthcare team' />
         </div>
         <div className='about-content'>
           <h2>Who We Are</h2>
@@ -59,18 +59,18 @@ export function About() {
         <h2>Meet Our Team</h2>
         <div className='about-team-container'>
           <div className='about-team-card'>
-            <img src='https://via.placeholder.com/200' alt='Team Member' />
-            <h3>Dr. Sarah Johnson</h3>
+            <img src='nic.jpg' alt='Team Member' />
+            <h3>Dr. Nicolette Mensah</h3>
             <p>Chief Medical Advisor</p>
           </div>
           <div className='about-team-card'>
-            <img src='https://via.placeholder.com/200' alt='Team Member' />
-            <h3>Michael Smith</h3>
+            <img src='mj.jpg' alt='Team Member' />
+            <h3>Youngson Ahiase</h3>
             <p>Lead Developer</p>
           </div>
           <div className='about-team-card'>
-            <img src='https://via.placeholder.com/200' alt='Team Member' />
-            <h3>Alice Brown</h3>
+            <img src='anni.jpg' alt='Team Member' />
+            <h3> Anne Jolie</h3>
             <p>AI Research Specialist</p>
           </div>
         </div>

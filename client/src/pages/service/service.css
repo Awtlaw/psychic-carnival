@@ -1,13 +1,13 @@
-
+.service-page1{
+    height: 100%;
+    overflow: auto;
+}
 
 .service-page {
     line-height: 1.6;
-    background: #f9f9f9;
+    background: #F0F8F8;
     color: #333;
-    display: flex;
-    flex-direction: column;
-    heiight: 100%;
-    overflow: auto;
+    
 }
 
 
@@ -15,9 +15,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 40px;
-    background: #0077b6;
-    color: #fff;
+    padding: 15px 10%;
+    background: #fff;
+    color: #053B40;
+    position: sticky;
+    top:0;
+    z-index: 1000;
 }
 
 .hc-navbar .logo1 {
@@ -33,22 +36,22 @@
 
 .hc-navbar .nav-links li a {
     text-decoration: none;
-    color: #fff;
+    color:#053B40;;
     font-weight: 500;
-    transition: color 0.3s;
+    transition: color 0.3s ease;
 }
 
 .hc-navbar .nav-links li a:hover,
 .hc-navbar .nav-links li a.active {
-    color: #ffd166;
+    color: #022023;
 }
 
 
 .hc-services-hero {
     text-align: center;
     padding: 60px 20px;
-    background: linear-gradient(to right, #0077b6, #00b4d8);
-    color: white;
+     background: #E3E9E9;
+    color: #053B40;
 }
 
 .hc-services-hero h1 {
@@ -73,7 +76,7 @@
     background: #fff;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s;
     text-align: center;
 }
@@ -91,7 +94,7 @@
 .service-card h2 {
     font-size: 22px;
     margin: 15px 0;
-    color: #0077b6;
+    color: #053B40;
 }
 
 .service-card p {
@@ -101,7 +104,7 @@
 }
 
 .hcs-footer {
-    background: #0077b6;
+    background: #053B40;
     color: white;
     text-align: center;
     padding: 15px;

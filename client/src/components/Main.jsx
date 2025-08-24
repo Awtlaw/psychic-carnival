@@ -5,6 +5,10 @@ import './main.css'
 export function Main() {
   const [prediction, setPrediction] = useState({})
   const [symptoms, setSymptoms] = useState('')
+  const [showModal, setShowModal] = useState(false)
+  const [date, setDate] = useState('')
+  const [time, setTime] = useState('')
+  const [loading, setLoading] = useState(false) // 🔹 New loading state
 
   const handleSymptomChange = (e) => {
     setSymptoms(e.target.value)
@@ -12,21 +16,33 @@ export function Main() {
 
   const generateResults = async (e) => {
     e.preventDefault()
+    setLoading(true) // start spinner
     try {
       let { data: res } = await checkSymptoms({ query: symptoms })
+      console.log('API Response:', res)
       if (res.success) {
         alert('Symptoms analysis completed successfully!')
-        setPrediction(res) // res is already the data you need
+        setPrediction(res)
+        console.log('API is working', res)
       } else {
         alert('Analysis failed. Please try again.')
       }
     } catch (error) {
       alert(error.message || 'An error occurred')
+    } finally {
+      setLoading(false) // stop spinner
     }
   }
 
+  const handleAppointmentSubmit = (e) => {
+    e.preventDefault()
+    console.log('Appointment booked:', { date, time })
+    alert('Appointment booked successfully!')
+    setShowModal(false)
+  }
+
   useEffect(() => {
-    console.log(symptoms)
+    console.log('Symptoms entered:', symptoms)
   }, [symptoms])
 
   return (
@@ -40,21 +56,15 @@ export function Main() {
             should be interpreted carefully and never replace professional judgment.
           </p>
         </div>
+
         <div className='input-instruction'>
-          <p>Enter a clinical problem representation below to generate either a DDx or clinical plan.</p>
+          <p>Enter a clinical problem representation below to generate either a clinical reasoning.</p>
         </div>
-        <div className='examples'>
-          <p className='example-title'>Try an example:</p>
-          <div className='example-list'>
-            <div className='example-item'>Chest Pain DDx</div>
-            <div className='example-item'>ADHF Clinical plan</div>
-            <div className='example-item'>AMS DDx</div>
-            <div className='example-item'>ACS Clinical plan</div>
-          </div>
-        </div>
+
         <div className='input-header'>
           <p>Main complaint</p>
         </div>
+
         <form onSubmit={generateResults}>
           <textarea
             className='input-box'
@@ -65,15 +75,19 @@ export function Main() {
             onChange={handleSymptomChange}
           ></textarea>
           <div className='buttons'>
-            <button className='btn btn-primary' type='submit'>
-              Differential diagnosis
+            <button className='btn btn-primary' type='submit' disabled={loading}>
+              {loading ? (
+                <>
+                  <span className='spinner'></span> Generating...
+                </>
+              ) : (
+                'Generate'
+              )}
             </button>
-            <button className='btn btn-outline'>Clinical plan</button>
-            <button className='btn btn-accent'>Generate 🤖</button>
           </div>
         </form>
 
-        {/* Fixed: Actually display the prediction data */}
+        {/* Results Section */}
         {prediction?.response?.possible_conditions && (
           <div className='output-container'>
             <div id='myOutput'>
@@ -107,7 +121,7 @@ export function Main() {
                   {prediction.response.recommendations.tests && (
                     <div>
                       <strong>Suggested Tests:</strong>
-                      <ul>
+                      <ul className='point'>
                         {prediction.response.recommendations.tests.map((test, index) => (
                           <li key={index}>{test}</li>
                         ))}
@@ -120,7 +134,7 @@ export function Main() {
               {prediction.response.red_flags && (
                 <div style={{ marginTop: '20px', color: 'red' }}>
                   <h4>Red Flags - Seek Immediate Care:</h4>
-                  <ul>
+                  <ul className='point'>
                     {prediction.response.red_flags.map((flag, index) => (
                       <li key={index}>{flag}</li>
                     ))}
@@ -136,10 +150,42 @@ export function Main() {
               <button className='btn btn-accent' id='copy' style={{ display: 'none' }}>
                 Copy
               </button>
+              <button className='btn btn-primary' type='button' onClick={() => setShowModal(true)}>
+                Book Appointment
+              </button>
             </div>
           </div>
         )}
       </div>
+
+      {/* Appointment Modal */}
+      {showModal && (
+        <div className='appointment-modal'>
+          <div className='modal-content'>
+            <h2>Book Appointment</h2>
+            <form onSubmit={handleAppointmentSubmit}>
+              <label>
+                Select Date:
+                <input type='date' value={date} onChange={(e) => setDate(e.target.value)} required />
+              </label>
+              <label>
+                Select Time:
+                <input type='time' value={time} onChange={(e) => setTime(e.target.value)} required />
+              </label>
+
+              <div className='modal-buttons'>
+                <button type='submit' className='btn btn-primary'>
+                  Confirm
+                </button>
+                <button type='button' className='btn btn-secondary' onClick={() => setShowModal(false)}>
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
       <div className='note small'>
         <p>
           Note: HealthConnect AI is an advanced tool under development for healthcare professionals and medical researchers. It is not
