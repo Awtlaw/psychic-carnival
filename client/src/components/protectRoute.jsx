@@ -1,12 +1,13 @@
-import { Navigate } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { jwtDecode } from 'jwt-decode'
+import { useNavigate } from 'react-router-dom'
 
 export function ProtectRoute({ children }) {
+  const navigate = useNavigate()
   const token = localStorage.getItem('access')
 
   if (!token) {
-    return <Navigate to='/' replace />
+    navigate('/login')
   }
 
   try {
@@ -16,15 +17,14 @@ export function ProtectRoute({ children }) {
     if (decoded.exp && decoded.exp < currentTime) {
       // Token expired
       localStorage.removeItem('access')
-      return <Navigate to='/' replace />
+      navigate('/login')
     }
 
     return children
   } catch (error) {
-    // Invalid token
     console.error('Invalid token:', error)
     localStorage.removeItem('access')
-    return <Navigate to='/' replace />
+    navigate('/login')
   }
 }
 

@@ -3,6 +3,7 @@ import { loginUser } from '../../apis'
 import './login.css'
 import { jwtDecode } from 'jwt-decode'
 import { useNavigate } from 'react-router-dom'
+
 export function Login() {
   const init = {
     username: '',
@@ -22,13 +23,11 @@ export function Login() {
     let res
     try {
       res = await loginUser(form)
-      console.log(res)
       if (res.message === 'success') {
         alert(res.message)
         localStorage.clear()
         localStorage.setItem('access', res.accessToken)
         const userObject = jwtDecode(localStorage.getItem('access'))
-        console.log(userObject)
 
         switch (userObject.role) {
           case 'DOCTOR':
@@ -97,5 +96,19 @@ export function Login() {
         </form>
       </div>
     </div>
+  )
+}
+
+export const Logout = () => {
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    localStorage.clear()
+    navigate('/login', { replace: true })
+  }
+  return (
+    <button type='button' onClick={handleLogout}>
+      <div className=''>Logout</div>
+    </button>
   )
 }
