@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { loginUser } from '../../apis'
 import './login.css'
+import { jwtDecode } from 'jwt-decode'
+import { useNavigate } from 'react-router-dom'
 export function Login() {
   const init = {
     username: '',
@@ -8,6 +10,7 @@ export function Login() {
   }
 
   const [form, setForm] = useState(init)
+  const navigate = useNavigate()
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -19,13 +22,28 @@ export function Login() {
     let res
     try {
       res = await loginUser(form)
-      if (res.success) {
+      console.log(res)
+      if (res.message === 'success') {
         alert(res.message)
+        localStorage.clear()
+        localStorage.setItem('access', res.accessToken)
+        const userObject = jwtDecode(localStorage.getItem('access'))
+        console.log(userObject)
+
+        switch (userObject.role) {
+          case 'DOCTOR':
+            navigate('/history')
+            break
+          case 'PATIENT':
+            navigate('/home')
+            break
+        }
       } else {
         alert(res.message)
       }
-    } catch {
-      alert(res.message)
+    } catch (e) {
+      console.err(e)
+      alert(e)
     }
   }
 
