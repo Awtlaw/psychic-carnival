@@ -22,11 +22,11 @@ export const bookNewAppointment = [
     if (req.body.message === undefined)
       return res.status(400).json({ message: 'Bad Request', success: false });
 
-    const { patientId, doctor, message } = req.body;
+    const { patientId, doctorId, message } = req.body;
 
     const newAppointment = await appointments.bookAppointment(
       patientId,
-      doctor.id,
+      doctorId,
       message,
     );
 
@@ -42,7 +42,7 @@ export const bookNewAppointment = [
       message.date,
       message.period,
       message.reason,
-      `${doctor.fname} ${doctor.lname}`,
+      message.docFullName,
     );
   }),
 ];

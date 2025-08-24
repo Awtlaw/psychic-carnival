@@ -14,11 +14,11 @@ export const createNewReport = [
         error: validationErrors.array(),
       });
 
-    const { patientId, doctor, diagnosis: data } = req.body;
+    const { patientId, doctorId, diagnosis: data } = req.body;
 
     const newReport = await reports.createReport(
       patientId,
-      doctor.id,
+      doctorId,
       JSON.stringify(data),
     );
     res.status(201).json({
