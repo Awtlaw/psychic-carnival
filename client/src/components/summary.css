@@ -1,66 +1,65 @@
-   .doc-main-content {
-       flex: 1;
-       overflow-y: auto;
-       margin-top: 56px;
-       background-color: #F0F8F8;
-    height: calc(100vh - 56px);
-        
-   } 
+.doc-main-content {
+  flex: 1;
+  overflow-y: auto;
+  margin-top: 56px;
+  background-color: #f0f8f8;
+  height: calc(100vh - 56px);
+}
 
-   .doctor-container {
-       max-width: 900px;
-       margin: 20px auto;
-       padding: 20px;
-       background: #fff;
-       border-radius: 12px;
-       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-       font-family: Arial, sans-serif;
-       color: #333;
-   }
+.doctor-container {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+  color: #333;
+}
 
-   .doctor-title {
-       text-align: center;
-       font-size: 1.8rem;
-       margin-bottom: 10px;
-       color: #2c3e50;
-   }
+.doctor-title {
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  color: #2c3e50;
+}
 
-   .doctor-section {
-       margin: 20px 0;
-   }
+.doctor-section {
+  margin: 20px 0;
+}
 
-   .doctor-grid {
-       display: grid;
-       grid-template-columns: 200px 1fr;
-       gap: 10px 20px;
-       align-items: center;
-   }
+.doctor-grid {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 10px 20px;
+  align-items: center;
+}
 
-   .doctor-label {
-       font-weight: bold;
-       color: #555;
-   }
+.doctor-label {
+  font-weight: bold;
+  color: #555;
+}
 
-   .doctor-value {
-       padding: 8px 12px;
-       background: #f9f9f9;
-       border-radius: 8px;
-       border: 1px solid #eee;
-   }
+.doctor-value {
+  padding: 8px 12px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  border: 1px solid #eee;
+}
 
-   .doctor-list {
-       margin-left: 20px;
-       padding-left: 20px;
-       list-style-type: disc;
-   }
+.doctor-list {
+  margin-left: 20px;
+  padding-left: 20px;
+  list-style-type: disc;
+}
 
-   .doctor-text {
-       line-height: 1.6;
-       background: #f9f9f9;
-       padding: 10px;
-       border-radius: 8px;
-       border: 1px solid #eee;
-   }
-   .point{
-    list-style: none;
-   }
+.doctor-text {
+  line-height: 1.6;
+  background: #f9f9f9;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #eee;
+}
+.point {
+  list-style: none;
+}

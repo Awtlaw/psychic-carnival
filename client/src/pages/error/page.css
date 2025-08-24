@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-background: linear-gradient(to right, #086972, #053B40); /* Matches your app background */
+  background: linear-gradient(to right, #086972, #053b40); /* Matches your app background */
   color: white;
   text-align: center;
 }
@@ -24,7 +24,7 @@ background: linear-gradient(to right, #086972, #053B40); /* Matches your app bac
 
 .page-not-found-link {
   background-color: white;
-  color: #053B40;
+  color: #053b40;
   padding: 10px 20px;
   border-radius: 5px;
   text-decoration: none;
@@ -33,6 +33,6 @@ background: linear-gradient(to right, #086972, #053B40); /* Matches your app bac
 }
 
 .page-not-found-link:hover {
-  background-color: #053B40;
+  background-color: #053b40;
   color: white;
 }

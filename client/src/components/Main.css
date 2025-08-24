@@ -1,289 +1,283 @@
+body {
+  background: #f9f9f9;
+  /* display: flex; */
+  justify-content: center;
+  align-items: flex-start;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  /* font-family: Arial, sans-serif; */
+}
 
+.main-body {
+  /* width: 80%; */
+  /* same as 4/5 of content area */
+  /* max-width: 900px; */
+  /* keep the max width */
+  min-height: 80vh;
+  /* ensures main content takes almost full viewport height */
+  margin-top: 40px;
+  height: 100vh;
+  background: #f0f8f8;
+  padding: 2rem;
+  overflow-y: auto;
+  /* border-radius: 8px; */
+  /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); */
+}
 
-    body {
-        background: #f9f9f9;
-        /* display: flex; */
-        justify-content: center;
-        align-items: flex-start;
-        height: 100vh;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-        /* font-family: Arial, sans-serif; */
-    }
+.note {
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
 
-    .main-body {
-        /* width: 80%; */
-        /* same as 4/5 of content area */
-        /* max-width: 900px; */
-        /* keep the max width */
-        min-height: 80vh;
-        /* ensures main content takes almost full viewport height */
-        margin-top: 40px;
-        height: 100vh;
-        background: #F0F8F8;
-        padding: 2rem;
-        overflow-y: auto;
-        /* border-radius: 8px; */
-        /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); */
-    }
+.note.small {
+  margin-top: 2rem;
+  /* font-size: 0.85rem; */
+}
 
-    .note {
-        padding: 1rem;
-        margin-bottom: 1.5rem;
-     
-    }
+.input-instruction {
+  margin-bottom: 1rem;
+  /* font-weight: bold; */
+}
 
-    .note.small {
-        margin-top: 2rem;
-        /* font-size: 0.85rem; */
-    }
+.examples {
+  display: flex;
+  flex-direction: row;
+  /* Stack title above list */
+  gap: 10px;
+  text-align: center;
+}
 
-    .input-instruction {
-        margin-bottom: 1rem;
-        /* font-weight: bold; */
-    }
+.example-title {
+  /* font-weight: lighter; */
+  margin-bottom: 0.5rem;
+  gap: 15px;
+  padding-top: 25px;
+}
 
-    .examples {
-        display: flex;
-        flex-direction: row;
-        /* Stack title above list */
-        gap: 10px;
-        text-align: center;
-    }
+.example-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  align-items: stretch;
+  padding-top: 15px;
+}
 
-    .example-title {
-        /* font-weight: lighter; */
-        margin-bottom: 0.5rem;
-        gap: 15px;
-        padding-top: 25px;
+.example-item {
+  flex: 1;
+  /* Equal width per row */
+  width: 200px;
+  height: 45px;
+  display: flex;
+  /* For vertical centering */
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f5f5;
+  padding: 10px;
+  border-radius: 4px;
+  color: black;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.3s;
+}
 
+.example-item:hover {
+  background: #cde4e4;
+}
 
-    }
+.input-header {
+  margin: 1rem 0 0.5rem;
+  /* font-weight: bold; */
+}
 
-    .example-list {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 15px;
-        align-items: stretch;
-        padding-top: 15px;
+.input-box {
+  width: 100%;
+  height: 100px;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: vertical;
+  font-size: 1rem;
+}
 
-    }
+.buttons {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
 
-    .example-item {
-        flex: 1;
-        /* Equal width per row */
-        width: 200px;
-        height: 45px;
-        display: flex;
-        /* For vertical centering */
-        justify-content: center;
-        align-items: center;
-        background-color: #F5F5F5;
-        padding: 10px;
-        border-radius: 4px;
-        color: black;
-        text-align: center;
-        cursor: pointer;
-        transition: background 0.3s;
-    }
+.btn {
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  /* font-size: 0.95rem; */
+  transition: background 0.3s;
+}
 
-    .example-item:hover {
-        background: #cde4e4;
-    }
+.btn-primary {
+  background: #086972;
+  color: white;
+}
 
-    .input-header {
-        margin: 1rem 0 0.5rem;
-        /* font-weight: bold; */
-    }
+.btn-primary:hover {
+  background: #065a61;
+}
 
-    .input-box {
-        width: 100%;
-        height: 100px;
-        padding: 0.75rem;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        resize: vertical;
-        font-size: 1rem;
-    }
+.btn-outline {
+  background: white;
+  border: 1px solid #086972;
+  color: #086972;
+}
 
-    .buttons {
-        margin-top: 1rem;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.75rem;
-    }
+.btn-outline:hover {
+  background: #e6f2f2;
+}
 
-    .btn {
-        padding: 0.6rem 1rem;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        /* font-size: 0.95rem; */
-        transition: background 0.3s;
-    }
+.btn-accent {
+  background: #ffd166;
+  color: #333;
+}
 
-    .btn-primary {
-        background: #086972;
-        color: white;
-    }
+.btn-accent:hover {
+  background: #fcbf49;
+}
 
-    .btn-primary:hover {
-        background: #065a61;
-    }
+.output-container {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: #fafafa;
+  border-radius: 5px;
+  border: 1px solid #eee;
+}
 
-    .btn-outline {
-        background: white;
-        border: 1px solid #086972;
-        color: #086972;
-    }
+.buttons-sec {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.75rem;
+}
 
-    .btn-outline:hover {
-        background: #e6f2f2;
-    }
-
-    .btn-accent {
-        background: #ffd166;
-        color: #333;
-    }
-
-    .btn-accent:hover {
-        background: #fcbf49;
-    }
-
-    .output-container {
-        margin-top: 1.5rem;
-        padding: 1rem;
-        background: #fafafa;
-        border-radius: 5px;
-        border: 1px solid #eee;
-    }
-
-    .buttons-sec {
-        margin-top: 1rem;
-        display: flex;
-        gap: 0.75rem;
-    }
-
-        /* ============================
+/* ============================
        Appointment Modal Styling
        ============================ */
-    
-        /* Modal overlay (dark background) */
-        .appointment-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            /* stays above everything */
-        }
-    
-        /* Modal box */
-        .appointment-modal .modal-content {
-            background: #ffffff;
-            padding: 25px 30px;
-            border-radius: 12px;
-            width: 400px;
-            max-width: 90%;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-            animation: fadeIn 0.3s ease-in-out;
-        }
-    
-        /* Title */
-        .appointment-modal .modal-content h2 {
-            margin-bottom: 20px;
-            text-align: center;
-            font-size: 1.5rem;
-            color: #053B40;
-        }
-    
-        /* Form */
-        .appointment-modal form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-    
-        /* Labels */
-        .appointment-modal label {
-            font-weight: 600;
-            font-size: 0.95rem;
-            color: #333;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-    
-        /* Inputs */
-        .appointment-modal input[type="date"],
-        .appointment-modal input[type="time"] {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-size: 0.95rem;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-    
-        .appointment-modal input[type="date"]:focus,
-        .appointment-modal input[type="time"]:focus {
-            border-color: #053B40;
-        }
-    
-        /* Buttons container */
-        .appointment-modal .modal-buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
-    
-        /* Confirm button */
-        .appointment-modal .btn.btn-primary {
-            background-color: #053B40;
-            border: none;
-            padding: 10px 18px;
-            border-radius: 8px;
-            color: #fff;
-            cursor: pointer;
-            font-weight: 600;
-            transition: background-color 0.2s;
-        }
-    
-        .appointment-modal .btn.btn-primary:hover {
-            background-color: #066357;
-        }
-    
-        /* Cancel button */
-        .appointment-modal .btn.btn-secondary {
-            background-color: #ccc;
-            border: none;
-            padding: 10px 18px;
-            border-radius: 8px;
-            color: #333;
-            cursor: pointer;
-            font-weight: 600;
-            transition: background-color 0.2s;
-        }
-    
-        .appointment-modal .btn.btn-secondary:hover {
-            background-color: #aaa;
-        }
-    
-        /* Animation */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-    
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+
+/* Modal overlay (dark background) */
+.appointment-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  /* stays above everything */
+}
+
+/* Modal box */
+.appointment-modal .modal-content {
+  background: #ffffff;
+  padding: 25px 30px;
+  border-radius: 12px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Title */
+.appointment-modal .modal-content h2 {
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 1.5rem;
+  color: #053b40;
+}
+
+/* Form */
+.appointment-modal form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Labels */
+.appointment-modal label {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Inputs */
+.appointment-modal input[type='date'],
+.appointment-modal input[type='time'] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.appointment-modal input[type='date']:focus,
+.appointment-modal input[type='time']:focus {
+  border-color: #053b40;
+}
+
+/* Buttons container */
+.appointment-modal .modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+/* Confirm button */
+.appointment-modal .btn.btn-primary {
+  background-color: #053b40;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.appointment-modal .btn.btn-primary:hover {
+  background-color: #066357;
+}
+
+/* Cancel button */
+.appointment-modal .btn.btn-secondary {
+  background-color: #ccc;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  color: #333;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.appointment-modal .btn.btn-secondary:hover {
+  background-color: #aaa;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

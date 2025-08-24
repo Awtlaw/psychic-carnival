@@ -16,7 +16,7 @@ export function ProtectRoute({ children }) {
 
     if (decoded.exp && decoded.exp < currentTime) {
       // Token expired
-      localStorage.removeItem('access')
+      localStorage.clear()
       navigate('/login')
     }
 

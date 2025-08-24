@@ -1,88 +1,85 @@
- .doctor-signup-container1 {
-     font-family: Arial, sans-serif;
-    background: linear-gradient(to right, #086972, #053B40);
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     height: 100vh;
-     margin: 0;
-     position: relative;
- }
+.doctor-signup-container1 {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to right, #086972, #053b40);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  position: relative;
+}
 .doctor-signup-container1 img {
-   
-            display: block;
-            margin: 0 auto 10px auto;
-            width: 60px;
-        
+  display: block;
+  margin: 0 auto 10px auto;
+  width: 60px;
 }
 
+/* Home button top corner */
+.doctor-home-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 8px 16px;
+  background: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
 
- /* Home button top corner */
- .doctor-home-btn {
-     position: absolute;
-     top: 20px;
-     left: 20px;
-     padding: 8px 16px;
-     background: #fff;
-     border: none;
-     border-radius: 6px;
-     cursor: pointer;
-     font-weight: bold;
-     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
- }
+.doctor-signup-container {
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  width: 700px;
+}
 
- .doctor-signup-container {
-     background: #fff;
-     padding: 30px;
-     border-radius: 12px;
-     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-     width: 700px;
- }
+.doctor-signup-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #086972;
+}
 
- .doctor-signup-container h2 {
-     text-align: center;
-     margin-bottom: 20px;
-     color: #086972;
- }
+/* Grid layout for form fields */
+.doctor-signup-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
 
- /* Grid layout for form fields */
- .doctor-signup-form {
-     display: grid;
-     grid-template-columns: 1fr 1fr;
-     gap: 20px;
- }
+.doctor-signup-form .input-box {
+  display: flex;
+  flex-direction: column;
+}
 
- .doctor-signup-form .input-box {
-     display: flex;
-     flex-direction: column;
- }
+.doctor-signup-form label {
+  margin-bottom: 6px;
+  font-weight: bold;
+  color: #333;
+}
 
- .doctor-signup-form label {
-     margin-bottom: 6px;
-     font-weight: bold;
-     color: #333;
- }
+.doctor-signup-form input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
 
- .doctor-signup-form input {
-     padding: 10px;
-     border: 1px solid #ccc;
-     border-radius: 6px;
- }
+/* Submit button full width */
+.doctor-signup-form .btn {
+  grid-column: span 2;
+  padding: 12px;
+  background: #086972;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 10px;
+}
 
- /* Submit button full width */
- .doctor-signup-form .btn {
-     grid-column: span 2;
-     padding: 12px;
-     background: #086972;
-     color: #fff;
-     border: none;
-     border-radius: 8px;
-     cursor: pointer;
-     font-size: 16px;
-     font-weight: bold;
-     margin-top: 10px;
- }
-
- .doctor-signup-form .btn:hover {
-     background: #086972;
- }
+.doctor-signup-form .btn:hover {
+  background: #086972;
+}

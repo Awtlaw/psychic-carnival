@@ -1,175 +1,173 @@
+.hcl-landing {
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.hcl-main-landing-container {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  background-color: #ffffff;
+  color: #333;
+  box-sizing: border-box;
+}
 
- .hcl-landing {
-     height: 100%;
-     overflow-x: hidden;
-     overflow-y: auto;
- }
- .hcl-main-landing-container {
-     font-family: Arial, sans-serif;
-     line-height: 1.6;
-     background-color: #FFFFFF;
-     color: #333;
-     box-sizing: border-box;
-     
- }
+/* Navbar */
+.hcl-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
 
- /* Navbar */
- .hcl-nav {
-     display: flex;
-     justify-content: space-between;
-     align-items: center;
-     padding: 1rem 2rem;
-     background: #fff;
-     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-     position: sticky;
-     top: 0;
-     z-index: 1000;
- }
+.hcl-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #086972;
+  text-decoration: none;
+}
 
- .hcl-brand {
-     font-size: 1.5rem;
-     font-weight: bold;
-     color: #086972;
-     text-decoration: none;
- }
+.hcl-nav-links {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+}
 
- .hcl-nav-links {
-     display: flex;
-     gap: 1.5rem;
-     list-style: none;
- }
+.hcl-nav-links a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
 
- .hcl-nav-links a {
-     text-decoration: none;
-     color: #333;
-     font-weight: 500;
- }
+.hcl-nav-links a:hover {
+  color: #086972;
+}
 
- .hcl-nav-links a:hover {
-     color: #086972;
- }
+/* Buttons */
+.hcl-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  text-decoration: none;
+  display: inline-block;
+}
 
- /* Buttons */
- .hcl-btn {
-     padding: 0.5rem 1rem;
-     border-radius: 6px;
-     border: none;
-     cursor: pointer;
-     font-weight: bold;
-     text-decoration: none;
-     display: inline-block;
- }
+.hcl-btn-custom {
+  background: #086972;
+  color: #fff;
+}
 
- .hcl-btn-custom {
-     background: #086972;
-     color: #fff;
- }
+.hcl-btn-custom:hover {
+  background: #053b40;
+}
 
- .hcl-btn-custom:hover {
-     background: #053b40;
- }
+.hcl-btn-outline {
+  background: #fff;
+  border: 2px solid #086972;
+  color: #086972;
+}
 
- .hcl-btn-outline {
-     background: #fff;
-     border: 2px solid #086972;
-     color: #086972;
- }
+.hcl-btn-outline:hover {
+  background: #086972;
+  color: #fff;
+}
 
- .hcl-btn-outline:hover {
-     background: #086972;
-     color: #fff;
- }
+/* Hero Section */
+.hcl-hero {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: #f9f9f9;
+}
 
- /* Hero Section */
- .hcl-hero {
-     text-align: center;
-     padding: 4rem 2rem;
-     background: #f9f9f9;
- }
+.hcl-hero h1 {
+  font-size: 2.5rem;
+  color: #086972;
+  margin-bottom: 1rem;
+}
 
- .hcl-hero h1 {
-     font-size: 2.5rem;
-     color: #086972;
-     margin-bottom: 1rem;
- }
+.hcl-hero p {
+  max-width: 700px;
+  margin: 0 auto 2rem auto;
+  font-size: 1.1rem;
+}
 
- .hcl-hero p {
-     max-width: 700px;
-     margin: 0 auto 2rem auto;
-     font-size: 1.1rem;
- }
+.hcl-hero img {
+  max-width: 600px;
+  width: 100%;
+  margin-top: 2rem;
+}
 
- .hcl-hero img {
-     max-width: 600px;
-     width: 100%;
-     margin-top: 2rem;
- }
+/* Features */
+.hcl-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  padding: 4rem 2rem;
+}
 
- /* Features */
- .hcl-features {
-     display: grid;
-     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-     gap: 2rem;
-     padding: 4rem 2rem;
- }
+.hcl-feature-card {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
 
- .hcl-feature-card {
-     background: #fff;
-     padding: 2rem;
-     border-radius: 10px;
-     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-     text-align: center;
- }
+.hcl-feature-card h3 {
+  margin-bottom: 1rem;
+  color: #086972;
+}
 
- .hcl-feature-card h3 {
-     margin-bottom: 1rem;
-     color: #086972;
- }
+.hcl-feature-card p {
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+}
 
- .hcl-feature-card p {
-     font-size: 0.95rem;
-     margin-bottom: 1.5rem;
- }
+/* Signup Section */
+.hcl-signup {
+  background: #f0f8f8;
+  padding: 4rem 2rem;
+  text-align: center;
+}
 
- /* Signup Section */
- .hcl-signup {
-     background: #f0f8f8;
-     padding: 4rem 2rem;
-     text-align: center;
- }
+.hcl-signup h2 {
+  margin-bottom: 1rem;
+  color: #086972;
+}
 
- .hcl-signup h2 {
-     margin-bottom: 1rem;
-     color: #086972;
- }
+.hcl-signup form {
+  max-width: 400px;
+  margin: 0 auto;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
- .hcl-signup form {
-     max-width: 400px;
-     margin: 0 auto;
-     background: #fff;
-     padding: 2rem;
-     border-radius: 8px;
-     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
- }
+.hcl-signup input {
+  width: 100%;
+  padding: 0.75rem;
+  margin: 0.5rem 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
 
- .hcl-signup input {
-     width: 100%;
-     padding: 0.75rem;
-     margin: 0.5rem 0;
-     border: 1px solid #ccc;
-     border-radius: 6px;
- }
+.hcl-signup button {
+  margin-top: 1rem;
+  width: 100%;
+}
 
- .hcl-signup button {
-     margin-top: 1rem;
-     width: 100%;
- }
-
- /* Footer */
- .hcl-footer {
-     background:#053B40;
-     color: white;
-     text-align: center;
-     padding: 15px;
-     margin-top: 135px;
- }
+/* Footer */
+.hcl-footer {
+  background: #053b40;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  margin-top: 135px;
+}
