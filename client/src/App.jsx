@@ -16,7 +16,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='*' element={<PageNotFound />} />
+        <Route path=' *' element={<PageNotFound />} />
         <Route path='/' element={<Land />} />
         <Route path='/about' element={<About />} />
         <Route path='/service' element={<Service />} />
