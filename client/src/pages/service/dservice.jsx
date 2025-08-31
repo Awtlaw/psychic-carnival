@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import './service.css'
-export function Service() {
+export function Dservice() {
   return (
     <div className='service-page1'>
       <div className='service-page'>
@@ -9,16 +9,16 @@ export function Service() {
             <div className='logo1'>HealthConnect</div>
             <ul className='nav-links'>
               <li>
-                <Link to='/'>Home</Link>
+                <Link to='/reports'>Home</Link>
               </li>
               <li>
-                <Link to='/about'>About</Link>
+                <Link to='/dabout'>About</Link>
               </li>
               <li>
-                <Link to='/service'>Services</Link>
+                <Link to='/dservice'>Services</Link>
               </li>
               <li>
-                <Link to='/contact'>Contact</Link>
+                <Link to='/dcontact'>Contact</Link>
               </li>
             </ul>
           </nav>

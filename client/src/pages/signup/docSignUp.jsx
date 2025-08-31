@@ -1,6 +1,8 @@
 import { signupDoctor } from '../../apis'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom' // ✅ for navigation
 import './docSignUp.css'
+
 export function DocSignUp() {
   const init = {
     firstName: '',
@@ -11,6 +13,7 @@ export function DocSignUp() {
     confirmPassword: ''
   }
   const [docForm, setDocForm] = useState(init)
+  const navigate = useNavigate() // ✅ use navigate hook
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -19,30 +22,31 @@ export function DocSignUp() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    let res
     try {
-      res = await signupDoctor(docForm)
+      const res = await signupDoctor(docForm)
       if (res.success) {
-        alert(res.message)
+        // ✅ go to login page
+        navigate('/login')
       } else {
         alert(res.message)
       }
-    } catch {
-      alert(res.message)
+    } catch (err) {
+      console.error('Signup error:', err)
+      alert('Registration failed. Please try again.')
     }
   }
 
   return (
     <div className='doctor-signup-container1'>
-      <a href='#' className='home-btn'>
+      <a href='/' className='home-btn'>
         ← Home
       </a>
 
-      <div class='doctor-signup-container'>
+      <div className='doctor-signup-container'>
         <img src='logo.png' alt='logo' />
         <h2>Doctor Sign Up</h2>
-        <form class='doctor-signup-form' onSubmit={handleSubmit}>
-          <div class='input-box'>
+        <form className='doctor-signup-form' onSubmit={handleSubmit}>
+          <div className='input-box'>
             <label htmlFor='firstName'>First Name</label>
             <input
               type='text'
@@ -54,7 +58,7 @@ export function DocSignUp() {
               onChange={handleChange}
             />
           </div>
-          <div class='input-box'>
+          <div className='input-box'>
             <label htmlFor='lastName'>Last Name</label>
             <input
               type='text'
@@ -66,11 +70,11 @@ export function DocSignUp() {
               onChange={handleChange}
             />
           </div>
-          <div class='input-box'>
+          <div className='input-box'>
             <label htmlFor='email'>Email</label>
             <input type='email' id='email' placeholder='Enter email' required name='email' value={docForm.email} onChange={handleChange} />
           </div>
-          <div class='input-box'>
+          <div className='input-box'>
             <label htmlFor='phone'>Phone</label>
             <input
               type='tel'
@@ -82,7 +86,7 @@ export function DocSignUp() {
               onChange={handleChange}
             />
           </div>
-          <div class='input-box'>
+          <div className='input-box'>
             <label htmlFor='password'>Password</label>
             <input
               type='password'
@@ -94,7 +98,7 @@ export function DocSignUp() {
               onChange={handleChange}
             />
           </div>
-          <div class='input-box'>
+          <div className='input-box'>
             <label htmlFor='confirmPassword'>Confirm Password</label>
             <input
               type='password'
@@ -106,7 +110,7 @@ export function DocSignUp() {
               onChange={handleChange}
             />
           </div>
-          <button type='submit' class='btn'>
+          <button type='submit' className='btn'>
             Sign Up
           </button>
         </form>

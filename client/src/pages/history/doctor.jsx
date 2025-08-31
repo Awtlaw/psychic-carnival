@@ -1,11 +1,12 @@
+import { Dnavbar } from '../../components/Dnavbar'
 import { History } from '../../components/history'
-import { Navbar } from '../../components/Navbar'
-import { Sidebar } from '../../components/sidebar'
+// import { Navbar } from '../../components/Navbar'
+// import { Sidebar } from '../../components/sidebar'
 
 export default function Doctor() {
   return (
     <div>
-      <Navbar />
+      <Dnavbar />
 
       <div className='content'>
         {/* <Sidebar /> */}

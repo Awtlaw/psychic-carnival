@@ -13,7 +13,7 @@ nav {
   top: 0;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
-/* Navbar flex layout */
+
 .navbar {
   display: flex;
   align-items: center;
@@ -28,18 +28,18 @@ nav {
   border-bottom: 1px solid black;
 }
 
-/* Logo */
+
 .logo {
   color: #086972;
   display: flex;
   font-size: 1.5rem;
   font-weight: bold;
   text-decoration: none;
-  /* align-items: center; */
+
 }
 .nlogo {
   display: flex;
-  /* align-items: center; */
+
   gap: 10px;
 }
 .nlogo img {
@@ -66,7 +66,7 @@ nav {
 .nav-links a:hover {
   color: #086972;
 }
-/* Hamburger menu */
+
 .menu-btn {
   display: none;
   flex-direction: column;
@@ -81,7 +81,6 @@ nav {
   border-radius: 2px;
 }
 
-/* Responsive styles */
 @media (max-width: 768px) {
   .nav-links {
     display: none;

@@ -1,7 +1,9 @@
 import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { format } from 'date-fns'
 import { signupPatient } from '../../apis'
 import './patientSignUp.css'
+
 export function PatientSignUp() {
   const init = {
     firstName: '',
@@ -16,6 +18,7 @@ export function PatientSignUp() {
     proxy: null
   }
   const [patientForm, setPatientForm] = useState(init)
+  const navigate = useNavigate()
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -26,22 +29,27 @@ export function PatientSignUp() {
     e.preventDefault()
     let res
     try {
-      res = await signupPatient({ ...patientForm, dob: format(patientForm.dob, 'MM/dd/yyyy') })
+      res = await signupPatient({
+        ...patientForm,
+        dob: format(new Date(patientForm.dob), 'MM/dd/yyyy')
+      })
+
       if (res.success) {
-        alert(res.message)
+        navigate('/login') // redirect to login
       } else {
-        alert(res.message)
+        alert(res.message) // show error if signup failed
       }
-    } catch {
-      alert(res.message)
+    } catch (err) {
+      console.error('Signup error:', err)
+      alert('Registration failed. Please try again.')
     }
   }
 
   return (
     <div className='signup-container'>
-      <a href='#' className='home-btn'>
+      <Link to='/' className='home-btn'>
         ← Home
-      </a>
+      </Link>
       <div className='signup-box'>
         <img src='logo.png' alt='' />
         <h2>Create Your HealthConnect Account</h2>
@@ -125,7 +133,7 @@ export function PatientSignUp() {
           <div className='input-box'>
             <label htmlFor='sex'>Sex</label>
             <select id='sex' required name='sex' value={patientForm.sex} onChange={handleChange}>
-              <option value='' disabled selected>
+              <option value='' disabled>
                 Select sex
               </option>
               <option value='M'>Male</option>

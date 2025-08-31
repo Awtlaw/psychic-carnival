@@ -1,27 +1,27 @@
 import { Link } from 'react-router-dom'
 import './about.css'
-export function About() {
+export function Dabout() {
   return (
     <div className='about-page'>
       <nav className='about-navbar'>
         <div className='about-logo'>HealthConnect</div>
         <ul>
           <li>
-            <Link to='/'>Home</Link>
+            <Link to='/reports'>Home</Link>
           </li>
           <li>
-            <Link to='/about' className='active'>
+            <Link to='/dabout' className='active'>
               About
             </Link>
           </li>
           <li>
-            <Link to='/service'>Services</Link>
+            <Link to='/dservice'>Services</Link>
           </li>
           <li>
-            <Link to='/contact'>Contact</Link>
+            <Link to='/dcontact'>Contact</Link>
           </li>
           <li>
-            <Link to='/login'>Login</Link>
+            <Link to='/logOut'>LogOut</Link>
           </li>
         </ul>
       </nav>

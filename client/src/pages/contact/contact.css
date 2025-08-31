@@ -4,14 +4,19 @@
     padding: 0;
 } */
 
+.contact-page-container{
+box-sizing: border-box;
+  height: 100%;
+  overflow: auto;
+
+}
 .contact-page {
-  font-family: Arial, Helvetica, sans-serif;
-  background: var(--hc-bg);
+  /* font-family: Arial, Helvetica, sans-serif; */
+  background: #F0F8F8;
   color: var(--hc-text);
   line-height: 1.6;
 }
 
-/* ===== Navbar ===== */
 .hcc-navbar {
   display: flex;
   justify-content: space-between;
@@ -35,7 +40,7 @@
 }
 
 .hcc-navbar .nav-links a {
-  color: var(--hc-white);
+  color: black;
   text-decoration: none;
   font-weight: 500;
   padding: 0.25rem 0;
@@ -43,9 +48,8 @@
   transition: border-color 0.2s ease;
 }
 
-.hcc-navbar .nav-links a:hover,
-.hcc-navbar .nav-links a.active {
-  border-color: var(--hc-white);
+.hcc-navbar .nav-links a:hover {
+  border-color: black;
 }
 
 /* ===== Contact Section ===== */

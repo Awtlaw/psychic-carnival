@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import './contact.css'
-export function Contact() {
+export function Pcontact() {
   return (
     <div className='contact-page-container'>
       <div className='contact-page'>
@@ -9,16 +9,18 @@ export function Contact() {
             <div className='logoc'>HealthConnect</div>
             <ul className='nav-links'>
               <li>
-                <Link to='/'>Home</Link>
+                <Link to='/home'>Home</Link>
               </li>
               <li>
-                <Link to='/about'>About</Link>
+                <Link to='/pabout'>About</Link>
               </li>
               <li>
-                <Link to='/service'>Services</Link>
+                <Link to='/pservice'>Services</Link>
               </li>
               <li>
-                <Link to='/contact'>Contact</Link>
+                <Link to='/pcontact' className='active'>
+                  Contact
+                </Link>
               </li>
             </ul>
           </nav>
@@ -54,9 +56,9 @@ export function Contact() {
 
               <div className='hc-social'>
                 <strong>Follow Us:</strong>
-                <Link to='privacy.html'>Facebook</Link>
-                <Link to='privacy.html'>Twitter/X</Link>
-                <Link to='privacy.html'>LinkedIn</Link>
+                <Link to='#'>Facebook</Link>
+                <Link to='#'>Twitter/X</Link>
+                <Link to='#'>LinkedIn</Link>
               </div>
             </div>
           </div>
