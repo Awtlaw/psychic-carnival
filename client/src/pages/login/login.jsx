@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { loginUser } from '../../apis'
 import './login.css'
 import { jwtDecode } from 'jwt-decode'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 export function Login() {
   const init = {
@@ -48,9 +48,9 @@ export function Login() {
 
   return (
     <div className='login-container'>
-      <a href='index.html' className='home-btn'>
+      <Link to='/' className='home-btn'>
         ← Home
-      </a>
+      </Link>
       <div className='login-box'>
         <img src='logo.png' alt='HealthConnect Logo' />
         <h2>Welcome Back to HealthConnect</h2>
@@ -68,7 +68,9 @@ export function Login() {
             />
           </div>
           <div className='login-input-box'>
-            <label htmlFor='password'>Password</label>
+            <label htmlFor='password' placeholder='P@ssw0rd@'>
+              Password
+            </label>
             <input
               type='password'
               id='password'
@@ -90,7 +92,7 @@ export function Login() {
           </button>
           <div className='signup'>
             <p>
-              Don't have an account? <a href='signup.html'>Sign up</a>
+              Don't have an account? <Link to='/register-patient'>Sign up</Link>
             </p>
           </div>
         </form>
@@ -104,11 +106,12 @@ export const Logout = () => {
 
   const handleLogout = () => {
     localStorage.clear()
-    navigate('/login', { replace: true })
+    navigate('/', { replace: true })
   }
+
   return (
-    <button type='button' onClick={handleLogout}>
-      <div className=''>Logout</div>
+    <button type='button' className='logout-btn' onClick={handleLogout}>
+      Logout
     </button>
   )
 }

@@ -11,6 +11,12 @@ import { Service } from './pages/service/service'
 import { Contact } from './pages/contact/contact'
 import PageNotFound from './pages/error/page'
 import { ProtectRoute } from './components/protectRoute'
+import { Dabout } from './pages/about/dabout'
+import { Pabout } from './pages/about/pabout'
+import { Dcontact } from './pages/contact/dcontact'
+import { Pcontact } from './pages/contact/pcontact'
+import { Pservice } from './pages/service/pservice'
+import { Dservice } from './pages/service/dservice'
 
 function App() {
   return (
@@ -20,7 +26,7 @@ function App() {
         <Route path='/' element={<Land />} />
         <Route path='/about' element={<About />} />
         <Route path='/service' element={<Service />} />
-        <Route path='contact' element={<Contact />} />
+        <Route path='/contact' element={<Contact />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register-patient' element={<PatientSignUp />} />
         <Route path='/register-doctor' element={<DocSignUp />} />
@@ -32,6 +38,12 @@ function App() {
             </ProtectRoute>
           }
         />
+        <Route path='/dabout' element={<Dabout />} />
+        <Route path='/pabout' element={<Pabout />} />
+        <Route path='/dcontact' element={<Dcontact />} />
+        <Route path='/Pcontact' element={<Pcontact />} />
+        <Route path='/pservice' element={<Pservice />} />
+        <Route path='/dservice' element={<Dservice />} />
 
         <Route path='reports'>
           <Route element={<Doctor />} index={true} />
