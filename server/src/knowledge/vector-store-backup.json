@@ -83,11 +83,7 @@
         "hasWIDAL": false,
         "hasHPylori": true,
         "hasUrine": true,
-        "symptomKeywords": [
-          "burning in the chest",
-          "nausea",
-          "abdominal pain"
-        ],
+        "symptomKeywords": ["burning in the chest", "nausea", "abdominal pain"],
         "id": 3,
         "source": "medical-documents"
       }
@@ -874,9 +870,7 @@
         "hasWIDAL": false,
         "hasHPylori": false,
         "hasUrine": false,
-        "symptomKeywords": [
-          "itchy rash with fluid on the skin  for 5 days"
-        ],
+        "symptomKeywords": ["itchy rash with fluid on the skin  for 5 days"],
         "id": 38,
         "source": "medical-documents"
       }
@@ -1278,11 +1272,7 @@
         "hasWIDAL": false,
         "hasHPylori": false,
         "hasUrine": false,
-        "symptomKeywords": [
-          "loss of appetite",
-          "diarrhoea",
-          "vomiting"
-        ],
+        "symptomKeywords": ["loss of appetite", "diarrhoea", "vomiting"],
         "id": 56,
         "source": "medical-documents"
       }
@@ -1369,11 +1359,7 @@
         "hasWIDAL": false,
         "hasHPylori": true,
         "hasUrine": true,
-        "symptomKeywords": [
-          "feeling nauseous",
-          "vomiting",
-          "abdominal pain"
-        ],
+        "symptomKeywords": ["feeling nauseous", "vomiting", "abdominal pain"],
         "id": 60,
         "source": "medical-documents"
       }
@@ -1571,11 +1557,7 @@
         "hasWIDAL": true,
         "hasHPylori": true,
         "hasUrine": true,
-        "symptomKeywords": [
-          "burping and farting",
-          "tummy pain",
-          "indigestion"
-        ],
+        "symptomKeywords": ["burping and farting", "tummy pain", "indigestion"],
         "id": 69,
         "source": "medical-documents"
       }
@@ -2323,10 +2305,7 @@
         "hasWIDAL": false,
         "hasHPylori": false,
         "hasUrine": false,
-        "symptomKeywords": [
-          "syncope",
-          "feeling nauseous"
-        ],
+        "symptomKeywords": ["syncope", "feeling nauseous"],
         "id": 101,
         "source": "medical-documents"
       }
@@ -2672,11 +2651,7 @@
         "hasWIDAL": true,
         "hasHPylori": true,
         "hasUrine": true,
-        "symptomKeywords": [
-          "abdominal pain",
-          "feeling nauseous",
-          "vomiting"
-        ],
+        "symptomKeywords": ["abdominal pain", "feeling nauseous", "vomiting"],
         "id": 117,
         "source": "medical-documents"
       }
@@ -3744,10 +3719,7 @@
         "hasWIDAL": false,
         "hasHPylori": false,
         "hasUrine": false,
-        "symptomKeywords": [
-          "missed menstrual period",
-          "nausea"
-        ],
+        "symptomKeywords": ["missed menstrual period", "nausea"],
         "id": 161,
         "source": "medical-documents"
       }
@@ -4160,12 +4132,7 @@
         "hasWIDAL": false,
         "hasHPylori": false,
         "hasUrine": false,
-        "symptomKeywords": [
-          "fever",
-          "headaches",
-          "chills",
-          "vomiting"
-        ],
+        "symptomKeywords": ["fever", "headaches", "chills", "vomiting"],
         "id": 179,
         "source": "medical-documents"
       }
@@ -4206,11 +4173,7 @@
         "hasWIDAL": true,
         "hasHPylori": false,
         "hasUrine": false,
-        "symptomKeywords": [
-          "sustained fever",
-          "diarrhea",
-          "stomach pain"
-        ],
+        "symptomKeywords": ["sustained fever", "diarrhea", "stomach pain"],
         "id": 181,
         "source": "medical-documents"
       }

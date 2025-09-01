@@ -2,6 +2,8 @@ import { Router } from 'express';
 import { addNewAdmin, getAdmin, getAdmins } from '../controllers/user/admin.js';
 import {
   addNewDoctor,
+  changePassword,
+  deleteDoc,
   getDoctor,
   getDoctors,
 } from '../controllers/user/doctor.js';
@@ -18,7 +20,7 @@ export const users = Router();
 
 // registration
 users.post('/register/admin', addNewAdmin);
-users.post('/register/doctor', addNewDoctor);
+users.post('/register/doctor', ProtectRoute, addNewDoctor);
 users.post('/register/patient', addNewPatient);
 
 // login
@@ -30,6 +32,8 @@ users.get('/admin/:id', ProtectRoute, getAdmin);
 
 users.get('/doctor', ProtectRoute, getDoctors);
 users.get('/doctor/:id', ProtectRoute, getDoctor);
+users.put('/doctor/change-password', ProtectRoute, changePassword);
+users.delete('/doctor/delete', ProtectRoute, deleteDoc);
 
 users.get('/patient', ProtectRoute, getPatients);
 users.get('/patient/:id', ProtectRoute, getPatient);

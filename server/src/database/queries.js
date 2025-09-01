@@ -98,6 +98,29 @@ export const doctors = {
     });
     return doctor;
   },
+
+  updatePassword: async (email, hash) => {
+    try {
+      await prisma.doctor.update({
+        where: { email },
+        data: { pwd: hash },
+      });
+    } catch (e) {
+      console.log(e);
+      throw e;
+    }
+  },
+
+  removeDoctorByEmail: async (email) => {
+    try {
+      await prisma.doctor.delete({
+        where: { email },
+      });
+    } catch (e) {
+      console.log(e);
+      throw e;
+    }
+  },
 };
 
 export const patients = {

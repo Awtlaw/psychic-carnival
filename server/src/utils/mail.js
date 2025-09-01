@@ -71,3 +71,27 @@ export function sendReminderMail(mail, name, date, period, reason, doc) {
     console.log('Message sent:', info?.messageId);
   });
 }
+
+export function sendDocDetails(mail, name) {
+  const detailsMail = {
+    from: `HealthConnect Team <${process.env.SMTP_USER}>`,
+    to: mail,
+    subject: 'Your Account Has Been Created - HealthConnect',
+    text: `
+    
+    Hello ${name},
+    
+    Kindly note your doctor's account has been created.
+    Login with your email and the default password: P@ssw0rd10
+    Please change your password after logging in to secure your account.
+
+    Best regards,  
+    HealthConnect Team
+    `,
+  };
+
+  transporter.sendMail(detailsMail, function (err, info) {
+    if (err) console.log(err);
+    console.log('Message sent:', info?.messageId);
+  });
+}
