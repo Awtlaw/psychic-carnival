@@ -23,3 +23,11 @@ export const calculateAge = (dob) => {
   }
   return `${months} months, ${days} days`;
 };
+
+export const randomString = function (length = 6) {
+  const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+  return Array.from(
+    { length },
+    () => letters[Math.floor(Math.random() * letters.length)],
+  ).join('');
+};

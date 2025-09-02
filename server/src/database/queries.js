@@ -121,9 +121,22 @@ export const doctors = {
       throw e;
     }
   },
+
+  uploadDoctorPfp: async (email, filename) => {
+    await prisma.doctor.update({
+      where: { email },
+      data: { profileImg: filename },
+    });
+  },
 };
 
 export const patients = {
+  uploadPatientPfp: async (email, filename) => {
+    await prisma.patient.update({
+      where: { email },
+      data: { profileImg: filename },
+    });
+  },
   createPatient: async (...params) => {
     const newPatient = await prisma.patient.create({
       data: {

@@ -47,6 +47,7 @@ model Doctor {
   joinedAt    DateTime      @default(now())
   Appointment Appointment[]
   Report      Report[]
+  profileImg  String?
 }
 
 model Patient {
@@ -64,6 +65,7 @@ model Patient {
   joinedAt     DateTime      @default(now())
   appointments Appointment[]
   reports      Report[]      @relation("PatientReports")
+  profileImg   String?
 }
 
 model Report {

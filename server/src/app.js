@@ -5,6 +5,7 @@ import express from 'express';
 import { users } from './routes/users.js';
 import { appointments } from './routes/appointments.js';
 import { reports } from './routes/reports.js';
+import { uploads } from './routes/uploads.js';
 import cors from 'cors';
 import path from 'node:path';
 import { fileURLToPath } from 'url';
@@ -21,6 +22,7 @@ app.use(
 );
 app.use(express.json());
 app.use(cors(corsOptions));
+app.use('/images', express.static('images'));
 
 app.get('/', (req, res) => {
   res.json({ message: 'HealthConnect', success: true });
@@ -28,6 +30,7 @@ app.get('/', (req, res) => {
 app.use('/api/user', users);
 app.use('/api/report', reports);
 app.use('/api/appointment', appointments);
+app.use('/api/upload', uploads);
 
 // error handler
 // eslint-disable-next-line no-unused-vars
