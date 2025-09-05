@@ -12,24 +12,26 @@
 .hc-navbar {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 15px 10%;
+  align-items: center; 
+  padding: 1rem 2rem;
   background: #fff;
-  color: #053b40;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 0;
   z-index: 1000;
 }
 
 .hc-navbar .logo1 {
-  font-size: 22px;
+  font-size: 1.5rem;
   font-weight: bold;
+  color: #086972;
+  text-decoration: none;
 }
 
 .hc-navbar .nav-links {
-  list-style: none;
   display: flex;
-  gap: 20px;
+  gap: 1.5rem;
+  list-style: none;
 }
 
 .hc-navbar .nav-links li a {

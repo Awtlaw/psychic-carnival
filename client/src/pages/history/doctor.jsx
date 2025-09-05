@@ -10,7 +10,7 @@ export default function Doctor() {
 
       <div className='content'>
         {/* <Sidebar /> */}
-        <div className='history-main-container'>
+        <div>
           <History />
         </div>
       </div>

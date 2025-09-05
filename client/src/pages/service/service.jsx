@@ -12,7 +12,7 @@ export function Service() {
                 <Link to='/'>Home</Link>
               </li>
               <li>
-                <Link to='/about'>About</Link>
+                <Link to='/about'>About Us</Link>
               </li>
               <li>
                 <Link to='/service'>Services</Link>
@@ -21,6 +21,14 @@ export function Service() {
                 <Link to='/contact'>Contact</Link>
               </li>
             </ul>
+            <div>
+              <Link to='/login' className='hcl-btn hcl-btn-outline'>
+                Login
+              </Link>
+              <Link to='/register-patient' className='hcl-btn hcl-btn-custom'>
+                Sign Up
+              </Link>
+            </div>
           </nav>
         </header>
         <section className='hc-services-hero'>

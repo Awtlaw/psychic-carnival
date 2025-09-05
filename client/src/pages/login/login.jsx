@@ -36,6 +36,9 @@ export function Login() {
           case 'PATIENT':
             navigate('/home')
             break
+          case 'ADMIN':
+            navigate('/admin')
+            break
         }
       } else {
         alert(res.message)

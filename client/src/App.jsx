@@ -17,6 +17,8 @@ import { Dcontact } from './pages/contact/dcontact'
 import { Pcontact } from './pages/contact/pcontact'
 import { Pservice } from './pages/service/pservice'
 import { Dservice } from './pages/service/dservice'
+import Admin from './pages/admin/admin'
+import { Summary } from './components/summary'
 
 function App() {
   return (
@@ -30,6 +32,8 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/register-patient' element={<PatientSignUp />} />
         <Route path='/register-doctor' element={<DocSignUp />} />
+        <Route path='/admin' element={<Admin />} />
+        <Route path='/summary' element={<Summary />} />
         <Route
           path='home'
           element={

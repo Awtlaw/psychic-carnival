@@ -11,7 +11,6 @@
   box-sizing: border-box;
 }
 
-/* Navbar */
 .hcl-nav {
   display: flex;
   justify-content: space-between;
@@ -47,9 +46,9 @@
   color: #086972;
 }
 
-/* Buttons */
 .hcl-btn {
   padding: 0.5rem 1rem;
+  /* border-radius: 2px 20px; */
   border-radius: 6px;
   border: none;
   cursor: pointer;
@@ -78,7 +77,6 @@
   color: #fff;
 }
 
-/* Hero Section */
 .hcl-hero {
   text-align: center;
   padding: 4rem 2rem;
@@ -103,7 +101,6 @@
   margin-top: 2rem;
 }
 
-/* Features */
 .hcl-features {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -129,7 +126,6 @@
   margin-bottom: 1.5rem;
 }
 
-/* Signup Section */
 .hcl-signup {
   background: #f0f8f8;
   padding: 4rem 2rem;
@@ -163,7 +159,6 @@
   width: 100%;
 }
 
-/* Footer */
 .hcl-footer {
   background: #053b40;
   color: white;

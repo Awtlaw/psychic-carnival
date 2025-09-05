@@ -1,28 +1,28 @@
 body {
-  background: #f9f9f9;
-  justify-content: center;
-  align-items: flex-start;
-  height: 100vh;
-  margin: 0;
+ margin: 0;
   padding: 0;
   overflow: hidden;
-  font-family: Arial, sans-serif;
 }
 
-.main-body {
-  /* width: 80%; */
-  /* same as 4/5 of content area */
-  /* max-width: 900px; */
-  /* keep the max width */
-  min-height: 80vh;
-  /* ensures main content takes almost full viewport height */
+/* .main-body {
   margin-top: 40px;
-  height: 100vh;
   background: #f0f8f8;
   padding: 2rem;
   overflow-y: auto;
-  /* border-radius: 8px; */
-  /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); */
+  flex: 1;
+
+} */
+.main-body {
+  flex: 1;
+  /* fill remaining space */
+  background: #f0f8f8;
+  padding: 2rem;
+  margin-top: 56px;
+  /* leave space for navbar */
+  overflow-y: auto;
+  /* scrollable */
+  min-height: calc(100vh - 56px);
+  /* total height minus navbar */
 }
 
 .note {
@@ -32,24 +32,22 @@ body {
 
 .note.small {
   margin-top: 2rem;
-  /* font-size: 0.85rem; */
 }
 
 .input-instruction {
   margin-bottom: 1rem;
-  /* font-weight: bold; */
 }
 
 .examples {
   display: flex;
   flex-direction: row;
-  /* Stack title above list */
+
   gap: 10px;
   text-align: center;
 }
 
 .example-title {
-  /* font-weight: lighter; */
+  
   margin-bottom: 0.5rem;
   gap: 15px;
   padding-top: 25px;
@@ -65,11 +63,11 @@ body {
 
 .example-item {
   flex: 1;
-  /* Equal width per row */
+  
   width: 200px;
   height: 45px;
   display: flex;
-  /* For vertical centering */
+ 
   justify-content: center;
   align-items: center;
   background-color: #f5f5f5;
@@ -87,7 +85,7 @@ body {
 
 .input-header {
   margin: 1rem 0 0.5rem;
-  /* font-weight: bold; */
+ 
 }
 
 .input-box {
@@ -112,7 +110,7 @@ body {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  /* font-size: 0.95rem; */
+
   transition: background 0.3s;
 }
 
@@ -158,11 +156,6 @@ body {
   gap: 0.75rem;
 }
 
-/* ============================
-       Appointment Modal Styling
-       ============================ */
-
-/* Modal overlay (dark background) */
 .appointment-modal {
   position: fixed;
   top: 0;
@@ -174,10 +167,9 @@ body {
   justify-content: center;
   align-items: center;
   z-index: 2000;
-  /* stays above everything */
 }
 
-/* Modal box */
+
 .appointment-modal .modal-content {
   background: #ffffff;
   padding: 25px 30px;
@@ -188,7 +180,7 @@ body {
   animation: fadeIn 0.3s ease-in-out;
 }
 
-/* Title */
+
 .appointment-modal .modal-content h2 {
   margin-bottom: 20px;
   text-align: center;
@@ -196,14 +188,14 @@ body {
   color: #053b40;
 }
 
-/* Form */
+
 .appointment-modal form {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 
-/* Labels */
+
 .appointment-modal label {
   font-weight: 600;
   font-size: 0.95rem;
@@ -213,7 +205,6 @@ body {
   gap: 6px;
 }
 
-/* Inputs */
 .appointment-modal input[type='date'],
 .appointment-modal input[type='time'] {
   padding: 10px;
@@ -229,14 +220,13 @@ body {
   border-color: #053b40;
 }
 
-/* Buttons container */
 .appointment-modal .modal-buttons {
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
 }
 
-/* Confirm button */
+
 .appointment-modal .btn.btn-primary {
   background-color: #053b40;
   border: none;
@@ -252,7 +242,7 @@ body {
   background-color: #066357;
 }
 
-/* Cancel button */
+
 .appointment-modal .btn.btn-secondary {
   background-color: #ccc;
   border: none;
@@ -268,7 +258,6 @@ body {
   background-color: #aaa;
 }
 
-/* Animation */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -279,4 +268,72 @@ body {
     opacity: 1;
     transform: translateY(0);
   }
+}
+.layout1 {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+}
+
+/* Sidebar */
+/* .sidebar {
+  width: 240px;
+  background: #053b40;
+  color: white;
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+} */
+ /* Sidebar */
+ .sidebar {
+   width: 240px;
+   flex-shrink: 0;
+   height: 100vh;
+   /* full viewport height */
+   display: flex;
+   flex-direction: column;
+   padding: 2rem 1rem;
+   background: #053b40;
+   color: white;
+ }
+
+.sidebar h2 {
+  margin: 0 0 2rem 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Reset ul/li */
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin:3rem 0 0 0;
+}
+
+.sidebar ul li {
+  margin-bottom: 0.5rem;
+}
+
+/* Make the <a> look like Admin’s <li> */
+.sidebar ul li a {
+  display: block;
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border-radius: 6px;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  transition: background 0.2s ease;
+}
+
+/* Hover */
+.sidebar ul li a:hover {
+  background: #065a60;
+}
+
+/* Active state */
+.sidebar ul li.active a {
+  background: #0a9396;
 }

@@ -9,15 +9,22 @@ body,
   font-family: Arial, sans-serif;
 }
 
-.main-content {
+/* .main-content {
   flex: 1;
   background-color: #f4f4f4;
   overflow-y: auto;
-}
+} */
 
-.content {
+/* .content {
   display: flex;
   flex: 1;
-  /* height: calc(100vh - 56px); */
   min-height: 0;
+} */
+.main-content {
+  flex: 1;
+  /* min-height: calc(100vh - 56px); full height minus navbar */
+  /* background: #f4f4f4; example */
+  /* padding: 20px; */
+  /* margin-top: 56px; */
+  /* overflow-y: auto; */
 }

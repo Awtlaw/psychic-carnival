@@ -9,13 +9,13 @@ export function Land() {
           <div className='hcl-brand'>HealthConnect</div>
           <ul className='hcl-nav-links'>
             <li>
-              <Link to='/home'>Home</Link>
+              <Link to='/'>Home</Link>
             </li>
             <li>
               <Link to='/about'>About Us</Link>
             </li>
             <li>
-              <Link to='/service'>Service</Link>
+              <Link to='/service'>Services</Link>
             </li>
             <li>
               <Link to='/contact'>Contact</Link>

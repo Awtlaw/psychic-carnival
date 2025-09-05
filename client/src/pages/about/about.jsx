@@ -5,13 +5,13 @@ export function About() {
     <div className='about-page'>
       <nav className='about-navbar'>
         <div className='about-logo'>HealthConnect</div>
-        <ul>
+        <ul className='ab-nav-links'>
           <li>
             <Link to='/'>Home</Link>
           </li>
           <li>
             <Link to='/about' className='active'>
-              About
+              About Us
             </Link>
           </li>
           <li>
@@ -20,10 +20,15 @@ export function About() {
           <li>
             <Link to='/contact'>Contact</Link>
           </li>
-          <li>
-            <Link to='/login'>Login</Link>
-          </li>
         </ul>
+        <div>
+          <Link to='/login' className='hcl-btn hcl-btn-outline'>
+            Login
+          </Link>
+          <Link to='/register-patient' className='hcl-btn hcl-btn-custom'>
+            Sign Up
+          </Link>
+        </div>
       </nav>
 
       <header className='about-header'>

@@ -36,7 +36,6 @@ export function Dnavbar() {
             <Link to='/dabout'>About</Link>
             <Link to='/dservice'>Services</Link>
             <Link to='/dcontact'>Contact</Link>
-            <Logout />
           </div>
         </div>
       </nav>

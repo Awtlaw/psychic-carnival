@@ -2,7 +2,9 @@ import { httpClient } from './client'
 
 export const signupDoctor = async (data) => {
   try {
-    const response = await httpClient.post('/api/user/register/doctor', data)
+    const response = await httpClient.post('/api/user/register/doctor', data, {
+      headers: { Authorization: `Bearer ${localStorage.getItem('access')}` }
+    })
     return response.data
   } catch (error) {
     return error.response.data

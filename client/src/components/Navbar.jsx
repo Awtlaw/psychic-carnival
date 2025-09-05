@@ -35,7 +35,6 @@ export function Navbar() {
             <Link to='/about'>About</Link>
             <Link to='/service'>Services</Link>
             <Link to='/contact'>Contact</Link>
-            <Logout />
           </div>
         </div>
       </nav>
