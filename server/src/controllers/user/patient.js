@@ -115,3 +115,10 @@ export const getImage = asyncHandler(async (req, res) => {
     res.status(404).json({ message: 'Image not found', success: false });
   }
 });
+
+export const updatePatientInfo = asyncHandler(async (req, res) => {
+  const { sub } = req.user;
+  const { phone, address } = req.body;
+  await patients.updatePatient(sub, phone, address);
+  res.json({ message: 'Update success', success: true });
+});
