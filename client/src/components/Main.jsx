@@ -1,4 +1,16 @@
-import { assignDoctor, bookApt, checkSymptoms, getPatientById, listPendingApts, listReports, writeReport } from '../apis'
+import {
+  assignDoctor,
+  bookApt,
+  checkSymptoms,
+  getPatientById,
+  listPendingApts,
+  listReports,
+  writeReport,
+  uploadPfp,
+  getUserPfp,
+  changePassword,
+  updatePatient
+} from '../apis'
 import { useEffect, useState } from 'react'
 import './main.css'
 import { jwtDecode } from 'jwt-decode'
@@ -20,6 +32,80 @@ export function Main() {
   const [patients, setPatients] = useState({})
   const [pendingAppointments, setPendingAppointments] = useState([])
   const [loadingApts, setLoadingApts] = useState(false)
+  const [profile, setProfile] = useState(null)
+  const [loadingProfile, setLoadingProfile] = useState(false)
+  const [userPfp, setUserPfp] = useState(null) // stores profile picture URL
+  const [selectedFile, setSelectedFile] = useState(null) // file chosen by user
+  const [uploading, setUploading] = useState(false)
+  const [oldPassword, setOldPassword] = useState('')
+  const [newPassword, setNewPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [changingPassword, setChangingPassword] = useState(false)
+  const [form, setForm] = useState({
+    phone: '',
+    address: ''
+  })
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setForm((prev) => ({ ...prev, [name]: value }))
+  }
+
+  const handleSave = async () => {
+    try {
+      const { sub: patientId } = jwtDecode(localStorage.getItem('access'))
+      // Assuming your API updates profile details
+      const res = await updatePatient(patientId, form)
+
+      if (res.success) {
+        alert('Profile updated successfully!')
+        setProfile((prev) => ({ ...prev, ...form })) // update UI
+      } else {
+        alert(res.message || 'Update failed')
+      }
+    } catch (err) {
+      console.error(err)
+      alert('Error updating profile')
+    }
+  }
+
+  console.log(loadingProfile)
+  const handlePfpChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      setSelectedFile(e.target.files[0])
+    }
+  }
+
+  const handlePfpUpload = async () => {
+    if (!selectedFile) return alert('Please select a file!')
+
+    const formData = new FormData()
+    formData.append('image', selectedFile)
+    formData.append('email', profile?.email)
+
+    setUploading(true)
+    try {
+      const res = await uploadPfp(formData)
+      if (res.success) {
+        alert('Profile picture uploaded successfully!')
+        setUserPfp(res.imageUrl)
+
+        // Trigger animation on profile picture
+        const imgEl = document.querySelector('.profile-picture img')
+        if (imgEl) {
+          imgEl.classList.remove('update-animation') // reset animation
+          void imgEl.offsetWidth // trigger reflow
+          imgEl.classList.add('update-animation') // apply animation
+        }
+      } else {
+        alert(res.message || 'Upload failed')
+      }
+    } catch (err) {
+      console.error(err)
+      alert('Error uploading file')
+    } finally {
+      setUploading(false)
+    }
+  }
 
   const handleSymptomChange = (e) => setSymptoms(e.target.value)
 
@@ -38,6 +124,34 @@ export function Main() {
       alert(error.message || 'An error occurred')
     } finally {
       setLoading(false)
+    }
+  }
+  // handle password change
+  const handlePasswordChange = async (e) => {
+    e.preventDefault()
+    if (newPassword !== confirmPassword) {
+      return alert('New password and confirmation do not match!')
+    }
+
+    try {
+      const { sub: patientId } = jwtDecode(localStorage.getItem('access'))
+      setChangingPassword(true)
+
+      const res = await changePassword(patientId, { oldPassword, newPassword })
+
+      if (res.success) {
+        alert('Password changed successfully!')
+        setOldPassword('')
+        setNewPassword('')
+        setConfirmPassword('')
+      } else {
+        alert(res.message || 'Password change failed')
+      }
+    } catch (err) {
+      console.error('Error changing password', err)
+      alert('Something went wrong')
+    } finally {
+      setChangingPassword(false)
     }
   }
 
@@ -80,6 +194,45 @@ export function Main() {
       }
     }
     fetchReports()
+  }, [])
+  // fetch profile
+  useEffect(() => {
+    if (activeTab !== 'profile' && activeTab !== 'settings') return
+
+    const fetchProfile = async () => {
+      setLoadingProfile(true)
+      try {
+        const { sub: patientId } = jwtDecode(localStorage.getItem('access'))
+        const res = await getPatientById(patientId)
+        setProfile(res.data)
+
+        // ✅ pre-fill form
+        setForm({
+          phone: res.data.phone || '',
+          address: res.data.address || ''
+        })
+      } catch (err) {
+        console.error('Failed to fetch profile:', err)
+      } finally {
+        setLoadingProfile(false)
+      }
+    }
+
+    fetchProfile()
+  }, [activeTab])
+
+  // fetch profile picture
+  useEffect(() => {
+    const fetchPfp = async () => {
+      try {
+        const { sub: userId } = jwtDecode(localStorage.getItem('access'))
+        const res = await getUserPfp(userId)
+        if (res.success) setUserPfp(res.imageUrl)
+      } catch (err) {
+        console.error('Failed to fetch profile picture', err)
+      }
+    }
+    fetchPfp()
   }, [])
 
   // Fetch patients
@@ -128,20 +281,20 @@ export function Main() {
       <aside className='sidebar'>
         <ul>
           <li className={activeTab === 'symptom-checker' ? 'active' : ''} onClick={() => setActiveTab('symptom-checker')}>
-            <a href='#'>🏠 Symptom checker</a>
+            🏠 Symptom checker
           </li>
 
           <li className={activeTab === 'profile' ? 'active' : ''} onClick={() => setActiveTab('profile')}>
-            <a href='#'>🏠 Profile</a>
+            🏠 Profile
           </li>
           <li className={activeTab === 'history' ? 'active' : ''} onClick={() => setActiveTab('history')}>
-            <a href='#'>📝 History</a>
+            📝 History
           </li>
           <li className={activeTab === 'appointments' ? 'active' : ''} onClick={() => setActiveTab('appointments')}>
-            <a href='#'>📅 Appointments</a>
+            📅 Appointments
           </li>
           <li className={activeTab === 'settings' ? 'active' : ''} onClick={() => setActiveTab('settings')}>
-            <a href='#'>⚙ Settings</a>
+            ⚙ Settings
           </li>
         </ul>
         <Logout />
@@ -292,7 +445,7 @@ export function Main() {
           </div>
         </div>
       )}
-
+      {/* History */}
       {activeTab === 'history' && (
         <div className='main-body'>
           {reportsList.length > 0 ? (
@@ -331,7 +484,7 @@ export function Main() {
           )}
         </div>
       )}
-
+      {/* Appointment */}
       {activeTab === 'appointments' && (
         <div className='main-body'>
           <h1>Pending Appointments</h1>
@@ -340,7 +493,7 @@ export function Main() {
           ) : pendingAppointments?.length === 0 ? (
             <p>No pending appointments</p>
           ) : (
-            <div className='reports-list'>
+            <div className='main-body'>
               {pendingAppointments.map((apt) => {
                 const fullName = apt.message?.fullName || 'Unknown patient'
 
@@ -373,6 +526,111 @@ export function Main() {
               })}
             </div>
           )}
+        </div>
+      )}
+      {/* Profile */}
+      {activeTab === 'profile' && (
+        <div className='main-body'>
+          <h2>Your Profile</h2>
+
+          {/* Display current profile picture */}
+          <div className='profile-picture'>
+            <img
+              src={selectedFile ? URL.createObjectURL(selectedFile) : userPfp || '/default-avatar.png'}
+              alt='Profile'
+              style={{ width: '120px', height: '120px', borderRadius: '50%' }}
+            />
+          </div>
+
+          <div className='upload-section'>
+            <input type='file' accept='image/*' onChange={handlePfpChange} />
+            <button className='btn btn-primary' onClick={handlePfpUpload} disabled={uploading}>
+              {uploading ? 'Uploading...' : 'Upload'}
+            </button>
+          </div>
+
+          {/* Display username/email or other info */}
+          <div className='profile-info'>
+            <p>
+              <strong>First Name:</strong> {profile?.fname}
+            </p>
+            <p>
+              <strong>Last Name:</strong> {profile?.lname}
+            </p>
+            <p>
+              <strong>Email:</strong> {profile?.email}
+            </p>
+            <p>
+              <strong>Phone:</strong> {profile?.phone}
+            </p>
+            <p>
+              <strong>Date of Birth:</strong> {profile?.dob}
+            </p>
+            <p>
+              <strong>Sex:</strong> {profile?.sex}
+            </p>
+            <p>
+              <strong>Address:</strong> {profile?.address}
+            </p>
+          </div>
+        </div>
+      )}
+      {/* settings tab */}
+      {activeTab === 'settings' && (
+        <div className='main-body'>
+          <h2>Settings</h2>
+
+          {/* Update Contact Info */}
+          <div className='settings-section'>
+            <h3>Update Contact Info</h3>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault()
+                handleSave()
+              }}
+            >
+              <div>
+                <label>Phone</label>
+                <input type='text' name='phone' value={form.phone} onChange={handleChange} />
+              </div>
+
+              <div>
+                <label>Address</label>
+                <input type='text' name='address' value={form.address} onChange={handleChange} />
+              </div>
+
+              <button className='btn btn-primary' type='submit'>
+                Save Changes
+              </button>
+            </form>
+          </div>
+
+          <hr style={{ margin: '20px 0' }} />
+
+          {/* Change Password */}
+          <div className='settings-section'>
+            <h3>Change Password</h3>
+            <form onSubmit={handlePasswordChange}>
+              <div>
+                <label>Old Password</label>
+                <input type='password' value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} required />
+              </div>
+
+              <div>
+                <label>New Password</label>
+                <input type='password' value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required />
+              </div>
+
+              <div>
+                <label>Confirm New Password</label>
+                <input type='password' value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
+              </div>
+
+              <button className='btn btn-primary' type='submit' disabled={changingPassword}>
+                {changingPassword ? 'Updating...' : 'Change Password'}
+              </button>
+            </form>
+          </div>
         </div>
       )}
     </div>

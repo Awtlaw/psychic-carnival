@@ -28,14 +28,12 @@ nav {
   border-bottom: 1px solid black;
 }
 
-
 .logo {
   color: #086972;
   display: flex;
   font-size: 1.5rem;
   font-weight: bold;
   text-decoration: none;
-
 }
 .nlogo {
   display: flex;

@@ -72,7 +72,6 @@
   border-radius: 6px;
 }
 
-
 /* Submit button full width */
 .doctor-signup-form .btn {
   grid-column: span 2;
@@ -102,7 +101,6 @@
   box-shadow: 0 0 4px rgba(8, 105, 114, 0.3);
   transition: all 0.2s ease;
 }
-
 
 .success-message {
   background: #e6ffed;

@@ -33,7 +33,9 @@
   padding: 0.6rem 0.8rem;
   border-radius: 6px;
   cursor: pointer;
-  transition: background 0.3s, transform 0.2s;
+  transition:
+    background 0.3s,
+    transform 0.2s;
 }
 
 /* Hover effect */
@@ -203,4 +205,3 @@
   display: inline-block;
   transition: all 0.25s ease;
 }
-
