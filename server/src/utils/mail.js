@@ -72,7 +72,7 @@ export function sendReminderMail(mail, name, date, period, reason, doc) {
   });
 }
 
-export function sendDocDetails(mail, name) {
+export function sendDocDetails(mail, password, name) {
   const detailsMail = {
     from: `HealthConnect Team <${process.env.SMTP_USER}>`,
     to: mail,
@@ -82,7 +82,7 @@ export function sendDocDetails(mail, name) {
     Hello ${name},
     
     Kindly note your doctor's account has been created.
-    Login with your email and the default password: P@ssw0rd10
+    Login with your email and the default password: ${password}
     Please change your password after logging in to secure your account.
 
     Best regards,  

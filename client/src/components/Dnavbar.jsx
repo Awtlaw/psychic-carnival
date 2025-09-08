@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import './Navbar.css' // Assuming you have a CSS file for stylingimport { useState } from 'react'
-import { Logout } from '../pages/login/login'
+import './Navbar.css'
 import logo from '../assets/logo.png'
 
 export function Dnavbar() {

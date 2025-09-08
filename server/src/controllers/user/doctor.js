@@ -35,7 +35,7 @@ export const addNewDoctor = [
       .status(201)
       .json({ message: 'Created user', success: true, data: newDoctor });
 
-    sendDocDetails(email, `${firstName} ${lastName}`);
+    sendDocDetails(email, password, `${firstName} ${lastName}`);
   }),
 ];
 
