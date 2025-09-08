@@ -41,10 +41,8 @@ export function Main() {
   const [newPassword, setNewPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [changingPassword, setChangingPassword] = useState(false)
-  const [form, setForm] = useState({
-    phone: '',
-    address: ''
-  })
+  const [showPassword, setShowPassword] = useState(false)
+  const [form, setForm] = useState({ phone: '', address: '' })
   const handleChange = (e) => {
     const { name, value } = e.target
     setForm((prev) => ({ ...prev, [name]: value }))
@@ -579,57 +577,77 @@ export function Main() {
       {activeTab === 'settings' && (
         <div className='main-body'>
           <h2>Settings</h2>
-
-          {/* Update Contact Info */}
           <div className='settings-section'>
-            <h3>Update Contact Info</h3>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault()
-                handleSave()
-              }}
-            >
-              <div>
-                <label>Phone</label>
-                <input type='text' name='phone' value={form.phone} onChange={handleChange} />
-              </div>
+            {/* Update Contact Info */}
+            <div className='profile-info-s'>
+              <h3 className='center'>Update Contact Info</h3>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault()
+                  handleSave()
+                }}
+              >
+                <div>
+                  <label>Phone</label>
+                  <input type='text' name='phone' value={form.phone} onChange={handleChange} />
+                </div>
 
-              <div>
-                <label>Address</label>
-                <input type='text' name='address' value={form.address} onChange={handleChange} />
-              </div>
+                <div>
+                  <label>Address</label>
+                  <input type='text' name='address' value={form.address} onChange={handleChange} />
+                </div>
 
-              <button className='btn btn-primary' type='submit'>
-                Save Changes
-              </button>
-            </form>
-          </div>
+                <button className='btn btn-primary' type='submit'>
+                  Save Changes
+                </button>
+              </form>
+            </div>
+            <div className='baseline1'></div>
 
-          <hr style={{ margin: '20px 0' }} />
+            {/* Change Password */}
+            <div className='profile-info-s'>
+              <h3 className='center'>Change Password</h3>
+              <form onSubmit={handlePasswordChange}>
+                <div>
+                  <label>Old Password</label>
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    value={oldPassword}
+                    onChange={(e) => setOldPassword(e.target.value)}
+                    required
+                  />
+                </div>
 
-          {/* Change Password */}
-          <div className='settings-section'>
-            <h3>Change Password</h3>
-            <form onSubmit={handlePasswordChange}>
-              <div>
-                <label>Old Password</label>
-                <input type='password' value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} required />
-              </div>
+                <div>
+                  <label>New Password</label>
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    required
+                  />
+                </div>
 
-              <div>
-                <label>New Password</label>
-                <input type='password' value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required />
-              </div>
+                <div>
+                  <label>Confirm</label>
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className='buttons-sec-s'>
+                  <button type='button' onClick={() => setShowPassword(!showPassword)} className='btn btn-secondary'>
+                    {showPassword ? 'Hide' : 'Show'}
+                  </button>
 
-              <div>
-                <label>Confirm New Password</label>
-                <input type='password' value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
-              </div>
-
-              <button className='btn btn-primary' type='submit' disabled={changingPassword}>
-                {changingPassword ? 'Updating...' : 'Change Password'}
-              </button>
-            </form>
+                  <button className='btn btn-primary' type='submit' disabled={changingPassword}>
+                    {changingPassword ? 'Updating...' : 'Change Password'}
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       )}

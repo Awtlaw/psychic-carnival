@@ -82,3 +82,21 @@ export const updatePatient = async (id, data) => {
     return error.response?.data || { success: false, message: 'Server error' }
   }
 }
+
+export const changePatientInfo = async (data) => {
+  try {
+    const response = await httpClient.put(`/api/user/patient/contact`, data)
+    return response.data
+  } catch (error) {
+    return error.response?.data || { success: false, message: 'Server error' }
+  }
+}
+
+export const changeDocInfo = async (data) => {
+  try {
+    const response = await httpClient.put(`/api/user/doctor/contact`, data)
+    return response.data
+  } catch (error) {
+    return error.response?.data || { success: false, message: 'Server error' }
+  }
+}
