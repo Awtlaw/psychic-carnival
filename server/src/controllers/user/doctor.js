@@ -95,3 +95,10 @@ export const deleteDoc = asyncHandler(async (req, res) => {
   await doctors.removeDoctorByEmail(email);
   res.json({ message: 'Operation successful', success: true });
 });
+
+export const updateDocContact = asyncHandler(async (req, res) => {
+  const { sub } = req.user;
+  const { phone } = req.body;
+  await doctors.updateDoctor(sub, phone);
+  res.json({ message: 'Update success', success: true });
+});

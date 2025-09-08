@@ -128,6 +128,14 @@ export const doctors = {
       data: { profileImg: filename },
     });
   },
+
+  updateDoctor: async (id, phone) => {
+    const patient = await prisma.patient.update({
+      where: { id },
+      data: { phone },
+    });
+    return patient;
+  },
 };
 
 export const patients = {
@@ -184,6 +192,14 @@ export const patients = {
         email,
       },
       omit: {},
+    });
+    return patient;
+  },
+
+  updatePatient: async (id, phone, address) => {
+    const patient = await prisma.patient.update({
+      where: { id },
+      data: { phone, address },
     });
     return patient;
   },
