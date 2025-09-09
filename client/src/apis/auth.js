@@ -37,3 +37,21 @@ export const loginUser = async (data) => {
     return error.response.data
   }
 }
+
+export const changeDocPassword = async (data) => {
+  try {
+    const response = await httpClient.put(`/api/user/doctor/change-password`, data)
+    return response.data
+  } catch (error) {
+    return error.response?.data || { success: false, message: 'Server error' }
+  }
+}
+
+export const changePatientPassword = async (data) => {
+  try {
+    const response = await httpClient.put(`/api/user/patient/change-password`, data)
+    return response.data
+  } catch (error) {
+    return error.response?.data || { success: false, message: 'Server error' }
+  }
+}

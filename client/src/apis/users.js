@@ -45,9 +45,9 @@ export const getAdminById = async (id) => {
   }
 }
 
-export const getUserPfp = async (data) => {
+export const getUserPfp = async (id) => {
   try {
-    const response = await httpClient.get(`/api/upload/image/${data}`)
+    const response = await httpClient.get(`/api/upload/image/${id}`)
     return response.data
   } catch (error) {
     return error.response.data
@@ -64,22 +64,6 @@ export const uploadPfp = async (data) => {
     return response.data
   } catch (error) {
     return error.response.data
-  }
-}
-export const changePassword = async (id, data) => {
-  try {
-    const response = await httpClient.put(`/api/user/patient/${id}/change-password`, data)
-    return response.data
-  } catch (error) {
-    return error.response?.data || { success: false, message: 'Server error' }
-  }
-}
-export const updatePatient = async (id, data) => {
-  try {
-    const response = await httpClient.put(`/api/user/patient/${id}`, data)
-    return response.data
-  } catch (error) {
-    return error.response?.data || { success: false, message: 'Server error' }
   }
 }
 

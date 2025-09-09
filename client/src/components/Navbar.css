@@ -54,50 +54,53 @@ nav {
   gap: 20px;
 }
 
-.nav-links a {
-  color: #086972;
-  text-decoration: none;
+
+
+
+
+
+
+
+
+
+.nav-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.username {
   font-size: 1rem;
-  transition: color 0.3s ease;
-}
-
-.nav-links a:hover {
+  font-weight: bold;
   color: #086972;
+  transform: translateY(+0px);
 }
 
-.menu-btn {
-  display: none;
-  flex-direction: column;
-  cursor: pointer;
-  gap: 5px;
+.profile-pic {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #086972;
+  transform: translateY(-13px);
 }
 
-.menu-btn span {
-  background: red;
-  height: 3px;
-  width: 25px;
-  border-radius: 2px;
+.profile-pic:hover {
+  transform: scale(1.1) translateY(-13px);
+  transition: transform 0.1s ease-in-out;
 }
 
 @media (max-width: 768px) {
-  .nav-links {
-    display: none;
-    flex-direction: column;
-    width: 100%;
-    background: #444;
+  .nav-user {
     margin-top: 10px;
-    padding: 10px 0;
+    justify-content: flex-start;
   }
-
-  .nav-links.show {
-    display: flex;
-  }
-
-  .menu-btn {
-    display: flex;
-  }
-  .username {
-    margin-left: 0;
-    margin-top: 10px;
-  }
+}
+.doctor-icon {
+  font-size: 2.0rem;
+  color: #086972;
+  transform: translateY(-10px);
+}
+.doctor-icon:hover {
+  transform: scale(1.1) translateY(-13px);
+  transition: transform 0.1s ease-in-out;
 }

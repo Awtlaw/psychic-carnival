@@ -1,18 +1,30 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import './Navbar.css' // Assuming you have a CSS file for stylingimport { useState } from 'react'
-import { Logout } from '../pages/login/login'
+import { jwtDecode } from 'jwt-decode'
+import { getPatientById } from '../apis'
+import './Navbar.css'
 
 export function Navbar() {
-  const [toggleHamburger, setToggleHamburger] = useState(false)
+  const [user, setUser] = useState(null)
 
-  const handleToggle = () => {
-    setToggleHamburger(!toggleHamburger)
-  }
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const { sub: userId } = jwtDecode(localStorage.getItem('access'))
+        const res = await getPatientById(userId)
+        setUser(res.data)
+      } catch (err) {
+        console.error('Failed to fetch user:', err)
+      }
+    }
+    fetchUser()
+  }, [])
+
   return (
     <div className='baseline'>
       <nav style={{ borderBottom: '1px solid #F2F2F2' }}>
         <div className='navbar'>
+          {/* Left side */}
           <div className='nlogo'>
             <div className='logoN'>
               <img src='logo.png' alt='logo' />
@@ -24,17 +36,10 @@ export function Navbar() {
             </div>
           </div>
 
-          <div className='menu-btn' id='menu-btn' onClick={handleToggle}>
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-
-          <div className={`nav-links ${toggleHamburger ? 'show' : ''}`}>
-            <Link to='/reports'>Home</Link>
-            <Link to='/about'>About</Link>
-            <Link to='/service'>Services</Link>
-            <Link to='/contact'>Contact</Link>
+          {/* Right side (User info only) */}
+          <div className='nav-user'>
+            <span className='username'>{user ? `${user.fname} ${user.lname}` : 'Loading...'}</span>
+            <img src={user?.pfpUrl || `http://localhost:5173/api/upload/image/${user?.id}`} alt='profile' className='profile-pic' />
           </div>
         </div>
       </nav>

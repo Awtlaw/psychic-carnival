@@ -8,8 +8,8 @@ import {
   writeReport,
   uploadPfp,
   getUserPfp,
-  changePassword,
-  updatePatient
+  changePatientInfo,
+  changePatientPassword
 } from '../apis'
 import { useEffect, useState } from 'react'
 import './main.css'
@@ -43,17 +43,18 @@ export function Main() {
   const [changingPassword, setChangingPassword] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [form, setForm] = useState({ phone: '', address: '' })
+  // form state for contact info
+  // Decode user ID
+  const { sub: userId } = jwtDecode(localStorage.getItem('access'))
+  console.log(getUserPfp)
   const handleChange = (e) => {
     const { name, value } = e.target
     setForm((prev) => ({ ...prev, [name]: value }))
   }
-
+  //  Save updated contact info
   const handleSave = async () => {
     try {
-      const { sub: patientId } = jwtDecode(localStorage.getItem('access'))
-      // Assuming your API updates profile details
-      const res = await updatePatient(patientId, form)
-
+      const res = await changePatientInfo(form)
       if (res.success) {
         alert('Profile updated successfully!')
         setProfile((prev) => ({ ...prev, ...form })) // update UI
@@ -72,7 +73,7 @@ export function Main() {
       setSelectedFile(e.target.files[0])
     }
   }
-
+  // upload profile picture
   const handlePfpUpload = async () => {
     if (!selectedFile) return alert('Please select a file!')
 
@@ -104,9 +105,9 @@ export function Main() {
       setUploading(false)
     }
   }
-
+  // handle symptom input change
   const handleSymptomChange = (e) => setSymptoms(e.target.value)
-
+  // handle symptom form submit
   const generateResults = async (e) => {
     e.preventDefault()
     setLoading(true)
@@ -132,10 +133,15 @@ export function Main() {
     }
 
     try {
-      const { sub: patientId } = jwtDecode(localStorage.getItem('access'))
       setChangingPassword(true)
-
-      const res = await changePassword(patientId, { oldPassword, newPassword })
+      const user = jwtDecode(localStorage.getItem('access'))
+      console.log(user)
+      // call change password api
+      const res = await changePatientPassword({
+        email: user.email,
+        oldPwd: oldPassword,
+        newPwd: newPassword
+      })
 
       if (res.success) {
         alert('Password changed successfully!')
@@ -182,6 +188,7 @@ export function Main() {
     setPrediction({})
   }
 
+  // fetch reports on component mount
   useEffect(() => {
     const fetchReports = async () => {
       try {
@@ -223,9 +230,9 @@ export function Main() {
   useEffect(() => {
     const fetchPfp = async () => {
       try {
-        const { sub: userId } = jwtDecode(localStorage.getItem('access'))
-        const res = await getUserPfp(userId)
-        if (res.success) setUserPfp(res.imageUrl)
+        // const res = await getUserPfp(userId)
+
+        setUserPfp(null)
       } catch (err) {
         console.error('Failed to fetch profile picture', err)
       }
@@ -279,11 +286,11 @@ export function Main() {
       <aside className='sidebar'>
         <ul>
           <li className={activeTab === 'symptom-checker' ? 'active' : ''} onClick={() => setActiveTab('symptom-checker')}>
-            🏠 Symptom checker
+            ✅ Symptom checker
           </li>
 
           <li className={activeTab === 'profile' ? 'active' : ''} onClick={() => setActiveTab('profile')}>
-            🏠 Profile
+            👨‍⚕️ Profile
           </li>
           <li className={activeTab === 'history' ? 'active' : ''} onClick={() => setActiveTab('history')}>
             📝 History
@@ -534,7 +541,7 @@ export function Main() {
           {/* Display current profile picture */}
           <div className='profile-picture'>
             <img
-              src={selectedFile ? URL.createObjectURL(selectedFile) : userPfp || '/default-avatar.png'}
+              src={selectedFile ? URL.createObjectURL(selectedFile) : userPfp || `http://localhost:5173/api/upload/image/${userId}`}
               alt='Profile'
               style={{ width: '120px', height: '120px', borderRadius: '50%' }}
             />

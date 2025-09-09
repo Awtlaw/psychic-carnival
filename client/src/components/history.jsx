@@ -2,7 +2,8 @@ import { faClock, faFile, faCalendarCheck, faHourglassHalf } from '@fortawesome/
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './history.css'
 import { useEffect, useState } from 'react'
-import { listReports, getPatientById, listPendingApts } from '../apis'
+import Modal from 'react-modal'
+import { listReports, getPatientById, listPendingApts, changeDocPassword, getDoctorById } from '../apis'
 import { parseISO, format, isValid } from 'date-fns'
 import { jwtDecode } from 'jwt-decode'
 import { Logout } from '../pages/login/login'
@@ -14,7 +15,17 @@ export function History() {
   const [patients, setPatients] = useState({})
   const [pendingAppointments, setPendingAppointments] = useState([])
   const [loadingApts, setLoadingApts] = useState(false)
+  const [oldPassword, setOldPassword] = useState('')
+  const [newPassword, setNewPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [changingPassword, setChangingPassword] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
+  const [profile, setProfile] = useState(null)
+  const [showModal, setShowModal] = useState(false)
+  const [loadingProfile, setLoadingProfile] = useState(false)
+  const [showPasswordModal, setShowPasswordModal] = useState(false)
 
+  console.log(loadingProfile)
   // Decode doctor ID
   let loggedInDoc = null
   try {
@@ -36,6 +47,32 @@ export function History() {
     }
     fetchReports()
   }, [])
+  // must change password modal
+  // Fetch profile (runs on mount + tab change)
+  useEffect(() => {
+    if (!loggedInDoc) return
+
+    const fetchProfile = async () => {
+      setLoadingProfile(true)
+      try {
+        const res = await getDoctorById(loggedInDoc)
+        console.log('Profile response:', res.data)
+
+        setProfile(res.data)
+
+        // ✅ force password change popup
+        if (res.data.mustChangePassword) {
+          setShowModal(true)
+        }
+      } catch (err) {
+        console.error('Failed to fetch profile:', err)
+      } finally {
+        setLoadingProfile(false)
+      }
+    }
+
+    fetchProfile()
+  }, [activeTab, loggedInDoc])
 
   useEffect(() => {
     const fetchApts = async () => {
@@ -85,6 +122,39 @@ export function History() {
   const recentReports = doctorReports.slice(-5).reverse()
   // const today = new Date()
   const todayAppointments = 0 // placeholder for future API
+
+  const handlePasswordChange = async (e) => {
+    e.preventDefault()
+    if (newPassword !== confirmPassword) {
+      return alert('New password and confirmation do not match!')
+    }
+
+    try {
+      setChangingPassword(true)
+      const user = jwtDecode(localStorage.getItem('access'))
+
+      const res = await changeDocPassword({
+        email: user.email,
+        oldPwd: oldPassword,
+        newPwd: newPassword
+      })
+
+      if (res.success) {
+        alert('Password changed successfully!')
+        setOldPassword('')
+        setNewPassword('')
+        setConfirmPassword('')
+        setShowModal(false) // 👈 close modal after success
+      } else {
+        alert(res.message || 'Password change failed')
+      }
+    } catch (err) {
+      console.error('Error changing password', err)
+      alert('Something went wrong')
+    } finally {
+      setChangingPassword(false)
+    }
+  }
 
   return (
     <div className='layout2'>
@@ -251,8 +321,114 @@ export function History() {
           </div>
         )}
 
-        {activeTab === 'settings' && <h2>⚙ Settings (Coming Soon)</h2>}
+        {activeTab === 'settings' && (
+          <div className='main-body'>
+            <h2>Settings</h2>
+            <div className='settings-section'>
+              {/* Update Contact Info */} {/* Display username/email or other info */}
+              <div className='profile-info'>
+                <p>
+                  <strong>First Name:</strong> {profile?.fname}
+                </p>
+                <p>
+                  <strong>Last Name:</strong> {profile?.lname}
+                </p>
+                <p>
+                  <strong>Email:</strong> {profile?.email}
+                </p>
+                <p>
+                  <strong>Phone:</strong> {profile?.phone}
+                </p>
+              </div>
+              <div className='baseline1'></div>
+              {/* Change Password */}
+              <div className='profile-info-s'>
+                <h3 className='center'>Change Password</h3>
+                <form onSubmit={handlePasswordChange}>
+                  <div>
+                    <label>Old Password</label>
+                    <input
+                      type={showPassword ? 'text' : 'password'}
+                      value={oldPassword}
+                      onChange={(e) => setOldPassword(e.target.value)}
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label>New Password</label>
+                    <input
+                      type={showPassword ? 'text' : 'password'}
+                      value={newPassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label>Confirm</label>
+                    <input
+                      type={showPassword ? 'text' : 'password'}
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div className='buttons-sec-s'>
+                    <button type='button' onClick={() => setShowPassword(!showPassword)} className='btn btn-secondary'>
+                      {showPassword ? 'Hide' : 'Show'}
+                    </button>
+
+                    <button className='btn btn-primary' type='submit' disabled={changingPassword}>
+                      {changingPassword ? 'Updating...' : 'Change Password'}
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
+      <Modal isOpen={showModal} ariaHideApp={false} className='modal'>
+        <h2>Change Your Temporary Password</h2>
+        <form onSubmit={handlePasswordChange}>
+          <div>
+            <label>Old Password</label>
+            <input
+              type={showPasswordModal ? 'text' : 'password'}
+              value={oldPassword}
+              onChange={(e) => setOldPassword(e.target.value)}
+              required
+            />
+          </div>
+          <div>
+            <label>New Password</label>
+            <input
+              type={showPasswordModal ? 'text' : 'password'}
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              required
+            />
+          </div>
+          <div>
+            <label>Confirm Password</label>
+            <input
+              type={showPasswordModal ? 'text' : 'password'}
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+            />
+          </div>
+          <div className='buttons-sec-s'>
+            <button type='button' onClick={() => setShowPasswordModal(!showPasswordModal)} className='btn btn-secondary'>
+              {showPasswordModal ? 'Hide' : 'Show'}
+            </button>
+            <button className='btn btn-primary' type='submit' disabled={changingPassword}>
+              {changingPassword ? 'Updating...' : 'Change Password'}
+            </button>
+          </div>
+        </form>
+      </Modal>
     </div>
   )
 }
