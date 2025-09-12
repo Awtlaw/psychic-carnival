@@ -54,15 +54,6 @@ nav {
   gap: 20px;
 }
 
-
-
-
-
-
-
-
-
-
 .nav-user {
   display: flex;
   align-items: center;
@@ -96,7 +87,7 @@ nav {
   }
 }
 .doctor-icon {
-  font-size: 2.0rem;
+  font-size: 2rem;
   color: #086972;
   transform: translateY(-10px);
 }

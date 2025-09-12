@@ -26,3 +26,23 @@ export const writeReport = async (data) => {
     return error.response.data
   }
 }
+
+// ✅ Update doctor's notes
+export const updateReportNotes = async (id, notes) => {
+  try {
+    const response = await httpClient.patch(`/api/report/${id}/notes`, { notes })
+    return response.data
+  } catch (error) {
+    return error.response.data
+  }
+}
+
+// ✅ Fulfill report
+export const fulfillReport = async (id) => {
+  try {
+    const response = await httpClient.patch(`/api/report/${id}/fulfill`)
+    return response.data
+  } catch (error) {
+    return error.response.data
+  }
+}
