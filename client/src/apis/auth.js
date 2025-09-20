@@ -55,3 +55,11 @@ export const changePatientPassword = async (data) => {
     return error.response?.data || { success: false, message: 'Server error' }
   }
 }
+export const changeAdminPassword = async (data) => {
+  try {
+    const response = await httpClient.put(`/api/user/admin/change-password`, data)
+    return response.data
+  } catch (error) {
+    return error.response?.data || { success: false, message: 'Server error' }
+  }
+}

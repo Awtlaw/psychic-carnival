@@ -64,7 +64,6 @@
   list-style: none;
 }
 
-
 /* Container */
 .report-container {
   max-width: 800px;
@@ -123,7 +122,7 @@
   padding: 0.6rem 1.2rem;
   font-size: 0.95rem;
   border: none;
-  border-radius: 10px;
+  border-radius: 5px;
   cursor: pointer;
   margin-right: 0.6rem;
   transition: all 0.2s ease-in-out;

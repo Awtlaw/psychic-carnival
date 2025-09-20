@@ -3,11 +3,12 @@ import {
   bookApt,
   checkSymptoms,
   getPatientById,
+  getDoctorById,
   listPendingApts,
   listReports,
   writeReport,
   uploadPfp,
-  getUserPfp,
+  // getUserPfp,
   changePatientInfo,
   changePatientPassword
 } from '../apis'
@@ -17,8 +18,9 @@ import { jwtDecode } from 'jwt-decode'
 import { faClock, faFile } from '@fortawesome/free-solid-svg-icons'
 import { format, isValid, parseISO } from 'date-fns'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 import { Logout } from '../pages/login/login'
+import { Summary } from './summary'
 
 export function Main() {
   const [prediction, setPrediction] = useState({})
@@ -43,14 +45,23 @@ export function Main() {
   const [changingPassword, setChangingPassword] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [form, setForm] = useState({ phone: '', address: '' })
+  const [selectedReport, setSelectedReport] = useState(null)
+  const [doctors, setDoctors] = useState({})
+
+  console.log('loadingProfile:', loadingProfile) // loading state for profile fetch
+
   // form state for contact info
   // Decode user ID
   const { sub: userId } = jwtDecode(localStorage.getItem('access'))
-  console.log(getUserPfp)
+  // console.log(getUserPfp)
   const handleChange = (e) => {
     const { name, value } = e.target
     setForm((prev) => ({ ...prev, [name]: value }))
   }
+  // Get logged in user ID
+  const token = localStorage.getItem('access')
+  const decoded = token ? jwtDecode(token) : null
+  const loggedInUserId = decoded?.sub
   //  Save updated contact info
   const handleSave = async () => {
     try {
@@ -67,7 +78,7 @@ export function Main() {
     }
   }
 
-  console.log(loadingProfile)
+  // console.log(loadingProfile)
   const handlePfpChange = (e) => {
     if (e.target.files && e.target.files[0]) {
       setSelectedFile(e.target.files[0])
@@ -187,6 +198,31 @@ export function Main() {
     setDate('')
     setPrediction({})
   }
+  // fetch doctors for pending appointments
+  useEffect(() => {
+    if (pendingAppointments.length === 0) return
+
+    const fetchDoctors = async () => {
+      try {
+        const uniqueIds = [...new Set(pendingAppointments.map((apt) => apt.doctorId))]
+        const entries = await Promise.all(
+          uniqueIds.map(async (id) => {
+            try {
+              const doctor = await getDoctorById(id)
+              return [id, doctor?.data || null]
+            } catch {
+              return [id, null]
+            }
+          })
+        )
+        setDoctors(Object.fromEntries(entries))
+      } catch (err) {
+        console.error('Failed to load doctors:', err)
+      }
+    }
+
+    fetchDoctors()
+  }, [pendingAppointments])
 
   // fetch reports on component mount
   useEffect(() => {
@@ -293,7 +329,7 @@ export function Main() {
             👨‍⚕️ Profile
           </li>
           <li className={activeTab === 'history' ? 'active' : ''} onClick={() => setActiveTab('history')}>
-            📝 History
+            📝 Medical Reports
           </li>
           <li className={activeTab === 'appointments' ? 'active' : ''} onClick={() => setActiveTab('appointments')}>
             📅 Appointments
@@ -453,42 +489,56 @@ export function Main() {
       {/* History */}
       {activeTab === 'history' && (
         <div className='main-body'>
-          {reportsList.length > 0 ? (
-            reportsList.map((r) => {
-              const patient = patients[r.patientId]
-              const patientName = patient ? `Report for ${patient.fname ?? ''} ${patient.lname ?? ''}`.trim() : 'Loading patient...'
-
-              let formattedDate = 'Unknown date'
-              try {
-                formattedDate = format(parseISO(r.createdAt), 'MMM dd, yyyy HH:mm')
-              } catch {
-                console.warn('Invalid date for report:', r.createdAt)
-              }
-
-              return (
-                <div className='report-card' key={r.id ?? Math.random()}>
-                  <div className='report-info'>
-                    <FontAwesomeIcon icon={faFile} className='report-icon' />
-                    <div className='report-text'>
-                      <Link to={`/reports/${r.id}`} className='report-link'>
-                        {patientName}
-                      </Link>
-                    </div>
-                  </div>
-                  <div className='report-time'>
-                    <FontAwesomeIcon icon={faClock} className='time-icon' />
-                    <span>{formattedDate}</span>
-                  </div>
-                </div>
-              )
-            })
+          {selectedReport ? (
+            // ✅ Show the summary for the selected report
+            <Summary report={selectedReport} onBack={() => setSelectedReport(null)} />
           ) : (
-            <div className='no-records'>
-              <h3>No Reports Found</h3>
-            </div>
+            // ✅ Otherwise show the reports list
+            <>
+              {reportsList.length > 0 ? (
+                <>
+                  <h3>Your Reports</h3>
+                  {reportsList
+                    .filter((r) => r.patientId === loggedInUserId) // show only this user's reports
+                    .map((r) => {
+                      const patient = patients[r.patientId]
+                      const patientName = patient ? `Report for ${patient.fname ?? ''} ${patient.lname ?? ''}`.trim() : 'Loading patient...'
+
+                      let formattedDate = 'Unknown date'
+                      try {
+                        formattedDate = format(parseISO(r.createdAt), 'MMM dd, yyyy HH:mm')
+                      } catch {
+                        console.warn('Invalid date for report:', r.createdAt)
+                      }
+
+                      return (
+                        <div
+                          className='report-card'
+                          key={r.id ?? Math.random()}
+                          onClick={() => setSelectedReport(r)} // 👈 swap reports list with summary
+                        >
+                          <div className='report-info'>
+                            <FontAwesomeIcon icon={faFile} className='report-icon' />
+                            <div className='report-text'>{patientName}</div>
+                          </div>
+                          <div className='report-time'>
+                            <FontAwesomeIcon icon={faClock} className='time-icon' />
+                            <span>{formattedDate}</span>
+                          </div>
+                        </div>
+                      )
+                    })}
+                </>
+              ) : (
+                <div className='no-records'>
+                  <h3>No Reports Found</h3>
+                </div>
+              )}
+            </>
           )}
         </div>
       )}
+
       {/* Appointment */}
       {activeTab === 'appointments' && (
         <div className='main-body'>
@@ -499,40 +549,46 @@ export function Main() {
             <p>No pending appointments</p>
           ) : (
             <div className='main-body'>
-              {pendingAppointments.map((apt) => {
-                const fullName = apt.message?.fullName || 'Unknown patient'
+              {pendingAppointments
+                .filter((r) => r.patientId === loggedInUserId) // ✅ only this user’s appointments
+                .map((apt) => {
+                  // 👇 Lookup doctor info if you have it in state (doctors object or array)
+                  const doctor = doctors?.[apt.doctorId]
+                  const doctorName = doctor ? `Dr. ${doctor.fname ?? ''} ${doctor.lname ?? ''}`.trim() : 'Assigned Doctor'
 
-                // Validate date before formatting
-                let formattedDate = 'Unknown date'
-                try {
-                  const d = parseISO(apt.message?.date)
-                  if (isValid(d)) {
-                    formattedDate = format(d, 'MMM dd, yyyy HH:mm')
+                  // Format appointment date safely
+                  let formattedDate = 'Unknown date'
+                  try {
+                    const d = parseISO(apt.message?.date)
+                    if (isValid(d)) {
+                      formattedDate = format(d, 'MMM dd, yyyy HH:mm')
+                    }
+                  } catch (err) {
+                    console.log(err)
+                    console.warn('Invalid date:', apt.message?.date)
                   }
-                } catch (err) {
-                  console.log(err)
-                  console.warn('Invalid date:', apt.message?.date)
-                }
 
-                return (
-                  <div className='report-card' key={apt.id}>
-                    <div className='report-info'>
-                      <FontAwesomeIcon icon={faClock} className='report-icon' />
-                      <div className='report-text'>
-                        <span className='report-link'>{fullName}</span>
+                  return (
+                    <div className='report-card' key={apt.id}>
+                      <div className='report-info'>
+                        <FontAwesomeIcon icon={faClock} className='report-icon' />
+                        <div className='report-text'>
+                          You have an appointment with {doctorName} on {formattedDate} ({apt.message?.period})
+                        </div>
+                        <div className='report-text'>Reason: {apt.message?.reason || 'N/A'}</div>
+                        <div className='report-text'>Status: {apt.status || 'Pending'}</div>
+                      </div>
+                      <div className='report-time'>
+                        <div className='buttons-sec'></div>
                       </div>
                     </div>
-                    <div className='report-time'>
-                      <FontAwesomeIcon icon={faClock} className='time-icon' />
-                      <span>{formattedDate}</span>
-                    </div>
-                  </div>
-                )
-              })}
+                  )
+                })}
             </div>
           )}
         </div>
       )}
+
       {/* Profile */}
       {activeTab === 'profile' && (
         <div className='main-body'>
