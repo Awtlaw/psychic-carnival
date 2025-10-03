@@ -1,6 +1,6 @@
 import path from 'path';
 import fs from 'node:fs';
-import { hash, genSalt } from 'bcryptjs';
+import { hash, genSalt, compare } from 'bcryptjs';
 import { doctors, patients } from '../../database/queries.js';
 import asyncHandler from 'express-async-handler';
 import { patientValidator } from '../../validators/users.js';
@@ -107,7 +107,8 @@ export const uploadImage = asyncHandler(async (req, res) => {
 });
 
 export const getImage = asyncHandler(async (req, res) => {
-  const filePath = path.resolve('images', req.params.filename);
+  const userPfp = await patients.getPatientById(req.params.id);
+  const filePath = path.resolve('images', userPfp.profileImg);
 
   if (fs.existsSync(filePath)) {
     res.sendFile(filePath);
@@ -121,4 +122,29 @@ export const updatePatientInfo = asyncHandler(async (req, res) => {
   const { phone, address } = req.body;
   await patients.updatePatient(sub, phone, address);
   res.json({ message: 'Update success', success: true });
+});
+
+export const changePassword = asyncHandler(async (req, res) => {
+  const { email, oldPwd, newPwd } = req.body;
+  const user = await patients.getPatientByEmail(email);
+  if (!user)
+    return res
+      .status(404)
+      .json({ message: 'No patient found!', success: false });
+  if (oldPwd === newPwd)
+    return res
+      .status(400)
+      .json({ message: 'Cannot use old password', success: false });
+
+  const isValid = await compare(oldPwd, user.pwd);
+  if (!isValid)
+    return res
+      .status(400)
+      .json({ message: 'Wrong credentials', success: false });
+
+  const salt = await genSalt(10);
+  const newPwdHashed = await hash(newPwd, salt);
+  await patients.updatePassword(email, newPwdHashed);
+
+  res.json({ message: 'Password update success', success: true });
 });

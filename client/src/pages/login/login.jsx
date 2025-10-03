@@ -88,7 +88,7 @@ export function Login() {
             <label>
               <input type='checkbox' /> Remember me
             </label>
-            <a href='#'>Forgot Password?</a>
+            <Link to='/forgot-password'>Forgot Password?</Link>
           </div>
           <button type='submit' className=' log-btn'>
             Login

@@ -95,11 +95,12 @@ export function PatientSignUp() {
             <input
               type='tel'
               id='phone'
-              placeholder='Enter your phone number'
+              placeholder='Enter your phone number (0247055527)'
               required
               name='phone'
               value={patientForm.phone}
               onChange={handleChange}
+              pattern='[0-9+]+'
             />
           </div>
           <div className='input-box'>
@@ -107,7 +108,7 @@ export function PatientSignUp() {
             <input
               type='password'
               id='password'
-              placeholder='Create a password'
+              placeholder='(Badbad@34)'
               required
               name='password'
               value={patientForm.password}
@@ -128,8 +129,17 @@ export function PatientSignUp() {
           </div>
           <div className='input-box'>
             <label htmlFor='dob'>Date of Birth</label>
-            <input type='date' id='dob' required name='dob' value={patientForm.dob} onChange={handleChange} />
+            <input
+              type='date'
+              id='dob'
+              required
+              name='dob'
+              value={patientForm.dob}
+              onChange={handleChange}
+              max={new Date().toISOString().split('T')[0]} // today
+            />
           </div>
+
           <div className='input-box'>
             <label htmlFor='sex'>Sex</label>
             <select id='sex' required name='sex' value={patientForm.sex} onChange={handleChange}>

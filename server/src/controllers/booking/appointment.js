@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import asyncHandler from 'express-async-handler';
-import { appointments } from '../../database/queries.js';
+import { appointments, reports } from '../../database/queries.js';
 import { appointmentValidator } from '../../validators/appointments.js';
 import { validationResult } from 'express-validator';
 import { sendBookingMail, sendReminderMail } from '../../utils/mail.js';
@@ -175,5 +175,28 @@ export const getAvailableDoc = asyncHandler(async (req, res) => {
     message: 'Doctor assigned successfully',
     success: true,
     data: assignedDoctor, // Send back the chosen doctor's details
+  });
+});
+
+// ✅ Mark a report as fulfilled
+export const fulfillReport = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  if (!id) {
+    return res.status(400).json({ message: 'Bad Request', success: false });
+  }
+
+  // Make sure only doctors can fulfill reports
+  if (req.user?.role !== 'doctor') {
+    return res.status(403).json({
+      message: 'Forbidden: only doctors can fulfill reports',
+      success: false,
+    });
+  }
+
+  const updatedReport = await reports.fulfillReport(id); // <-- write this query
+  res.json({
+    message: 'Report marked as fulfilled ✅',
+    success: true,
+    data: updatedReport,
   });
 });

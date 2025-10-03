@@ -19,6 +19,8 @@ import { Pservice } from './pages/service/pservice'
 import { Dservice } from './pages/service/dservice'
 import Admin from './pages/admin/admin'
 import { Summary } from './components/summary'
+import { ResetPassword } from './pages/resetpassword/resetpassword'
+import { ForgotPassword } from './pages/resetpassword/forgotpassword'
 
 function App() {
   return (
@@ -34,6 +36,8 @@ function App() {
         <Route path='/register-doctor' element={<DocSignUp />} />
         <Route path='/admin' element={<Admin />} />
         <Route path='/summary' element={<Summary />} />
+        <Route path='/forgot-password' element={<ForgotPassword />} />
+        <Route path='/reset-password' element={<ResetPassword />} />
         <Route
           path='home'
           element={

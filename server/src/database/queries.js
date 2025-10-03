@@ -33,9 +33,6 @@ export const admins = {
       where: {
         id: +id,
       },
-      omit: {
-        pwd: true,
-      },
     });
     return admin;
   },
@@ -49,6 +46,19 @@ export const admins = {
     });
     return admin;
   },
+  updateAdminPassword: async (id, hash) => {
+    try {
+      const updatedAdmin = await prisma.admin.update({
+        where: { id: Number(id) },
+        data: { pwd: hash },
+        omit: { pwd: true },
+      });
+      return updatedAdmin;
+    } catch (e) {
+      console.error(e);
+      throw e;
+    }
+  },
 };
 
 export const doctors = {
@@ -60,6 +70,7 @@ export const doctors = {
         fname,
         lname,
         pwd,
+        mustChangePassword: true, // Force password change on first login
       },
       omit: {
         pwd: true,
@@ -103,7 +114,7 @@ export const doctors = {
     try {
       await prisma.doctor.update({
         where: { email },
-        data: { pwd: hash },
+        data: { pwd: hash, mustChangePassword: false }, // Reset flag after password change
       });
     } catch (e) {
       console.log(e);
@@ -203,6 +214,18 @@ export const patients = {
     });
     return patient;
   },
+
+  updatePassword: async (email, hash) => {
+    try {
+      await prisma.patient.update({
+        where: { email },
+        data: { pwd: hash },
+      });
+    } catch (e) {
+      console.log(e);
+      throw e;
+    }
+  },
 };
 
 export const appointments = {
@@ -290,5 +313,19 @@ export const reports = {
       },
     });
     return report;
+  },
+  updateNotes: async (id, notes) => {
+    return await prisma.report.update({
+      where: { id: Number(id) },
+      data: { notes },
+    });
+  },
+  fulfillReport: async (id) => {
+    return await prisma.report.update({
+      where: { id: Number(id) },
+      data: {
+        status: 'FULFILLED', // 👈 make sure you added `status` in your schema
+      },
+    });
   },
 };

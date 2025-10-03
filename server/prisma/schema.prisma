@@ -34,6 +34,8 @@ model Admin {
   pwd      String
   role     Role     @default(ADMIN)
   joinedAt DateTime @default(now())
+  resetTokenHash   String?       // Add this
+  resetTokenExpiry DateTime?     // Add this
 }
 
 model Doctor {
@@ -48,6 +50,10 @@ model Doctor {
   Appointment Appointment[]
   Report      Report[]
   profileImg  String?
+  mustChangePassword  Boolean  @default(true)
+  resetTokenHash   String?       // Add this
+  resetTokenExpiry DateTime?     // Add this
+
 }
 
 model Patient {
@@ -66,6 +72,8 @@ model Patient {
   appointments Appointment[]
   reports      Report[]      @relation("PatientReports")
   profileImg   String?
+  resetTokenHash   String?       // Add this
+  resetTokenExpiry DateTime?     // Add this
 }
 
 model Report {
@@ -76,6 +84,7 @@ model Report {
   patientId Int
   doctor    Doctor?  @relation(fields: [doctorId], references: [id])
   doctorId  Int?
+   notes       String?   // 👈 doctor's notes
 }
 
 model Appointment {
@@ -89,3 +98,16 @@ model Appointment {
   doctor    Doctor?           @relation(fields: [doctorId], references: [id])
   doctorId  Int?
 }
+
+
+model PasswordResetToken {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  email     String
+  tokenHash String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+

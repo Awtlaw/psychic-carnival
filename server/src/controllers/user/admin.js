@@ -1,4 +1,4 @@
-import { hash, genSalt } from 'bcryptjs';
+import { hash, genSalt, compare } from 'bcryptjs';
 import { admins } from '../../database/queries.js';
 import asyncHandler from 'express-async-handler';
 import { adminValidator } from '../../validators/users.js';
@@ -47,4 +47,35 @@ export const getAdmin = asyncHandler(async (req, res) => {
 
   const admin = await admins.getAdminById(id);
   res.json({ message: 'Retrieved user', success: true, data: admin });
+});
+
+export const changeAdminPassword = asyncHandler(async (req, res) => {
+  const { id, oldPassword, newPassword } = req.body;
+
+  if (!id || !oldPassword || !newPassword) {
+    return res.status(400).json({ success: false, message: 'Missing fields' });
+  }
+
+  // Get admin from DB
+  const admin = await admins.getAdminById(id);
+  if (!admin) {
+    return res.status(404).json({ success: false, message: 'Admin not found' });
+  }
+  console.log(admin);
+  // Verify old password
+  const isMatch = await compare(oldPassword, admin.pwd);
+  if (!isMatch) {
+    return res
+      .status(400)
+      .json({ success: false, message: 'Invalid old password' });
+  }
+
+  // Hash new password
+  const salt = await genSalt(10);
+  const hashed = await hash(newPassword, salt);
+
+  // Update in DB
+  await admins.updateAdminPassword(id, hashed);
+
+  res.json({ success: true, message: 'Password updated successfully' });
 });

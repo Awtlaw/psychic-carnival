@@ -456,7 +456,13 @@ export function Main() {
                 <form onSubmit={handleAppointmentSubmit}>
                   <label>
                     Select Date:
-                    <input type='date' value={date} onChange={(e) => setDate(e.target.value)} required />
+                    <input
+                      type='date'
+                      value={date}
+                      onChange={(e) => setDate(e.target.value)}
+                      required
+                      min={new Date().toISOString().split('T')[0]} // prevents past dates
+                    />
                   </label>
                   <label>
                     Select Time:

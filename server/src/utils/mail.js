@@ -95,3 +95,39 @@ export function sendDocDetails(mail, password, name) {
     console.log('Message sent:', info?.messageId);
   });
 }
+export async function sendPasswordResetEmail(mail, resetUrl) {
+  const resetMail = {
+    from: `HealthConnect Team <${process.env.SMTP_USER}>`,
+    to: mail,
+    subject: '🔒 Password Reset Request - HealthConnect',
+    text: `
+Hello,
+
+You requested a password reset.
+
+🔗 Reset Link: ${resetUrl}
+
+If you did not make this request, please ignore this email.
+
+Best regards,  
+HealthConnect Team
+    `,
+    html: `
+      <p>Hello,</p>
+      <p>You requested a password reset.</p>
+      <p>This link will expire in 15 minutes for your security.</p>
+      <p>🔗 <a href="${resetUrl}">${resetUrl}</a></p>
+      <p>If you did not make this request, please ignore this email.</p>
+      <p>Best regards,<br>HealthConnect Team</p>
+    `,
+  };
+
+  try {
+    const info = await transporter.sendMail(resetMail);
+    console.log(`Password reset email sent to ${mail}`);
+    return info;
+  } catch (err) {
+    console.error('Error sending password reset email:', err);
+    throw err;
+  }
+}

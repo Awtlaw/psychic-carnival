@@ -9,4 +9,4 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 uploads.post('/image', ProtectRoute, upload.single('image'), uploadImage);
-uploads.get('/image/:filename', getImage);
+uploads.get('/image/:id', getImage); // id is userId

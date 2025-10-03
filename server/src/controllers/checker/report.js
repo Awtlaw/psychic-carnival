@@ -57,3 +57,49 @@ export const getReport = asyncHandler(async (req, res) => {
 
   res.json({ message: 'Retrieved report', success: true, data: patient });
 });
+
+// ✅ NEW: Update Doctor’s Notes
+export const updateReportNotes = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { notes } = req.body;
+
+  if (!notes || notes.trim() === '') {
+    return res.status(400).json({
+      message: 'Notes are required',
+      success: false,
+    });
+  }
+
+  const updatedReport = await reports.updateNotes(id, notes);
+
+  if (!updatedReport)
+    return res.status(404).json({
+      message: 'Report not found!',
+      success: false,
+    });
+
+  res.json({
+    message: 'Notes updated successfully',
+    success: true,
+    data: updatedReport,
+  });
+});
+// ✅ NEW: Mark Report as Fulfilled
+export const fulfillReport = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+
+  const updatedReport = await reports.fulfillReport(id); // call query function
+
+  if (!updatedReport) {
+    return res.status(404).json({
+      message: 'Report not found!',
+      success: false,
+    });
+  }
+
+  res.json({
+    message: 'Report marked as fulfilled',
+    success: true,
+    data: updatedReport,
+  });
+});

@@ -23,6 +23,7 @@ export const authenticateUser = function (req, res, next) {
           sub: user.id,
           email: user.email,
           role: user.role,
+          mustChangePassword: user.mustChangePassword, // 👈 include flag
         };
         const accessTokenOptions = { expiresIn: process.env.JWT_EXPIRES_IN };
         const refreshTokenPayload = { sub: user.id };
